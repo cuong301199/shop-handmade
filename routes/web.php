@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\LoaiSanPhamController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,30 +17,44 @@ use App\Http\Controllers\LoaiSanPhamController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-// Route::get('/', function () {
-//     return view('admin\loaisanpham\show_loaisanpham');
-// });
-
-Route::get('/admin', function(){
-    return view('admin\template\master');
+    return view('client.index');
 });
 
 
+Route::get('/admin', [AuthController::class, 'index'])->name('admin.index');
 
+//danh muc
+Route::get('/danhmuc', [DanhMucController::class, 'index'])->name('danhmuc.index');
+Route::get('/danhmuc/them', [DanhMucController::class, 'create'])->name('danhmuc.create');
+Route::post('/them-danh-muc', [DanhMucController::class, 'store'])->name('danhmuc.store');
+Route::get('/danhmuc/{id}/xoa',[DanhMucController::class,'delete'])->name('danhmuc.delete');
 
-
-
-Route::get('/danhmuc', [DanhMucController::class, 'index'])->name('danh-muc.index');
-Route::post('/danhmuc-add', [DanhMucController::class, 'add_danhmuc'])->name('danh-muc.add');
-Route::get('/danhmuc-show', [DanhMucController::class, 'show_danhmuc'])->name('danh-muc.danh_sach');
 
 
 Route::get('/loaisanpham', [LoaiSanPhamController::class, 'index'])->name('loaisanpham.index');
-Route::post('/loaisanpham-add', [LoaiSanPhamController::class, 'add_loaisanpham'])->name('loaisanpham.add');
-Route::get('/loaisanpham-show', [LoaiSanPhamController::class, 'show_loaisanpham'])->name('loaisanpham.danh_sach');
+Route::get('/loaisanpham/them',[LoaiSanPhamController::class, 'create'])->name('loaisanpham.create');
+Route::post('/them-loaisanpham',[LoaiSanPhamController::class, 'store'])->name('loaisanpham.store');
+Route::get('/loaisanpham/{id}/xoa',[LoaiSanPhamController::class, 'delete'])->name('loaisanpham.delete');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Route::get('/thu', function(){
