@@ -57,7 +57,7 @@ class LoaiSanPhamController extends Controller
         ->select('loai_san_pham.*','ten_dm')
         ->where('loai_san_pham.id', $id)
         ->first();
-        return view('admin.loaisanpham.edit', compact('danhsach'),compact('danhsach_lsp'));
+        return view('admin.loaisanpham.edit', compact('danhsach','danhsach_lsp'));
     }
 
     public function update(Request $request, $id){

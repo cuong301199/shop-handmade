@@ -12,7 +12,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <form action="{{ route('loaisanpham.update', ['id' => $danhsach_lsp->id]) }}" method="post">
+                <form method="post" action="{{ route('loaisanpham.update', ['id' => $danhsach_lsp->id]) }}" >
                     @csrf
                     <div class="form-group">
 
@@ -24,9 +24,11 @@
                         {{-- {{ dd($danhsach_lsp) }} --}}
                         {{-- {{ dd($danhsach) }} --}}
                         <select name="tenDanhMuc" id="">
-                            <option value="">{{ $danhsach_lsp->ten_dm }}</option>
+
                             @foreach ($danhsach as $item)
-                                <option value="{{ $item->id }}">{{ $item->ten_dm }}</option>
+                                <option value="{{ $item->id }}"
+                                    @if($danhsach_lsp->id_dm == $item->id) selected @endif >
+                                    {{ $item->ten_dm }}</option>
 
                             @endforeach
                         </select>

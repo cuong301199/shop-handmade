@@ -9,7 +9,7 @@
             <div class="col-md-6">
                 <h2>Đăng kí</h2>
 
-                <form action="{{ route('nguoi-dung.register') }}" method="post">
+                <form action="{{ route('nguoi-dung.register') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1" style="font-weight:bold;">Username</label>
