@@ -15,7 +15,7 @@
         <div class="row">
          <a href="{{ route('danhmuc.create')}}" class='btn btn-primary'>Thêm</a>
         </div>
-      
+
         <div class="row">
         <table class="table">
             <thead>
@@ -23,7 +23,7 @@
                 <th scope="col">STT</th>
                 <th scope="col">Tên danh mục</th>
                 <th scope="col">Thao tác</th>
-                
+
                 </tr>
             </thead>
             <tbody>
@@ -33,21 +33,21 @@
                     <th scope="row">{{$stt++}}</th>
                     <td>{{$item->ten_dm}}</td>
                     <td>
-                      <a href=""><button class='btn btn-warning'>edit</button></a>
+                      <a href="{{ route('danhmuc.edit', ['id'=>$item->id]) }}"><button class='btn btn-warning'>edit</button></a>
                       <a href="{{ route('danhmuc.delete',['id'=>$item->id])}}"><button class='btn btn-danger'>delete</button></a>
                     </td>
-           
-                    
+
+
                 </tr>
              @endforeach
-           
+
             </tbody>
             </table>
-         
+
           <!-- ./col -->
         </div>
-        
-        
+
+
         <!-- /.row (main row) -->
       </div><!-- /.container-fluid -->
     </section>

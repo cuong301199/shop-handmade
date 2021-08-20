@@ -1,38 +1,34 @@
 @extends('admin.template.master')
 
 @section('title')
-    Thêm danh mục
+    Sửa loại sản phẩm
 @endsection
 
 @section('title-page')
-    Them danh mục
+    Sửa loại sản phẩm
 @endsection
 @section('content')
 
     <body>
         <div class="container">
-
-        </div>
-        <div class="container">
             <div class="row">
-                <form action="{{ route('loaisanpham.store') }}" method="post">
-
-
+                <form action="{{ route('loaisanpham.update', ['id' => $danhsach_lsp->id]) }}" method="post">
                     @csrf
                     <div class="form-group">
-                        {{-- {{ dd($danhsach) }} --}}
+
                         <label for="">Tên loại sản phẩm </label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" name="tenLoaiSanPham"
-                            placeholder="Tên">
+                        <input type="text" class="form-control" id="exampleInputEmail1"
+                            value="{{ $danhsach_lsp->ten_lsp }}" name="tenLoaiSanPham" placeholder="Tên">
                         <br>
                         <label for="">Tên danh mục</label>
+                        {{-- {{ dd($danhsach_lsp) }} --}}
+                        {{-- {{ dd($danhsach) }} --}}
                         <select name="tenDanhMuc" id="">
-                            <?php $stt = 1; ?>
-                            @foreach ($danhsach as $item => $key)
-                                <option value="{{ $key->id }}">{{ $key->ten_dm }}</option>
+                            <option value="">{{ $danhsach_lsp->ten_dm }}</option>
+                            @foreach ($danhsach as $item)
+                                <option value="{{ $item->id }}">{{ $item->ten_dm }}</option>
 
                             @endforeach
-
                         </select>
 
                     </div>

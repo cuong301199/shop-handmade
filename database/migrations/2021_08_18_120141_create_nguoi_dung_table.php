@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDanhMucTable extends Migration
+class CreateNguoiDungTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateDanhMucTable extends Migration
      */
     public function up()
     {
-        Schema::create('danh_muc', function (Blueprint $table) {
+        Schema::create('nguoi_dung', function (Blueprint $table) {
             $table->id('id');
-            $table->string('ten_dm');
-            $table->text('mota_dm');
+            $table->string('username');
+            $table->string('password');
+            $table->bigInteger('id_q')->unsigned()->default('2');
+            $table->foreign('id_q')->references('id')->on('quyen')->onDelete('cascade');
+
+
+
             $table->timestamps();
         });
     }
@@ -28,6 +33,6 @@ class CreateDanhMucTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('danh_muc');
+        Schema::dropIfExists('nguoi_dung');
     }
 }
