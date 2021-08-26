@@ -15,8 +15,8 @@ class CreateChiTietGioHangTable extends Migration
     {
         Schema::create('chi_tiet_gio_hang', function (Blueprint $table) {
 
-            $table->bigInteger('id_user')->unsigned();
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('id_nd')->unsigned();
+            $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
             $table->bigInteger('id_sp')->unsigned();
             $table->foreign('id_sp')->references('id')->on('san_pham')->onDelete('cascade');
@@ -26,8 +26,8 @@ class CreateChiTietGioHangTable extends Migration
 
             $table->bigInteger('id_hd')->unsigned();
             $table->foreign('id_hd')->references('id')->on('hoa_don')->onDelete('cascade');
-            
-            
+
+
             $table->timestamps();
         });
     }

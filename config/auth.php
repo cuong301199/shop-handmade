@@ -46,6 +46,23 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'nguoi_dung'=>[
+            'driver'=> 'session',
+            'provider'=>'nguoi_dung'
+        ],
+        'nguoi_dung-api'=>[
+            'driver'=>'token',
+            'provider'=>'nguoi_dung'
+        ],
+        'quan_tri'=>[
+            'driver'=>'session',
+            'provider'=>'quan_tri'
+        ],
+        'quan_tri-api'=>[
+            'driver'=>'token',
+            'provider'=>'quan_tri'
+        ]
     ],
 
     /*
@@ -70,6 +87,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'nguoi_dung'=>[
+            'driver'=>'eloquent',
+            'model'=> App\Models\Nguoidung::class,
+        ],
+        'quan_tri'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Quantri::class,
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

@@ -1,75 +1,114 @@
-<footer id="colorlib-footer" role="contentinfo">
-			<div class="container">
-				<div class="row row-pb-md">
-					<div class="col footer-col colorlib-widget">
-						<h4>About Footwear</h4>
-						<p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life</p>
-						<p>
-							<ul class="colorlib-social-icons">
-								<li><a href="#"><i class="icon-twitter"></i></a></li>
-								<li><a href="#"><i class="icon-facebook"></i></a></li>
-								<li><a href="#"><i class="icon-linkedin"></i></a></li>
-								<li><a href="#"><i class="icon-dribbble"></i></a></li>
-							</ul>
-						</p>
-					</div>
-					<div class="col footer-col colorlib-widget">
-						<h4>Customer Care</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">Contact</a></li>
-								<li><a href="#">Returns/Exchange</a></li>
-								<li><a href="#">Gift Voucher</a></li>
-								<li><a href="#">Wishlist</a></li>
-								<li><a href="#">Special</a></li>
-								<li><a href="#">Customer Services</a></li>
-								<li><a href="#">Site maps</a></li>
-							</ul>
-						</p>
-					</div>
-					<div class="col footer-col colorlib-widget">
-						<h4>Information</h4>
-						<p>
-							<ul class="colorlib-footer-links">
-								<li><a href="#">About us</a></li>
-								<li><a href="#">Delivery Information</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Support</a></li>
-								<li><a href="#">Order Tracking</a></li>
-							</ul>
-						</p>
-					</div>
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-12 col-xs-12">
+                <div class="subscribe-box box-border">
+                    <h2>Subscribe to our newsletter</h2>
+                    <form>
+                        <input type="text" name="name" placeholder="enter your name">
+                        <input type="email" name="email" placeholder="enter your email address">
+                        <input type="submit" name="submit" value="Subscribe">
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12 col-xs-12">
+                <div class="box-el box-border box-border-small">
+                    <div class="pull-left"><img class="img-responsive" alt="logo light" src="{{ asset('template-client') }}/img/logo-gray.png" /></div>
+                    <h2>trendify fashion store</h2>
+                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse.</p>
+                </div>
+            </div>
+        </div>
+        <div class="seperator margin-bottom-50px"></div>
+        <div class="row">
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="single-widget">
+                    <h2>Contact Information</h2>
+                    <p>78 Fashion Street, Beverly Hill
+                    <br> Abony, NYC 12045</p>
+                    <p>Phone: (800) 0123 4567 890</p>
+                    <p>Fax: (800) 0123 4567 892</p>
+                    <p>E-mail: trendify@envato.com</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="single-widget">
+                    <h2>Categories</h2>
+                    <ul class="categories">
+                        <li><a href="#">Loungewear</a></li>
+                        <li><a href="#">Polo Shirt</a></li>
+                        <li><a href="#">Shirts</a></li>
+                        <li><a href="#">Shorts</a></li>
+                        <li><a href="#">Suits & Blazers</a></li>
+                        <li><a href="#">Sunglasses</a></li>
+                        <li><a href="#">Swimwear</a></li>
+                        <li><a href="#">Trousers & Chinos</a></li>
+                        <li><a href="#">Shoes, Boots & Trainers</a></li>
+                        <li><a href="#">Oversized and Longline</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="single-widget">
+                    <h2>Popular Tags</h2>
+                    <ul class="tags">
+                        <li><a href="#">Fashion</a></li>
+                        <li><a href="#">Trends</a></li>
+                        <li><a href="#">Clothes</a></li>
+                        <li><a href="#">Store</a></li>
+                        <li><a href="#">Kids</a></li>
+                        <li><a href="#">Top</a></li>
+                        <li><a href="#">Shirts</a></li>
+                        <li><a href="#">Dresses</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12 col-xs-12">
+                <div class="single-widget">
+                    <h2>Flickr Gallery</h2>
+                    <ul class="flickr">
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/1.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/2.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/3.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/4.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/5.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/6.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/7.png"></a>
+                        </li>
+                        <li>
+                            <a href="#"><img alt="flickr image" src="{{ asset('template-client') }}/img/flickr/8.png"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-					<div class="col footer-col">
-						<h4>News</h4>
-						<ul class="colorlib-footer-links">
-							<li><a href="blog.html">Blog</a></li>
-							<li><a href="#">Press</a></li>
-							<li><a href="#">Exhibitions</a></li>
-						</ul>
-					</div>
+        <div class="row">
+            <ul class="social">
+                <li><a href="#">facebook</a></li>
+                <li><a href="#">twitter</a></li>
+                <li><a href="#">pinterest</a></li>
+                <li><a href="#">instagram</a></li>
+                <li><a href="#">linked in</a></li>
+                <li><a href="#">google+</a></li>
+            </ul>
+        </div>
+    </div>
 
-					<div class="col footer-col">
-						<h4>Contact Information</h4>
-						<ul class="colorlib-footer-links">
-							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
-							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
-							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
-							<li><a href="#">yoursite.com</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="copy">
-				<div class="row">
-					<div class="col-sm-12 text-center">
-						<p>
-							<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
-							<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
-						</p>
-					</div>
-				</div>
-			</div>
-		</footer>
+    <div class="copyright">
+        <p class="text-center">&copy; 2016 by Trendify - Fashion Template | All rights reserved</p>
+    </div>
+</div>

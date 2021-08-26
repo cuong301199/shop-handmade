@@ -1,0 +1,78 @@
+.tp-banner-container {
+    width:100%;
+    position:relative;
+    padding:0;
+    margin-bottom: 25px;
+}
+
+.homepage_one {
+    width:100%;
+    position:relative;
+}
+
+.caption-one {
+    color: #1a1a1a;
+    text-transform: uppercase;
+    font-size: 32px;
+    font-family: 'Montserrat Semi Bold';
+}
+
+.caption-two {
+    color: #1a1a1a;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.8em;
+    font-family: 'Montserrat Light';
+    text-align: center;
+}
+
+.tp-leftarrow.default, 
+.tp-rightarrow.default,
+.tp-leftarrow.default:hover, 
+.tp-rightarrow.default:hover {
+    height: 25px;
+    width: 25px;
+}
+.tp-leftarrow.default {
+    background: url(left-arrow.png) no-repeat;
+}
+.tp-leftarrow.default:hover {
+    background: url(left-arrow-black.png) no-repeat;
+}
+.tp-rightarrow.default {
+    background: url(right-arrow.png) no-repeat;
+}
+.tp-rightarrow.default:hover {
+    background: url(right-arrow-black.png) no-repeat;
+}
+.tp-bullets.simplebullets.round .bullet {
+    width: 10px;
+    height: 10px;
+    margin: 15px 6px 0 0;
+    background: none;
+    background-color: #e7e7e7;
+    display: block;
+    -webkit-backface-visibility: visible;
+    -webkit-transition: opacity 200ms ease;
+    transition: opacity 200ms ease;
+    border-radius: 30px;
+}
+.tp-bullets.simplebullets.round .bullet:hover,
+.tp-bullets.simplebullets.round .bullet.selected { background-color: #1a1a1a }
+
+
+/* slider two */
+.home4 .tp-bullets.simplebullets.round .bullet, 
+.home5 .tp-bullets.simplebullets.round .bullet,
+.home6 .tp-bullets.simplebullets.round .bullet {
+    clear: both;
+}
+
+.slider_two .caption-two {
+    letter-spacing: 0;
+    text-transform: capitalize;
+    line-height: 32px;
+    font-size: 12px;
+    font-family: inherit;
+    text-align: left;
+}

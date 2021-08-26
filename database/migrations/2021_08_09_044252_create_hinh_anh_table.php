@@ -21,7 +21,6 @@ class CreateHinhAnhTable extends Migration
 
             $table->string('diachi_ha');
 
-
             $table->timestamps();
         });
     }

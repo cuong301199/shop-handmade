@@ -16,7 +16,7 @@ class CreateDanhMucTable extends Migration
         Schema::create('danh_muc', function (Blueprint $table) {
             $table->id('id');
             $table->string('ten_dm');
-            $table->text('mota_dm');
+            $table->text('mota_dm')->nullable();
             $table->timestamps();
         });
     }

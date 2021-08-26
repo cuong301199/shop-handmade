@@ -15,17 +15,15 @@ class CreateCuaHangTable extends Migration
     {
         Schema::create('cua_hang', function (Blueprint $table) {
             $table->id('id');
-            $table->bigInteger('id_user')->unsigned();
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
-            $table->bigInteger('id_admin')->unsigned();
-            $table->foreign('id_admin')->references('id')->on('admin')->onDelete('cascade');
+            $table->bigInteger('id_nd')->unsigned();
+            $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
+            $table->bigInteger('id_qt')->unsigned()->nullable();
+            $table->foreign('id_qt')->references('id')->on('quan_tri')->onDelete('cascade');
             $table->string('ten_ch');
             $table->string('sdt_ch');
             $table->string('diachi_ch');
-            $table->integer('trangthai_ch');
-           
+            $table->integer('trangthai_ch')->default('0');
 
-            
             $table->timestamps();
         });
     }

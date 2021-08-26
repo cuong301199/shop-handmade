@@ -1,32 +1,41 @@
-<!DOCTYPE HTML>
-<html>
-	<head>
-	<title>Footwear - Free Bootstrap 4 Template by Colorlib</title>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html lang="en">
 
-	@include('client.template.css')
+<!-- Mirrored from kl-webmedia.com/demo/trendify/home-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Sep 2018 07:45:20 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trendify - Fashion eCommerce HTML5 Template</title>
 
-	</head>
-	<body>
-		
-	<div class="colorlib-loader"></div>
+    <!-- BOOTSTRAP -->
+    @include('client.template.css')
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
 
-	<div id="page">
-		
-		@include('client.template.header')
-	
-    	@yield('content')
-	
-		@include('client.template.footer')
-	</div>
+<body class="home3">
 
-	<div class="gototop js-top">
-		<a href="#" class="js-gotop"><i class="ion-ios-arrow-up"></i></a>
-	</div>
-	
-	@include('client.template.js')
+    <!-- header -->
+   @include('client.template.header')
+    <!-- / header -->
 
-	</body>
+    <!-- slider -->
+    @yield('content')
+    <!-- / content -->
+
+
+    <!-- footer -->
+   @include('client.template.footer')
+    <!-- / footer -->
+
+    <!-- jQuery -->
+    @include('client.template.js')
+</body>
+
+<!-- Mirrored from kl-webmedia.com/demo/trendify/home-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Sep 2018 07:46:11 GMT -->
 </html>
-

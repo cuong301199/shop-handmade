@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use DB;
-class DanhmucSeeder extends Seeder
+class DanhMucSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,28 @@ class DanhmucSeeder extends Seeder
     {
         $danhmuc = [
             [
-                'ten_dm'=> 'danhmuc1',
+                'ten_dm'=> 'Trang sức và phụ kiện',
+                'mota_dm'=>'1423434'
+            ],
+            [
+                'ten_dm'=> 'Nhà và đời sống',
+                'mota_dm'=>'1423434'
+            ],
+            [
+                'ten_dm'=> 'Trang trí tiệc ',
+                'mota_dm'=>'1423434'
+            ],
+            [
+                'ten_dm'=> 'Đồ chơi và giải trí',
+                'mota_dm'=>'1423434'
+            ],
+            [
+                'ten_dm'=> 'Nghệ thuật và lưu niệm',
+                'mota_dm'=>'1423434'
+            ],
+
+            [
+                'ten_dm'=> 'Nguyên liệu và công cụ thủ công',
                 'mota_dm'=>'1423434'
             ],
          ];

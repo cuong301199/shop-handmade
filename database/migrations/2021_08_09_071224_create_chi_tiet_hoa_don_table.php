@@ -14,8 +14,8 @@ class CreateChiTietHoaDonTable extends Migration
     public function up()
     {
         Schema::create('chi_tiet_hoa_don', function (Blueprint $table) {
-            $table->bigInteger('id_user')->unsigned();
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('id_nd')->unsigned();
+            $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
             $table->bigInteger('id_sp')->unsigned();
             $table->foreign('id_sp')->references('id')->on('san_pham')->onDelete('cascade');
@@ -24,7 +24,7 @@ class CreateChiTietHoaDonTable extends Migration
             $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
 
             $table->bigInteger('id_hd')->unsigned();
-            $table->foreign('id_hd')->references('id')->on('hoa_don')->onDelete('cascade');     
+            $table->foreign('id_hd')->references('id')->on('hoa_don')->onDelete('cascade');
 
             $table->integer('so_luong');
 

@@ -1,29 +1,37 @@
-<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Rokkitt:100,300,400,700" rel="stylesheet">
-	
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/icomoon.css">
-	<!-- Ion Icon Fonts-->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/ionicons.min.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('template-client') }}/css/bootstrap.min.css">
 
-	<!-- Magnific Popup -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/magnific-popup.css">
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="{{ asset('template-client') }}/css/font-awesome.css">
+	<link rel="stylesheet" href="{{ asset('template-client') }}/css/eleganticon.css">
 
-	<!-- Flexslider  -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/flexslider.css">
+	<!-- MAGNIFIC POPUP -->
+    <link rel="stylesheet" href="{{ asset('template-client') }}/css/magnific-popup.css">
 
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/owl.theme.default.min.css">
-	
-	<!-- Date Picker -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/bootstrap-datepicker.css">
-	<!-- Flaticons  -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/fonts/flaticon/font/flaticon.css">
+    <!-- OWL CAROUSEL -->
+    <link rel="stylesheet" href="{{ asset('template-client') }}/css/owl.carousel.css">
 
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="{{ asset('template-client') }}/css/style.css">
+    <!-- ANIMATE CSS -->
+    <link rel="stylesheet" href="{{ asset('template-client') }}/css/animate.css">
+
+    <!-- SLIDER REVOLUTION -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('template-client') }}/assets/plugins/rs-plugin/css/settings-ie8.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('template-client') }}/assets/plugins/rs-plugin/css/settings.css" media="screen" />
+    <link rel="stylesheet" href="{{ asset('template-client1') }}/css/slider.css">
+
+	<!-- STYLESHEET -->
+	<link rel="stylesheet" href="{{ asset('template-client') }}/css/header.css">
+    <link rel="stylesheet" href="{{ asset('template-client') }}/css/footer.css">
+	<link rel="stylesheet" href="{{ asset('template-client') }}/style.css">
+	<link rel="stylesheet" href="{{ asset('template-client') }}/css/responsive.css">
+
+	<!-- GOOGLE FONTS -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,600,500,300' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Playfair+Display' rel='stylesheet' type='text/css'>
+
+	<!-- FAVICON -->
+	<link rel="icon" href="{{ asset('template-client') }}/img/favicon.ico">
+	<link rel="apple-touch-icon" href="{{ asset('template-client') }}/img/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('template-client') }}/img/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('template-client') }}/img/apple-touch-icon-114x114.png">

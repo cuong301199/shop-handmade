@@ -16,6 +16,7 @@ class CreateLoaiSanPhamTable extends Migration
         Schema::create('loai_san_pham', function (Blueprint $table) {
             $table->id('id');
             $table->string('ten_lsp');
+            $table->string('mota_lsp')->nullable();
             $table->bigInteger('id_dm')->unsigned();
             $table->foreign('id_dm')->references('id')->on('danh_muc')->onDelete('cascade');
             $table->timestamps();
