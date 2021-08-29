@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
-
+use Session;
 class SanPhamController extends Controller
 {
     //
@@ -54,11 +54,13 @@ class SanPhamController extends Controller
 
             ]
             );
+            Session::flash("success","Thêm thành công");
             return redirect()->back();
     }
 
     public function delete($id){
         $id = DB::table('san_pham')->where('id',$id)->delete();
+        Session::flash("success","Xóa thành công");
         return redirect()->back();
     }
 
@@ -83,7 +85,7 @@ class SanPhamController extends Controller
 
     }
 
-    public function update(Resquest $request, $id){
+    public function update(Request $request, $id){
         $tenSanPham = $request->tenSanPham;
         $soLuong =$request->soLuong;
         $giaSanPham = $request->giaSanPham;
@@ -103,8 +105,8 @@ class SanPhamController extends Controller
 
             ]
         );
-
-        return redirect()->back();
+        Session::flash("success","Sửa thành công");
+        return redirect()->route('sanpham.index');
 
     }
 

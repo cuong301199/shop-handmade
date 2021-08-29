@@ -19,6 +19,9 @@
                         <div class="card">
                             <div class="card-header">
                                 Thêm thông tin cho sản phẩm
+                                @if (Session::has('success'))
+                                    <p style="color: rgb(20, 163, 16)" >{{ Session::get('success') }}</p>
+                                @endif
                             </div>
                             <div class="card-body">
                                 <div class="row">

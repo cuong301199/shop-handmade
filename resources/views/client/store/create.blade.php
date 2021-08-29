@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 ">
+                                <div class="col-md-8 ">
                                     <button type="submit" style="border-radius: 1px; background-color:#1a1a1a"
                                         class="btn btn-primary btn-lg">Đăng kí</button>
                                 </div>
