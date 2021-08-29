@@ -15,13 +15,13 @@ class CreateGioHangTable extends Migration
     {
         Schema::create('gio_hang', function (Blueprint $table) {
             $table->id('id');
-            $table->string('ten_gh');
-            $table->integer('so_luong');
-            $table->float('tong_tien');
-            $table->string('ghi_chu');
-            $table->string('phi_van_chuyen');
-            $table->string('dia_diem_giao_hang');
-            $table->string('hinh_thuc_thanh_toan');
+            $table->string('ten_gh')->nullable();
+            $table->integer('so_luong')->nullable();
+            $table->float('tong_tien')->nullable();
+            $table->string('ghi_chu')->nullable();
+            $table->string('phi_van_chuyen')->nullable();
+            $table->string('dia_diem_giao_hang')->nullable();
+            $table->string('hinh_thuc_thanh_toan')->nullable();
             $table->timestamps();
         });
     }

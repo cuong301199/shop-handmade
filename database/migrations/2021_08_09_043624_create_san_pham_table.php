@@ -19,12 +19,17 @@ class CreateSanPhamTable extends Migration
             $table->bigInteger('id_ch')->unsigned();
             $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
 
+            $table->bigInteger('id_dm')->unsigned();
+            $table->foreign('id_dm')->references('id')->on('danh_muc')->onDelete('cascade');
+
             $table->bigInteger('id_lsp')->unsigned();
             $table->foreign('id_lsp')->references('id')->on('loai_san_pham')->onDelete('cascade');
 
             $table->string('ten_sp');
-            $table->text('mota_sp');
-            $table->float('gia_sp');
+            $table->text('mota_sp')->nullable();
+            $table->float('gia_sp')->nullable();
+            $table->string('hinh_sp')->nullable();
+            $table->integer('soluong_sp')->nullable();
 
             $table->timestamps();
         });

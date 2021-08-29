@@ -15,17 +15,14 @@ class DanhMucSeeder extends Seeder
     {
         $danhmuc = [
             [
-                'ten_dm'=> 'Trang sức và phụ kiện',
+                'ten_dm'=> 'Trang sức phụ kiện',
                 'mota_dm'=>'1423434'
             ],
             [
-                'ten_dm'=> 'Nhà và đời sống',
+                'ten_dm'=> 'Nhà cửa đời sống',
                 'mota_dm'=>'1423434'
             ],
-            [
-                'ten_dm'=> 'Trang trí tiệc ',
-                'mota_dm'=>'1423434'
-            ],
+
             [
                 'ten_dm'=> 'Đồ chơi và giải trí',
                 'mota_dm'=>'1423434'
@@ -39,6 +36,7 @@ class DanhMucSeeder extends Seeder
                 'ten_dm'=> 'Nguyên liệu và công cụ thủ công',
                 'mota_dm'=>'1423434'
             ],
+
          ];
 
          $insert = DB::table('danh_muc')->insert($danhmuc);

@@ -11,6 +11,7 @@ use App\Http\Controllers\TaoCuaHangController;
 use App\Http\Controllers\QuanLyCuaHangController;
 use App\Http\Controllers\SanPhamController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,12 @@ Route::prefix('/client')->group(function () {
     Route::get('/quanlycuahang', [QuanLyCuaHangController::class,'index'])->name('quanlycuahang.index');
 
     Route::get('/sanpham',[SanPhamController::class,'index'])->name('sanpham.index');
+    Route::get('/sanpham/them', [SanPhamController::class , 'create'])->name('sanpham.create');
+    Route::post('/sanpham/them-post',[SanPhamController::class,'store'])->name('sanpham-post.create');
+    Route::get('/sanpham/{id}/xoa',[SanPhamController::class,'delete'])->name('sanpham.delete');
+    Route::get('/sanpham/{id}/sua', [SanPhamController::class,'edit'])->name('sanpham.edit');
+    Route::post('/sanpham/{id}/sua-sp',[SanPhamController::class, 'update'] )->name('sanpham.update');
+
 });
 
 
@@ -43,6 +50,9 @@ Route::prefix('/client')->group(function () {
 Route::get('/admin/login', [QuanTriController::class,'login'])->name('admin.login');
 Route::post('/admin-login',[QuanTriController::class, 'postLogin'])->name('admin.postLogin');
 Route::get('/logout/admin',[QuanTriController::class,'logOut'])->name('admin.logout');
+
+
+
 
 Route::middleware(['checkQuanTri'])->group(function () {
     Route::prefix('')->group(function () {
@@ -80,13 +90,17 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 // Route::get('/thu1/{2}',[LoaiSanPhamController::class , 'edit']);
-// Route::get('/thu', function(){
-//     $danhsach = DB::table('loai_san_pham')
-//     ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
-//     ->select('loai_san_pham.*')
-//     ->where('loai_san_pham.id','=','2')
-//     ->get();
+Route::get('/1', function(){
 
-//         dd($danhsach);
+    $danhsach = DB::table('san_pham')
+        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        ->join('danh_muc','danh_muc.id','san_pham.id_dm')
+        ->select('san_pham.*','ten_lsp','ten_dm')
+        ->where('san_pham.id',3)
+        ->first();
 
-// });
+    dd($danhsach);
+
+
+
+});

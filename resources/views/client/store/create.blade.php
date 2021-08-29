@@ -28,6 +28,12 @@
                 <div class="col-md-6">
                     <div class="login">
                         <h3>Đăng kí</h3>
+                        @if (Session::has('error'))
+                            <p style="color: rgb(190, 29, 29)" >{{ Session::get("error") }}</p>
+                        @endif
+                        @if (Session::has('success'))
+                        <p style="color: rgb(16, 151, 11)" >{{ Session::get("success") }}</p>
+                        @endif
                         <form action="{{ route('post.store') }}" method="post">
                             @csrf
                             <div class="col-md-6 no-padding-left">

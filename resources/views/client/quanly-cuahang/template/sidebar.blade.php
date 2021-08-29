@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('nguoidung.logout') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Đăng xuất

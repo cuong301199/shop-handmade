@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use Auth;
+use Session;
 class NguoiDungController extends Controller
 {
     public function login(){
@@ -19,6 +20,32 @@ class NguoiDungController extends Controller
         $email = $request->email;
         $hoTen= $request->hoTen;
 
+        if($tenDangNhap=="" || $tenDangNhap == null ){
+            Session::flash("error", "Tên đăng nhập không được để trống");
+            return redirect()->back();
+        }
+        if($matKhau=="" || $matKhau == null ){
+            Session::flash("error", "Mật khẩu không được để trống");
+            return redirect()->back();
+        }if($email=="" || $email == null ){
+            Session::flash("error", "Email không được để trống");
+            return redirect()->back();
+        }if($hoTen=="" || $hoTen == null ){
+            Session::flash("error", "Họ tên không được để trống");
+            return redirect()->back();
+        }
+
+        $checkUsername = DB::table('nguoi_dung')->where('username',$tenDangNhap)->count();
+        if($checkUsername > 0){
+            Session::flash("error", "Tên đăng nhập đã có người sử dụng");
+            return redirect()->back();
+        }
+        // $checkEmail = DB::table('nguoi_dung')->where('email_nd',$email)->count();
+        // if($checkEmail > 0){
+        //     Session::flash("error", "Email đã có người sử dụng");
+        //     return redirect()->back();
+        // }
+
         if( $matKhau == $reMatKhau){
 
             $hashPassword = Hash::make($matKhau);
@@ -31,9 +58,12 @@ class NguoiDungController extends Controller
                 ]
             );
 
+            Session::flash("success", "Đăng kí thành công");
             return redirect()->back();
         }else{
-            dd('bị lỗi');
+            Session::flash("error", "Mật khẩu không trùng khớp");
+            return redirect()->back();
+
         };
     }
 
@@ -42,12 +72,16 @@ class NguoiDungController extends Controller
             'username'=> $request->tenDangNhap,
             'password'=>$request->matKhau
         ];
+
+
+
         if(Auth::guard('nguoi_dung')->attempt($arr)){
 
             return redirect()->route('client.index');
 
         }else{
-            dd('đăng nhập thất bại');
+            Session::flash("error-login", "Sai tên đăng nhập hoặc mật khẩu");
+            return redirect()->back();
         }
     }
 

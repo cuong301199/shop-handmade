@@ -19,7 +19,7 @@ class CreateHinhAnhTable extends Migration
             $table->bigInteger('id_sp')->unsigned();
             $table->foreign('id_sp')->references('id')->on('san_pham')->onDelete('cascade');
 
-            $table->string('diachi_ha');
+            $table->string('diachi_ha')->nullable();
 
             $table->timestamps();
         });

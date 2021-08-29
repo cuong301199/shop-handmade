@@ -21,13 +21,16 @@
             </div>
         </div>
     </div>
-     <!--/ page title -->
+    <!--/ page title -->
     <div class="margin-bottom-70px">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <div class="login">
                         <h3>Đăng nhập</h3>
+                        @if (Session::has('error-login'))
+                            <p style="color: rgb(231, 22, 22)">{{ Session::get('error-login') }}</p>
+                        @endif
                         <form action="{{ route('nguoi-dung.login') }}" method="post">
                             @csrf
                             <div class="col-md-6 no-padding-left">
@@ -56,12 +59,14 @@
                             <div class="clear-fix"></div>
 
                             <div class="col-md-6 no-padding-left">
-                                <button type="submit" style="border-radius: 1px; background-color:#1a1a1a" class="btn btn-primary btn-lg">Đăng nhập</button>
+                                <button type="submit" style="border-radius: 1px; background-color:#1a1a1a"
+                                    class="btn btn-primary btn-lg">Đăng nhập</button>
                             </div>
                         </form>
                         <div class="login-method col-md-12">
                             <div class="col-md-6 col-sm-6 no-padding-right no-padding-left">
-                                <a class="method-facebook" href="#"><i class="fa fa-facebook"></i>Đăng nhập bằng Facebook</a>
+                                <a class="method-facebook" href="#"><i class="fa fa-facebook"></i>Đăng nhập bằng
+                                    Facebook</a>
                             </div>
                             <div class="col-md-6 col-sm-6 no-padding-left no-padding-right">
                                 <a class="method-twitter" href="#"><i class="fa fa-twitter"></i>Đăng nhập bằng twitter</a>
@@ -73,13 +78,18 @@
                 <div class="col-md-6">
                     <div class="login">
                         <h3>tạo tài khoản</h3>
+                        @if (Session::has('error'))
+                            <p style="color: rgb(228, 51, 66)">{{ Session::get('error') }}</p>
+                        @endif
+                        @if (Session::has('success'))
+                            <p style="color: rgb(34, 192, 42)">{{ Session::get('success') }}</p>
+                        @endif
                         <form action="{{ route('nguoi-dung.register') }}" method="post">
                             @csrf
                             <div class="col-md-6 no-padding-left">
                                 <div class="first-name">
                                     <label for="your-first-name">Họ và tên<span class="required">*</span></label><br>
-                                    <input type="text" name="hoTen" value="" class="your-first-name"
-                                        id="your-first-name">
+                                    <input type="text" name="hoTen" value="" class="your-first-name" id="your-first-name">
                                 </div>
                             </div>
 
@@ -100,8 +110,7 @@
 
                             <div class="col-md-6 no-padding-left">
                                 <div class="recapture-text">
-                                    <label for="confirm-email">Nhập lại mật khẩu<span
-                                            class="required">*</span></label><br>
+                                    <label for="confirm-email">Nhập lại mật khẩu<span class="required">*</span></label><br>
                                     <input type="password" name="reMatKhau" value="" class="your-email" id="confirm-email">
                                 </div>
                             </div>
@@ -116,7 +125,8 @@
                             <div class="clear-fix"></div>
 
                             <div class="col-md-6 no-padding-left">
-                                <button type="submit" style="border-radius: 1px; background-color:#1a1a1a" class="btn btn-primary btn-lg">Đăng kí</button>
+                                <button type="submit" style="border-radius: 1px; background-color:#1a1a1a"
+                                    class="btn btn-primary btn-lg">Đăng kí</button>
                             </div>
                         </form>
                     </div>

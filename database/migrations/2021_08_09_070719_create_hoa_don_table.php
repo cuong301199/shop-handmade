@@ -25,10 +25,10 @@ class CreateHoaDonTable extends Migration
             $table->bigInteger('id_gh')->unsigned();
             $table->foreign('id_gh')->references('id')->on('gio_hang')->onDelete('cascade');
 
-            $table->string('ten_hd');
-            $table->string('ghi_chu');
-            $table->string('dia_chi');
-            $table->string('tong_tien');
+            $table->string('ten_hd')->nullable();
+            $table->string('ghi_chu')->nullable();
+            $table->string('dia_chi')->nullable();
+            $table->string('tong_tien')->nullable();
 
             $table->timestamps();
         });

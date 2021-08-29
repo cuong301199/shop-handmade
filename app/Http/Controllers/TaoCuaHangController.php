@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use Session;
 
 class TaoCuaHangController extends Controller
 {
@@ -22,11 +23,12 @@ class TaoCuaHangController extends Controller
                 'sdt_ch'=>$request->soDienThoai,
                 'id_nd'=> $id_nd ,
             ]);
-            dd('dang ki thanh cong');
+            Session::flash("success","Đăng kí thành công");
+            return redirect()->back();
 
     } else {
-        dd('dang ki that bai');
+            Session::flash("error","Đăng kí không thành công");
+            return redirect()->back();
     };
 }
 }
-
