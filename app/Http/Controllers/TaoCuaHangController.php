@@ -10,7 +10,8 @@ use Session;
 class TaoCuaHangController extends Controller
 {
     public function RegisterStore(){
-        return view('client.store.create');
+        $danhsach = DB::table('danh_muc')->get();
+        return view('client.store.create',compact('danhsach'));
     }
 
 
@@ -26,9 +27,27 @@ class TaoCuaHangController extends Controller
             Session::flash("success","Đăng kí thành công");
             return redirect()->back();
 
-    } else {
+        } else {
             Session::flash("error","Đăng kí không thành công");
             return redirect()->back();
-    };
-}
+        };
+    }
+
+
+    // public function choose_category(Request $request){
+
+    //     $chonDanhMuc = $request->chonDanhMuc;
+    //     $id_nd = Auth::guard('nguoi_dung')->user()->id;
+    //     $id_ch = DB::table('cua_hang')->where('id',$id_nd)->first();
+
+    //     foreach($chonDanhMuc as $item){
+    //         DB::table('cuahang_danhmuc')->insert(
+    //             [
+    //                 'id_dm'=>$item,
+    //                 'id_ch'=>$id_ch
+    //             ],
+    //         );
+    //     }
+
+    // }
 }

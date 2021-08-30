@@ -55,6 +55,20 @@
                                     <input type="text" name="soDienThoai" value="" class="password" id="password"><br>
                                 </div>
                             </div>
+
+                            {{-- <div class="row">
+                                <div class="col-md-12 ">
+                                    <label for="">Chọn danh mục muốn bán</label>
+                                    @foreach ( $danhsach as $item )
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="chonDanhMuc" type="checkbox" value="{{ $item->id }}" id="flexCheckDefault">
+                                        <label class="form-check-label"  style="text-transform:none;" for="flexCheckDefault">
+                                          {{ $item->ten_dm }}
+                                        </label>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div> --}}
                             <div class="row">
                                 <div class="col-md-8 ">
                                     <button type="submit" style="border-radius: 1px; background-color:#1a1a1a"
