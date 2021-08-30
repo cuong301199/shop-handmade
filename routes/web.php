@@ -10,6 +10,7 @@ use App\Http\Controllers\CuaHangController;
 use App\Http\Controllers\TaoCuaHangController;
 use App\Http\Controllers\QuanLyCuaHangController;
 use App\Http\Controllers\SanPhamController;
+use App\Http\Controllers\ChonDanhMucController;
 
 
 /*
@@ -42,6 +43,15 @@ Route::prefix('/client')->group(function () {
     Route::get('/sanpham/{id}/xoa',[SanPhamController::class,'delete'])->name('sanpham.delete');
     Route::get('/sanpham/{id}/sua', [SanPhamController::class,'edit'])->name('sanpham.edit');
     Route::post('/sanpham/{id}/sua-sp',[SanPhamController::class, 'update'] )->name('sanpham.update');
+
+
+    Route::get('/quanlidanhmuc',[ChonDanhMucController::class,'index'] )->name('quanlydanhmuc.index');
+    Route::get('/quanlydanhmuc/them',[ChonDanhMucController::class,'create'] )->name('quanlydanhmuc.create');
+    Route::post('/quanlydanhmuc/them-post',[ChonDanhMucController::class,'choose_category'] )->name('quanlydanhmuc.post');
+    Route::get('/quanlydanhmuc/{id_ch}{id_dm}/xoa',[ChonDanhMucController::class,'delete'])->name('quanlydanhmuc.delete');
+    Route::get('/quanlydanhmuc/sua',[ChonDanhMucController::class,'edit'])->name('quanlydanhmuc.edit');
+
+
 
 });
 
@@ -92,12 +102,20 @@ Route::middleware(['checkQuanTri'])->group(function () {
 // Route::get('/thu1/{2}',[LoaiSanPhamController::class , 'edit']);
 Route::get('/1', function(){
 
-    $danhsach = DB::table('san_pham')
-        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('danh_muc','danh_muc.id','san_pham.id_dm')
-        ->select('san_pham.*','ten_lsp','ten_dm')
-        ->where('san_pham.id',3)
-        ->first();
+    // $danhsach = DB::table('san_pham')
+    //     ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+    //     ->join('danh_muc','danh_muc.id','san_pham.id_dm')
+    //     ->select('san_pham.*','ten_lsp','ten_dm')
+    //     ->where('san_pham.id',3)
+    //     ->first();
+    $id_nd = Auth::guard('nguoi_dung')->user()->id;
+    $id_ch = DB::table('cua_hang')->where('id',$id_nd)->first();
+    $danhsach= DB::table('cuahang_danhmuc')
+    ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
+    ->select('cuahang_danhmuc.*','ten_dm')
+    ->where('cuahang_danhmuc.id_ch',1)
+    ->get();
+
 
     dd($danhsach);
 
