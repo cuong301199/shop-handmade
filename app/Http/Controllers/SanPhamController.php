@@ -24,9 +24,15 @@ class SanPhamController extends Controller
     }
 
     public function create(){
+        $id_nd= Auth::guard('nguoi_dung')->user()->id;
+        $id_ch=DB::table('cua_hang')->select('id')->where('id_nd',$id_nd)->first();
+
         $danhsach_lsp=DB::table('loai_san_pham')
         ->get();
-        $danhsach_dm =DB::table('danh_muc')
+        $danhsach_dm =DB::table('cuahang_danhmuc')
+        ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
+        ->select('cuahang_danhmuc.*','ten_dm')
+        ->where('cuahang_danhmuc.id_ch',$id_ch->id)
         ->get();
         return view('client.quanly-cuahang.sanpham.add', compact('danhsach_lsp','danhsach_dm'));
 

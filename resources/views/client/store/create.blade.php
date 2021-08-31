@@ -61,7 +61,7 @@
                                     <label for="">Chọn danh mục muốn bán</label>
                                     @foreach ( $danhsach as $item )
                                     <div class="form-check">
-                                        <input class="form-check-input" name="chonDanhMuc" type="checkbox" value="{{ $item->id }}" id="flexCheckDefault">
+                                        <input class="form-check-input" name="chonDanhMuc[]" type="checkbox" value="{{ $item->id }}" id="flexCheckDefault" >
                                         <label class="form-check-label"  style="text-transform:none;" for="flexCheckDefault">
                                           {{ $item->ten_dm }}
                                         </label>

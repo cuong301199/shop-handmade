@@ -41,10 +41,10 @@
                         </p>
                     </a>
                 </li> <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('quanlydanhmuc.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Cửa hàng
+                            Quản lý danh mục
                         </p>
                     </a>
                 </li>

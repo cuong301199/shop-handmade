@@ -8,7 +8,7 @@
     Thêm sản phẩm
 @endsection
 @section('content')
-
+{{-- {{ dd($danhsach_dm) }} --}}
     <body>
         <main class="container">
             <header class="row text-center"></header>
@@ -48,7 +48,7 @@
                                             <label for="">Danh mục</label>
                                             <select class="form-control" name="danhMuc" id="">
                                                 @foreach ($danhsach_dm as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->ten_dm }}</option>
+                                                    <option value="{{ $item->id_dm }}">{{ $item->ten_dm }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
