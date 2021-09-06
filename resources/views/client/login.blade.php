@@ -121,6 +121,20 @@
                                     <input type="email" name="email" value="" class="your-email" id="your-email1">
                                 </div>
                             </div>
+                            <div class="col-md-6 no-padding-right no-padding-left">
+                                <div class="last-name">
+                                    <label for="your-last-name">Địa chỉ<span class="required">*</span></label><br>
+                                    <input type="text" name="diaChi" value="" class="your-last-name"
+                                        id="your-last-name">
+                                </div>
+                            </div>
+                            <div class="col-md-6 no-padding-right no-padding-left">
+                                <div class="last-name">
+                                    <label for="your-last-name">Số điện thoại<span class="required">*</span></label><br>
+                                    <input type="number" name="soDienThoai" value="" class="your-last-name"
+                                        id="your-last-name">
+                                </div>
+                            </div>
 
                             <div class="clear-fix"></div>
 

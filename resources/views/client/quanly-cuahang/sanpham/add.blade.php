@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <img src="" width="90%"
+                                        <img src="{{ asset('template-client') }}/img/avatar.jpg" width="50%"
                                             class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
                                             alt="">
                                         <div class="form-group">

@@ -19,6 +19,8 @@ class NguoiDungController extends Controller
         $reMatKhau = $request->reMatKhau;
         $email = $request->email;
         $hoTen= $request->hoTen;
+        $diaChi = $request->diaChi;
+        $soDienThoai = $request->soDienThoai;
 
         if($tenDangNhap=="" || $tenDangNhap == null ){
             Session::flash("error", "Tên đăng nhập không được để trống");
@@ -55,6 +57,8 @@ class NguoiDungController extends Controller
                     'password'=> $hashPassword,
                     'ten_nd'=>$hoTen,
                     'email_nd'=>$email,
+                    'diachi_nd'=>$diaChi,
+                    'sdt_nd'=>$soDienThoai
                 ]
             );
 

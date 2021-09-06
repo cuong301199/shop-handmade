@@ -11,6 +11,8 @@ use App\Http\Controllers\TaoCuaHangController;
 use App\Http\Controllers\QuanLyCuaHangController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\ChonDanhMucController;
+use App\Http\Controllers\ThongTinCaNhanController;
+
 
 
 /*
@@ -51,6 +53,13 @@ Route::prefix('/client')->group(function () {
     Route::get('/quanlydanhmuc/{id_ch}{id_dm}/xoa',[ChonDanhMucController::class,'delete'])->name('quanlydanhmuc.delete');
     Route::get('/quanlydanhmuc/sua',[ChonDanhMucController::class,'edit'])->name('quanlydanhmuc.edit');
     Route::post('/quanlydanhmuc/sua-post',[ChonDanhMucController::class,'update'])->name('quanlydanhmuc.update');
+
+
+    Route::get('/thongtincanhan/{id}/',[ThongTinCaNhanController::class,'edit'])->name('profile.edit');
+    Route::post('/thongtincanhan/{id}/update',[ThongTinCaNhanController::class,'update'])->name('profile.update');
+
+    Route::get('/matkhau/{id}/edit',[ThongTinCaNhanController::class,'editpassword'])->name('password.edit');
+    Route::post('/matkhau/{id}/update',[ThongTinCaNhanController::class,'updatepassword'])->name('password.update');
 
 });
 
@@ -107,16 +116,16 @@ Route::get('/1', function(){
     //     ->select('san_pham.*','ten_lsp','ten_dm')
     //     ->where('san_pham.id',3)
     //     ->first();
-    $id_nd = Auth::guard('nguoi_dung')->user()->id;
-    $id_ch = DB::table('cua_hang')->where('id',$id_nd)->first();
-    $danhsach= DB::table('cuahang_danhmuc')
-    ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
-    ->select('cuahang_danhmuc.*','ten_dm')
-    ->where('cuahang_danhmuc.id_ch',1)
-    ->get();
+    // $id_nd = Auth::guard('nguoi_dung')->user()->id;
+    // $id_ch = DB::table('cua_hang')->where('id',$id_nd)->first();
+    // $danhsach= DB::table('cuahang_danhmuc')
+    // ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
+    // ->select('cuahang_danhmuc.*','ten_dm')
+    // ->where('cuahang_danhmuc.id_ch',1)
+    // ->get();
 
 
-    dd($danhsach);
+    // dd($danhsach);
 
 
 

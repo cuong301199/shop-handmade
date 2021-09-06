@@ -3,11 +3,16 @@
     <a href="{{ route('client.index') }}" class="brand-link">
         <img src="{{ asset('template-client') }}/img/logo.png" alt="Trendify logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">TRANG CHỦ</span>
+        <span class="brand-text font-weight-light">
+            <?php $id_nd = Auth::guard('nguoi_dung')->user()->id;
+                  $id_ch = DB::table('cua_hang')
+                           ->where('id', $id_nd)
+                           ->first(); ?> {{ $id_ch->ten_ch }}
+            </span>
     </a>
 
     <!-- Sidebar -->
-    <div class="sidebar" style="background-color: rgb(53, 53, 53)" >
+    <div class="sidebar" style="background-color: rgb(53, 53, 53)">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
@@ -40,7 +45,8 @@
                             Quản lý đơn hàng
                         </p>
                     </a>
-                </li> <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('quanlydanhmuc.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>

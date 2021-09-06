@@ -25,7 +25,7 @@ class ChonDanhMucController extends Controller
         // return view('client.quanly-cuahang.danhmuc.index',compact('chonDanhMuc'));
 
         };
-        return redirect()->route('quanlydanhmuc.index');
+        return redirect()->route('quanlydanhmuc.index',compact('id_ch'));
     }
 
     public function index(){
@@ -88,8 +88,9 @@ class ChonDanhMucController extends Controller
                     'id_ch'=>$id_ch->id
                 ],
             );
-        return redirect()->route('quanlydanhmuc.index',compact('id_ch'));
+
     }
+    return redirect()->route('quanlydanhmuc.index');
 
 
 }

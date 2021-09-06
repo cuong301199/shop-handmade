@@ -3,34 +3,37 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="left"> Welcome to Trendify <span><i class="fa fa-phone"></i>Call us</span> +49 1234 5678 9</div>
+                    <div class="left"> Welcome to Trendify <span><i class="fa fa-phone"></i>Call us</span>
+                        +49 1234 5678 9</div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="right">
                         <ul>
                             <li class="toggle">
-                                <span><img alt="en" src="{{ asset('template-client') }}/img/lan/en.jpg">English</span> <i class="fa fa-angle-down"></i>
+                                @if(Auth::guard('nguoi_dung')->check())
+                                <span style="font-size: 20px"><i class="far fa-user-circle"></i></span>
+                                <span><i class="fa fa-angle-down"></i></span>
+                                @else
+                                <li><a href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
+                                @endif
                                 <ul>
-                                    <li><img alt="en" src="{{ asset('template-client') }}/img/lan/en.jpg">English</li>
-                                    <li><img alt="ru" src="{{ asset('template-client') }}/img/lan/ru.jpg">Russian</li>
-                                    <li><img alt="fr" src="{{ asset('template-client') }}/img/lan/fr.jpg">France</li>
-                                    <li><img alt="bra" src="{{ asset('template-client') }}/img/lan/bra.jpg">Brazil</li>
+                                    @if (Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 2)
+                                        <li><a href="{{ route('register.store') }}">Đăng kí cửa hàng</a></li>
+                                        <li><a href="{{ route('profile.edit', ['id'=> Auth::guard('nguoi_dung')->user()->id]) }}">Thông tin cá nhân</a></li>
+                                        <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
+
+                                    @elseif(Auth::guard('nguoi_dung')->check() &&
+                                        Auth::guard('nguoi_dung')->user()->id_q == 3 )
+                                        <li><a href="{{ route('quanlycuahang.index') }}">Quản lý cửa hàng</a></li>
+                                        <li><a href="{{ route('profile.edit', ['id'=> Auth::guard('nguoi_dung')->user()->id]) }}">Thông tin cá nhân</a></li>
+                                        <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
+
+                                    @endif
+
                                 </ul>
+
                             </li>
-                            @if(Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 2)
-                                <li><a href="{{ route('register.store') }}">Đăng kí cửa hàng</a></li>
 
-                                <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
-
-                            @elseif(Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 3 )
-                                <li><a href="{{ route('quanlycuahang.index') }}">Quản lý cửa hàng</a></li>
-
-                                <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
-
-                            @else
-                                <li><a href="{{ route('nguoidung.login') }}">đăng nhập</a></li>
-
-                            @endif
                         </ul>
                     </div>
                 </div>
@@ -60,7 +63,8 @@
                         <div class="cart-list hidden-xs">
                             <h5 class="title">your shopping cart <span>(2 items)</span></h5>
                             <div class="cart-item">
-                                <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/products/1.jpg">
+                                <img class="img-responsive" alt="Single product"
+                                    src="{{ asset('template-client') }}/img/products/1.jpg">
                                 <span class="icon_close close-icon"></span>
                                 <div class="product-info">
                                     <h5>New Yorker Suit</h5>
@@ -80,7 +84,8 @@
                             </div>
 
                             <div class="cart-item">
-                                <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/products/1.jpg">
+                                <img class="img-responsive" alt="Single product"
+                                    src="{{ asset('template-client') }}/img/products/1.jpg">
                                 <span class="icon_close close-icon"></span>
                                 <div class="product-info">
                                     <h5>New Yorker Suit</h5>
@@ -100,7 +105,8 @@
                             </div>
 
                             <div class="order-total">
-                                <h5 class="title">TOTAL ON YOUR CART<span class="amount">$166</span></h5>
+                                <h5 class="title">TOTAL ON YOUR CART<span class="amount">$166</span>
+                                </h5>
                             </div>
                             <a href="#" class="trendify-btn black-bordered">View Cart</a>
                             <a href="#" class="trendify-btn black-bordered">Checkout</a>
@@ -115,7 +121,8 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse"
+                    aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -127,7 +134,8 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Home</a>
                         <ul class="dropdown-menu">
                             <li><a href="home-1.html">Home 1</a></li>
                             <li><a href="home-2.html">Home 2</a></li>
@@ -138,7 +146,8 @@
                         </ul>
                     </li>
                     <li class="dropdown megamenu-fw">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Pages</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-expanded="false">Pages</a>
                         <ul class="dropdown-menu megamenu-content" role="menu">
                             <li>
                                 <div class="row">
@@ -160,7 +169,8 @@
                                             <li><a href="shop-grid-4.html">Shop grid 4</a></li>
                                             <li><a href="product-details-1.html">Product Details 1</a></li>
                                             <li><a href="product-details-2.html">Product Details 2</a></li>
-                                            <li><a href="product-details-sidebar.html">Product Details With Sidebar</a></li>
+                                            <li><a href="product-details-sidebar.html">Product Details With Sidebar</a>
+                                            </li>
                                             <li><a href="product-details-popup.html">Product Details Popup</a></li>
                                             <li><a href="cart-2.html">Cart</a></li>
                                         </ul>
@@ -177,7 +187,8 @@
                                         </ul>
                                     </div>
                                     <div class="col-md-3">
-                                        <img src="img/blog_listed1.jpg" alt="" class="{{ asset('template-client') }}/img-responsive">
+                                        <img src="img/blog_listed1.jpg" alt=""
+                                            class="{{ asset('template-client') }}/img-responsive">
                                     </div>
                                 </div>
                             </li>
@@ -185,7 +196,8 @@
                     </li>
                     <li><a href="#">Men</a></li>
                     <li class="dropdown megamenu-fw">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">SHOP</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            aria-expanded="false">SHOP</a>
                         <ul class="dropdown-menu megamenu-content" role="menu">
                             <li>
                                 <div class="row">
@@ -205,7 +217,8 @@
                                             <li><a href="#">Shorts<span class="sell">Sell</span></a></li>
                                             <li><a href="#">Suits & Blazers</a></li>
                                             <li><a href="#">Swimwear</a></li>
-                                            <li><a href="#">Trousers & Chinos<span class="new">New</span></a></li>
+                                            <li><a href="#">Trousers & Chinos<span class="new">New</span></a>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -220,7 +233,8 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <img src="{{ asset('template-client') }}/img/blog_listed1.jpg" alt="" class="img-responsive">
+                                        <img src="{{ asset('template-client') }}/img/blog_listed1.jpg" alt=""
+                                            class="img-responsive">
                                     </div>
                                 </div>
                             </li>
@@ -228,7 +242,8 @@
                     </li>
                     <li><a href="#">Women</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Blog</a>
                         <ul class="dropdown-menu">
                             <li><a href="blog.html">Blog</a></li>
                             <li><a href="blog-list.html">Blog List</a></li>
@@ -237,7 +252,8 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Contact</a>
                         <ul class="dropdown-menu">
                             <li><a href="contact-1.html">Contact 1</a></li>
                             <li><a href="contact-2.html">Contact 2</a></li>

@@ -17,6 +17,8 @@ class CreateNguoiDungTable extends Migration
             $table->id('id');
             $table->string('username');
             $table->string('password');
+            $table->string('diachi_nd');
+            $table->string('sdt_nd');
             $table->string('ten_nd')->nullable();
             $table->string('email_nd')->nullable();
             $table->string('gioitinh_nd')->nullable();

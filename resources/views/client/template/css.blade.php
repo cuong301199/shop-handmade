@@ -35,3 +35,11 @@
 	<link rel="apple-touch-icon" href="{{ asset('template-client') }}/img/apple-touch-icon.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('template-client') }}/img/apple-touch-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('template-client') }}/img/apple-touch-icon-114x114.png">
+
+
+    <link href="{{ asset('template-client') }}/fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous"> --}}
+
+
+
+

@@ -20,12 +20,10 @@
                 <div class="col-md-12">
                     @if (empty($danhsach_dm))
                     <a href="{{ route('quanlydanhmuc.create') }}" class='btn btn-primary'
-                    style="margin-bottom: 10px">Chọn
-                    danh mục</a>
+                    style="margin-bottom: 10px">Chọn danh mục</a>
                     @else
                     <a href="{{ route('quanlydanhmuc.edit') }}" class='btn btn-primary'
-                    style="margin-bottom: 10px">Sửa
-                    danh mục</a>
+                    style="margin-bottom: 10px">Sửa danh mục</a>
                     @endif
 
                 </div>
