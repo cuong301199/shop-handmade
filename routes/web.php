@@ -12,6 +12,8 @@ use App\Http\Controllers\QuanLyCuaHangController;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\ChonDanhMucController;
 use App\Http\Controllers\ThongTinCaNhanController;
+use App\Http\Controllers\ChiTietSanPhamController;
+use App\Http\Controllers\HienThiSanPhamController;
 
 
 
@@ -25,8 +27,10 @@ use App\Http\Controllers\ThongTinCaNhanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('',[AuthController::class,'home'])->name('client.index');
 Route::prefix('/client')->group(function () {
-    Route::get('',[AuthController::class,'home'])->name('client.index');
+
 
 
     Route::get('/register/nguoidung',[NguoiDungController::class,'login'] )->name('nguoidung.login');
@@ -45,7 +49,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/sanpham/{id}/xoa',[SanPhamController::class,'delete'])->name('sanpham.delete');
     Route::get('/sanpham/{id}/sua', [SanPhamController::class,'edit'])->name('sanpham.edit');
     Route::post('/sanpham/{id}/sua-sp',[SanPhamController::class, 'update'] )->name('sanpham.update');
-
+    Route::get('/get-product-type/{idCat}',[SanPhamController::class,'getProductTypeByCat'])->name('sanpham.get-product-type');
 
     Route::get('/quanlydanhmuc',[ChonDanhMucController::class,'index'] )->name('quanlydanhmuc.index');
     Route::get('/quanlydanhmuc/them',[ChonDanhMucController::class,'create'] )->name('quanlydanhmuc.create');
@@ -60,6 +64,12 @@ Route::prefix('/client')->group(function () {
 
     Route::get('/matkhau/{id}/edit',[ThongTinCaNhanController::class,'editpassword'])->name('password.edit');
     Route::post('/matkhau/{id}/update',[ThongTinCaNhanController::class,'updatepassword'])->name('password.update');
+
+    Route::get('/sanpham/hienthi',[HienThiSanPhamController::class,'index'])->name('hienthisp.index');
+
+    Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
+
+
 
 });
 

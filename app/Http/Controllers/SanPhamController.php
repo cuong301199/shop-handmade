@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Session;
+use File;
 class SanPhamController extends Controller
 {
     //
@@ -17,7 +18,7 @@ class SanPhamController extends Controller
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-        ->select('san_pham.*','ten_lsp')
+        ->join('hinh_anh','hinh_anh.id_sp','san_pham.id')
         ->where('id_ch',$id_ch->id)
         ->get();
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
@@ -48,7 +49,7 @@ class SanPhamController extends Controller
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
         $id_ch=DB::table('cua_hang')->select('id')->where('id_nd',$id_nd)->first();
 
-        $insert =DB::table('san_pham')->insert(
+        $insert =DB::table('san_pham')->insertGetId(
             [
                 'id_ch'=>$id_ch->id,
                 'id_lsp'=>$loaiSanPham,
@@ -60,12 +61,39 @@ class SanPhamController extends Controller
 
             ]
             );
+
+            if($request->hasFile('hinhAnh')){
+                $hinhAnh = $request->file('hinhAnh');
+                $tenFile = $hinhAnh->getClientOriginalName();
+
+                $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
+                $insertHinhAnh = DB::table('hinh_anh')->insert(
+                    [
+                        'id_sp'=>$insert,
+                        'diachi_ha'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName()
+                    ]
+                );
+            }
+
             Session::flash("success","Thêm thành công");
-            return redirect()->back();
+            return redirect()->route('sanpham.index');
+    }
+
+
+    public function getProductTypeByCat($idCat){
+        $danhsach = DB::table('loai_san_pham')->where('id_dm', $idCat)->get();
+        return response()->json($danhsach, 200);
     }
 
     public function delete($id){
+        $hinhAnh= DB::table('hinh_anh')->where('id_sp',$id)->get();
+        foreach($hinhAnh as $item){
+           File::delete($item->diachi_ha);
+        }
+
+
         $id = DB::table('san_pham')->where('id',$id)->delete();
+
         Session::flash("success","Xóa thành công");
         return redirect()->back();
     }
@@ -80,8 +108,8 @@ class SanPhamController extends Controller
 
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        ->join('hinh_anh','hinh_anh.id_sp','san_pham.id')
         ->join('danh_muc','danh_muc.id','san_pham.id_dm')
-        ->select('san_pham.*','ten_lsp','ten_dm')
         ->where('san_pham.id',$id)
         ->first();
 
@@ -111,6 +139,22 @@ class SanPhamController extends Controller
 
             ]
         );
+
+        if($request->hasFile('hinhAnh')){
+            $hinhAnh = $request->file('hinhAnh');
+            $tenFile = $hinhAnh->getClientOriginalName();
+            $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
+            $hinhAnhHienTai=$request->hinhAnhHienTai;
+            $updateHinhAnh = DB::table('hinh_anh')->where('id_sp',$id)->update(
+                [
+                    'diachi_ha'=>'hinh-anh-san-pham/'.$tenFile
+                ]
+            );
+        }
+        if(!empty($hinhAnhHienTai)){
+           File::delete( $hinhAnhHienTai);
+        }
+
         Session::flash("success","Sửa thành công");
         return redirect()->route('sanpham.index');
 

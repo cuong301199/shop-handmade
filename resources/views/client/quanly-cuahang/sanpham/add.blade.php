@@ -8,19 +8,20 @@
     Thêm sản phẩm
 @endsection
 @section('content')
-{{-- {{ dd($danhsach_dm) }} --}}
+    {{-- {{ dd($danhsach_dm) }} --}}
+
     <body>
         <main class="container">
             <header class="row text-center"></header>
             <section class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('sanpham-post.create') }}" method="post">
+                    <form action="{{ route('sanpham-post.create') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-header">
                                 Thêm thông tin cho sản phẩm
                                 @if (Session::has('success'))
-                                    <p style="color: rgb(20, 163, 16)" >{{ Session::get('success') }}</p>
+                                    <p style="color: rgb(20, 163, 16)">{{ Session::get('success') }}</p>
                                 @endif
                             </div>
                             <div class="card-body">
@@ -40,13 +41,14 @@
                                         </div>
                                         <div class="input-group form-group">
                                             <span class="input-group-text">Giá sản phẩm</span>
-                                            <input class="form-control" type="number" name="giaSanPham" placeholder="Giá sản phẩm"
-                                                aria-label="Recipient's ">
+                                            <input class="form-control" type="number" name="giaSanPham"
+                                                placeholder="Giá sản phẩm" aria-label="Recipient's ">
                                             <span class="input-group-text">VND</span>
                                         </div>
                                         <div class="form-group">
                                             <label for="">Danh mục</label>
-                                            <select class="form-control" name="danhMuc" id="">
+                                            <select class="form-control danhMuc" name="danhMuc">
+                                                <option>Chọn danh mục</option>
                                                 @foreach ($danhsach_dm as $item)
                                                     <option value="{{ $item->id_dm }}">{{ $item->ten_dm }}</option>
                                                 @endforeach
@@ -54,9 +56,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Loại sản phẩm</label>
-                                            <select class="form-control" name="loaiSanPham" id="">
+                                            <select class="form-control loaiSanPham" name="loaiSanPham" id="">
                                                 @foreach ($danhsach_lsp as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->ten_lsp }}</option>
+
                                                 @endforeach
                                             </select>
                                         </div>
@@ -77,7 +79,12 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Mô tả</label>
-                                            <textarea class="form-control" name="moTa" id="" rows="3"></textarea>
+                                            <div class="card-body pad" style="padding-left: 0px"  >
+                                                <div class="mb-3">
+                                                    <textarea class="textarea" placeholder="Place some text here" name="moTa"
+                                                        style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -95,4 +102,30 @@
         </main>
 
     </body>
+    @push('ajax-add-product')
+        <script>
+            $(document).ready(function() {
+                const BASE_URL = window.location.origin //lấy base url
+                $('select.danhMuc').change(function(e) {
+                    e.preventDefault();
+                    var getIDCat = $(this).children("option:selected").val();
+                    console.log(getIDCat);
+                    $('.itemLSP').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL + "/client/get-product-type/" + getIDCat,
+                        //  data: "data",
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.loaiSanPham').append('<option value="' + response[i].id +
+                                    '" class = "itemLSP">' + response[i].ten_lsp + '</option>');
+                            }
+                        }
+                    });
+                });
+
+            });
+        </script>
+    @endpush
 @endsection

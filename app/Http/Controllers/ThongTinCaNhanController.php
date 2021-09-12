@@ -39,14 +39,18 @@ class ThongTinCaNhanController extends Controller
     }
 
     public function updatepassword(Request $request , $id){
-        $password  = $request->password;
+        $password  = $request->pass;
         $passNew  =$request->passNew;
         $rePassNew = $request -> rePassNew;
-        // $pass_old = Auth::guard('nguoi_dung')->user()->password;
-        // if($password != $pass_old){
-        //     Session::flash("error","Điền sai mật khẩu cũ");
-        //     return redirect()->back();
-        // };
+
+        $pass_old = Auth::guard('nguoi_dung')->user()->password;
+
+
+        if(!Hash::check($password, $pass_old)){
+
+            Session::flash("error","Điền sai mật khẩu cũ");
+            return redirect()->back();
+        };
         if($passNew != $rePassNew){
             Session::flash("error","Mật khẩu mới không giống nhau");
             return redirect()->back();

@@ -214,20 +214,23 @@
                 <div class="trendify-prev"></div>
                 <div class="trendify-next"></div>
 
+{{-- {{ dd($danhsachsanpham) }} --}}
+
                 <div id="new" class="tab-pane fade in active">
+                    @foreach ($danhsachsanpham as $item)
                     <div class="product-single">
                         <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_2.jpg">
+                            <img class="img-responsive" alt="Single product" src="{{ asset($item->diachi_ha) }}">
                             <div class="actions">
                                 <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
+                                    <li><a class="zoom" href=""><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id_sp]) }}">Chi tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
+                            <h2>{{ $item->ten_sp }}</h2>
                             <div class="star-rating">
                                 <ul>
                                     <li><i class="fa fa-star"></i></li>
@@ -238,7 +241,7 @@
                                 </ul>
                             </div>
                             <div class="price">
-                                <del> $50 </del> $40
+                                <del>   </del>{{ $item->gia_sp }} VND
                             </div>
                         </div>
                         <!-- Product pop-up -->
@@ -253,9 +256,9 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="right-content">
-                                                <a href="#"><h3>New Look Stripe T-Shirt</h3></a>
-                                                <span class="amount off">$50</span>
-                                                <span class="amount">$40</span><br>
+                                                <a href="#"><h3>{{ $item->ten_sp }}</h3></a>
+                                                {{-- <span class="amount off">$50</span> --}}
+                                                <span class="amount">{{ $item->gia_sp }}</span><br>
                                                 <span class="sku">available in stock</span>
                                                 <h4>DESCRIPTION</h4>
                                                 <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
@@ -283,15 +286,15 @@
                         </div>
                         <!-- / Product pop-up -->
                     </div>
-
-                    <div class="product-single">
+                    @endforeach
+                    {{-- <div class="product-single">
                         <div class="product-img">
                             <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
                             <div class="actions">
                                 <ul>
                                     <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    <li><a href="product-details-1.html">Chi tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -319,7 +322,7 @@
                                 <ul>
                                     <li><a class="zoom" href="{{ asset('template-client') }}/img/single_4.jpg"><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    <li><a href="product-details-1.html">Chi tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -347,7 +350,7 @@
                                 <ul>
                                     <li><a class="zoom" href="{{ asset('template-client') }}/img/single_1.jpg"><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    <li><a href="product-details-1.html">Chi Tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -375,7 +378,7 @@
                                 <ul>
                                     <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    <li><a href="product-details-1.html">Chi Tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -403,7 +406,7 @@
                                 <ul>
                                     <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    <li><a href="product-details-1.html">Chi Tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -422,7 +425,7 @@
                                 <del> $50 </del> $40
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div id="latest" class="tab-pane fade">

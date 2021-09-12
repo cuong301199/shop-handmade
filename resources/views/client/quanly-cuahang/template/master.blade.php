@@ -54,5 +54,6 @@
 
 <!-- jQuery -->
 @include('client.quanly-cuahang.template.js')
+@stack('ajax-add-product')
 </body>
 </html>

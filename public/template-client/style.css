@@ -602,6 +602,7 @@ ol {
     border-bottom: 2px solid #1a1a1a;
 }
 .product-single .product-img {
+    height: 230px;
     overflow: hidden;
     position: relative;
 }

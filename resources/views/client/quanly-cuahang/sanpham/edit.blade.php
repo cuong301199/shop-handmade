@@ -8,14 +8,15 @@
     Sửa sản phẩm
 @endsection
 @section('content')
-
+{{-- {{ dd($danhsach) }} --}}
     <body>
         {{-- {{ dd($danhsach_sp) }} --}}
         <main class="container">
             <header class="row text-center"></header>
             <section class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('sanpham.update', ['id'=>$danhsach->id]) }}" method="post">
+                    <form action="{{ route('sanpham.update', ['id' => $danhsach->id_sp]) }}" method="post"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="card">
                             <div class="card-header">
@@ -44,7 +45,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Danh mục</label>
-                                            <select class="form-control" name="danhMuc" id="">
+                                            <select class="form-control danhMuc" name="danhMuc" id="">
                                                 @foreach ($danhsach_dm as $item)
                                                     <option value="{{ $item->id }}" @if ($danhsach->id_dm == $item->id) selected   @endif>
                                                         {{ $item->ten_dm }}</option>
@@ -53,20 +54,23 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Loại sản phẩm</label>
-                                            <select class="form-control" name="loaiSanPham" id="">
-
+                                            <select class="form-control loaiSanPham" name="loaiSanPham" id="">
+                                                <option class="itemLSP" value="{{ $danhsach->id_lsp }}">
+                                                    {{ $danhsach->ten_lsp }}</option>
                                                 @foreach ($danhsach_lsp as $item)
-                                                    <option value="{{ $item->id }}" @if ($danhsach->id_lsp == $item->id) selected   @endif>
-                                                        {{ $item->ten_lsp }}</option>
+                                                    {{-- <option value="{{ $item->id }}" @if ($danhsach->id_lsp == $item->id) selected   @endif>
+                                                        {{ $item->ten_lsp }}</option> --}}
+
                                                 @endforeach
 
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <img src="" width="90%"
-                                            class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-                                            alt="">
+                                        <div class="form-group">
+                                            <img src="{{ asset($danhsach->diachi_ha) }}" width="90%" alt="">
+                                            <input type="hidden" name="hinhAnhHienTai" id="" value="{{ $danhsach->diachi_ha }}"><br>
+                                        </div>
                                         <div class="form-group">
                                             <label for=""></label>
                                             <input type="file" name="hinhAnh" id="" class="form-control-file"
@@ -78,8 +82,18 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <label for="">Mô tả</label>
-                                            <textarea class="form-control" value="{{ $danhsach->mota_sp }}" name="moTa" id="" rows="3">{{ $danhsach->mota_sp }}</textarea>
+                                            <div class="form-group">
+                                                <label for="">Mô tả</label>
+                                                <div class="card-body pad" style="padding-left: 0px">
+                                                    <div class="mb-3">
+                                                        <textarea class="textarea" placeholder="Place some text here"
+                                                            name="moTa" value="{{ $danhsach->mota_sp }}"
+                                                            style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $danhsach->mota_sp }}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {{-- <label for="">Mô tả</label>
+                                            <textarea class="form-control" value="{{ $danhsach->mota_sp }}" name="moTa" id="" rows="3">{{ $danhsach->mota_sp }}</textarea> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -97,4 +111,33 @@
         </main>
 
     </body>
+    @push('ajax-add-product')
+        <script>
+            $(document).ready(function() {
+                const BASE_URL = window.location.origin //lấy base url
+                $('select.danhMuc').change(function(e) {
+                    e.preventDefault();
+                    var getIDCat = $(this).children("option:selected").val();
+                    console.log(getIDCat);
+                    $('.itemLSP').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL + "/client/get-product-type/" + getIDCat,
+                        //  data: "data",
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                //    $('.loaiSanPham').append('<option value="'+response[i].id+'" class = "itemLSP">'+response[i].ten_lsp+'</option>');
+                                $('.loaiSanPham').append('<option value="' + response[i].id +
+                                    '" class = "itemLSP" @if ('+response[i].id+' == $item->id) selected @endif>' + response[
+                                        i].ten_lsp + '</option>')
+                            }
+                        }
+                    });
+                });
+                // {{-- <option value="{{ $item->id }}" @if ($danhsach->id_lsp == $item->id) selected   @endif>
+                //                                         {{ $item->ten_lsp }}</option> --}}
+            });
+        </script>
+    @endpush
 @endsection
