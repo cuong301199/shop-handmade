@@ -43,18 +43,18 @@
                                     <th scope="row">{{ $stt++ }}</th>
                                     <td>{{ $item->ten_sp }}</td>
                                     <td>
-                                        <img src="{{ asset($item->diachi_ha) }}" alt="" width = 50px heigth=50px>
+                                        <img src="{{ asset($item->hinhanh_sp) }}" alt="" width = 50px heigth=50px>
                                     </td>
                                     <td>{{ $item->ten_lsp }}</td>
                                     {{-- <td>{{ $item->mota_sp }}</td> --}}
-                                    <td>{{ $item->gia_sp }}</td>
+                                    <td>{{ $item->gia_sp }} VND</td>
                                     <td>{{ $item->soluong_sp }}</td>
 
 
                                     <td>
-                                        <a href="{{ route('sanpham.edit', ['id' => $item->id_sp]) }}"><button
+                                        <a href="{{ route('sanpham.edit', ['id' => $item->id]) }}"><button
                                                 class='btn btn-warning'>edit</button></a>
-                                        <a href="{{ route('sanpham.delete', ['id' => $item->id_sp]) }}"><button
+                                        <a href="{{ route('sanpham.delete', ['id' => $item->id]) }}"><button
                                                 class='btn btn-danger'>delete</button></a>
                                     </td>
 

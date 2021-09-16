@@ -18,9 +18,9 @@ class AuthController extends Controller
 
     public function home(){
         $danhsachsanpham = DB::table('san_pham')
-        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        // ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-        ->join('hinh_anh','hinh_anh.id_sp','san_pham.id')
+        ->select('san_pham.*')
         ->get();
         return view('client.index',compact('danhsachsanpham'));
     }

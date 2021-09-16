@@ -23,6 +23,9 @@
                                 @if (Session::has('success'))
                                     <p style="color: rgb(20, 163, 16)">{{ Session::get('success') }}</p>
                                 @endif
+                                @if (Session::has('error'))
+                                    <p style="color: rgb(218, 21, 31)">{{ Session::get('error') }}</p>
+                                @endif
                             </div>
                             <div class="card-body">
                                 <div class="row">
@@ -64,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <img src="{{ asset('template-client') }}/img/avatar.jpg" width="50%"
+                                        <img src="{{ asset('template-client') }}/img/avatar.jpg" width="30%"
                                             class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
                                             alt="">
                                         <div class="form-group">
@@ -73,15 +76,22 @@
                                                 placeholder="Hình ảnh" aria-describedby="helpId"><br>
                                             <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
                                         </div>
+                                        @for ($i = 1; $i < 4; $i++)
+                                            <input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"
+                                                placeholder="Hình ảnh" aria-describedby="helpId"><br>
+                                            <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
+                                        @endfor
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="">Mô tả</label>
-                                            <div class="card-body pad" style="padding-left: 0px"  >
+                                            <div class="card-body pad" style="padding-left: 0px">
                                                 <div class="mb-3">
-                                                    <textarea class="textarea" placeholder="Place some text here" name="moTa"
+                                                    <textarea class="textarea" placeholder="Place some text here"
+                                                        name="moTa"
                                                         style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                                 </div>
                                             </div>

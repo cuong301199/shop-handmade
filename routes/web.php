@@ -118,25 +118,8 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 // Route::get('/thu1/{2}',[LoaiSanPhamController::class , 'edit']);
-Route::get('/1', function(){
-
-    // $danhsach = DB::table('san_pham')
-    //     ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-    //     ->join('danh_muc','danh_muc.id','san_pham.id_dm')
-    //     ->select('san_pham.*','ten_lsp','ten_dm')
-    //     ->where('san_pham.id',3)
-    //     ->first();
-    // $id_nd = Auth::guard('nguoi_dung')->user()->id;
-    // $id_ch = DB::table('cua_hang')->where('id',$id_nd)->first();
-    // $danhsach= DB::table('cuahang_danhmuc')
-    // ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
-    // ->select('cuahang_danhmuc.*','ten_dm')
-    // ->where('cuahang_danhmuc.id_ch',1)
-    // ->get();
-
-
-    // dd($danhsach);
-
-
+Route::get('/1/{id}', function(){
+    $avatar_sp = DB::table('san_pham')->where('id',5)->get();
+    dd($avatar_sp);
 
 });

@@ -214,18 +214,18 @@
                 <div class="trendify-prev"></div>
                 <div class="trendify-next"></div>
 
-{{-- {{ dd($danhsachsanpham) }} --}}
+
 
                 <div id="new" class="tab-pane fade in active">
                     @foreach ($danhsachsanpham as $item)
                     <div class="product-single">
                         <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset($item->diachi_ha) }}">
+                            <img class="img-responsive" alt="Single product" src="{{ asset($item->hinhanh_sp) }}">
                             <div class="actions">
                                 <ul>
                                     <li><a class="zoom" href=""><i class="fa fa-search"></i></a></li>
                                     <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id_sp]) }}">Chi tiết<i class="fa fa-expand"></i></a></li>
+                                    <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}">Chi tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>

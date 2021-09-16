@@ -28,7 +28,7 @@ class CreateSanPhamTable extends Migration
             $table->string('ten_sp');
             $table->text('mota_sp')->nullable();
             $table->float('gia_sp')->nullable();
-            $table->string('hinh_sp')->nullable();
+            $table->string('hinhanh_sp')->nullable();
             $table->integer('soluong_sp')->nullable();
 
             $table->timestamps();

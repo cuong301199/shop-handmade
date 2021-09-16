@@ -18,8 +18,9 @@ class SanPhamController extends Controller
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-        ->join('hinh_anh','hinh_anh.id_sp','san_pham.id')
+
         ->where('id_ch',$id_ch->id)
+        ->select('san_pham.*','cua_hang.*','loai_san_pham.*','san_pham.id')
         ->get();
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
     }
@@ -49,30 +50,57 @@ class SanPhamController extends Controller
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
         $id_ch=DB::table('cua_hang')->select('id')->where('id_nd',$id_nd)->first();
 
-        $insert =DB::table('san_pham')->insertGetId(
-            [
-                'id_ch'=>$id_ch->id,
-                'id_lsp'=>$loaiSanPham,
-                'ten_sp'=>$tenSanPham,
-                'mota_sp'=>$moTa,
-                'gia_sp'=>$giaSanPham,
-                'soluong_sp'=>$soLuong,
-                'id_dm'=>$danhMuc
+        if($request->hasFile('hinhAnh')){
+            $hinhAnh = $request->file('hinhAnh');
+            $tenFile = $hinhAnh->getClientOriginalName();
 
-            ]
-            );
+            $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
 
-            if($request->hasFile('hinhAnh')){
-                $hinhAnh = $request->file('hinhAnh');
-                $tenFile = $hinhAnh->getClientOriginalName();
-
-                $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
-                $insertHinhAnh = DB::table('hinh_anh')->insert(
-                    [
-                        'id_sp'=>$insert,
-                        'diachi_ha'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName()
-                    ]
+            $insert =DB::table('san_pham')->insertGetId(
+                [
+                    'id_ch'=>$id_ch->id,
+                    'id_lsp'=>$loaiSanPham,
+                    'ten_sp'=>$tenSanPham,
+                    'mota_sp'=>$moTa,
+                    'gia_sp'=>$giaSanPham,
+                    'soluong_sp'=>$soLuong,
+                    'id_dm'=>$danhMuc,
+                    'hinhanh_sp'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName()
+                ]
                 );
+        }
+            // if($request->hasFile('hinhAnh')){
+            //     $hinhAnh = $request->file('hinhAnh');
+            //     $tenFile = $hinhAnh->getClientOriginalName();
+
+            //     $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
+            //     $insertHinhAnh = DB::table('hinh_anh')->insert(
+            //         [
+            //             'id_sp'=>$insert,
+            //             'avatar_ha'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName()
+            //         ]
+            //     );
+            // }
+            if($request->hasFile('hinhAnhChiTiet')){
+                $hinhAnh = $request->File('hinhAnhChiTiet');
+
+                foreach($hinhAnh as $file){
+                    if(isset($file)){
+                        $tenFile = $file->getClientOriginalName();
+                        $file->move(public_path('hinh-anh-san-pham/'), $file->getClientOriginalName());
+                        $insertHinhAnh = DB::table('hinh_anh')->insert(
+                            [
+                                'id_sp'=>$insert,
+                                'duongdan_ha'=>'hinh-anh-san-pham/'.$file->getClientOriginalName()
+                            ]
+                        );
+
+                    }
+                }
+            }
+            else{
+                Session::flash("error","Thiếu hình ảnh sản phẩm");
+                return redirect()->route('sanpham.create');
             }
 
             Session::flash("success","Thêm thành công");
@@ -88,9 +116,12 @@ class SanPhamController extends Controller
     public function delete($id){
         $hinhAnh= DB::table('hinh_anh')->where('id_sp',$id)->get();
         foreach($hinhAnh as $item){
-           File::delete($item->diachi_ha);
+           File::delete($item->duongdan_ha);
         }
-
+        $avatar_sp = DB::table('san_pham')->where('id', $id)->first();
+        if(isset($avatar_sp)){
+            File::delete($avatar_sp->hinhanh_sp);
+        }
 
         $id = DB::table('san_pham')->where('id',$id)->delete();
 
@@ -108,13 +139,16 @@ class SanPhamController extends Controller
 
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('hinh_anh','hinh_anh.id_sp','san_pham.id')
         ->join('danh_muc','danh_muc.id','san_pham.id_dm')
         ->where('san_pham.id',$id)
+        ->select('san_pham.*','loai_san_pham.*','danh_muc.*','san_pham.id')
         ->first();
 
+        $hinhanh = DB::table('hinh_anh')
+        ->where('id_sp',$id)
+        ->get();
 
-        return view('client.quanly-cuahang.sanpham.edit', compact('danhsach','danhsach_dm','danhsach_lsp'));
+        return view('client.quanly-cuahang.sanpham.edit', compact('danhsach','danhsach_dm','danhsach_lsp','hinhanh'));
 
 
     }
@@ -144,16 +178,43 @@ class SanPhamController extends Controller
             $hinhAnh = $request->file('hinhAnh');
             $tenFile = $hinhAnh->getClientOriginalName();
             $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
-            $hinhAnhHienTai=$request->hinhAnhHienTai;
-            $updateHinhAnh = DB::table('hinh_anh')->where('id_sp',$id)->update(
+
+            $updateHinhAnh = DB::table('san_pham')->where('id',$id)->update(
                 [
-                    'diachi_ha'=>'hinh-anh-san-pham/'.$tenFile
+                    'hinhanh_sp'=>'hinh-anh-san-pham/'.$tenFile
                 ]
             );
+            $hinhAnhHienTai=$request->hinhAnhHienTai;
+            if(!empty($hinhAnhHienTai)){
+                File::delete( $hinhAnhHienTai);
+            }
         }
-        if(!empty($hinhAnhHienTai)){
-           File::delete( $hinhAnhHienTai);
+        if($request->hasFile('hinhAnhChiTiet')){
+            $hinhAnh = $request->File('hinhAnhChiTiet');
+            foreach($hinhAnh as $file){
+                if(isset($file)){
+                    $tenFile = $file->getClientOriginalName();
+                    $file->move(public_path('hinh-anh-san-pham/'), $file->getClientOriginalName());
+                    $insertHinhAnh = DB::table('hinh_anh')->insert(
+                        [
+                            'id_sp' =>$id,
+                            'duongdan_ha'=>'hinh-anh-san-pham/'.$file->getClientOriginalName()
+                        ]
+                    );
+
+                }
+            }
         }
+
+
+
+        // $img_current = $request->imgcurrent;
+        // foreach($img_current as $file){
+        //     if(isset($file)){
+        //         File::delete( $file);
+        //     }
+        // }
+
 
         Session::flash("success","Sửa thành công");
         return redirect()->route('sanpham.index');

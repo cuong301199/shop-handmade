@@ -21,47 +21,50 @@
     </div>
 </div>
 <!--/ page title -->
-{{-- {{ dd($danhsach) }} --}}
+
 
 <!-- content area -->
 <div class="content">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                @foreach ($danhsach as $item)
+                {{-- @foreach ($danhsach as $item) --}}
                 <div class="col-md-6">
                     <div class="single-slider-item">
                         <ul class="owl-slider">
                             <li class="item">
-                                <img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive">
+                                <img src="{{ asset($danhsach->hinhanh_sp) }}" alt="" class="img-responsive">
+                                <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
+                            </li>
+
+                            @foreach ($hinhanh as $item)
+                            <li class="item">
+                                <img src="{{ asset($item->duongdan_ha) }}" alt="" class="img-responsive">
+                                <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
+                            </li>
+                            @endforeach
+                            {{-- <li class="item">
+                                <img src="{{ asset($danhsach->hinhanh_sp) }}" alt="" class="img-responsive">
                                 <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
                             </li>
                             <li class="item">
-                                <img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive">
+                                <img src="{{ asset($danhsach->hinhanh_sp) }}" alt="" class="img-responsive">
                                 <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
                             </li>
                             <li class="item">
-                                <img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive">
+                                <img src="{{ asset($danhsach->hinhanh_sp) }}" alt="" class="img-responsive">
                                 <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
-                            </li>
-                            <li class="item">
-                                <img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive">
-                                <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
-                            </li>
+                            </li> --}}
                         </ul>
                         <ul class="thumbnails-wrapper">
                             <li class="thumbnail">
-                                <a href="#"><img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive"></a>
+                                <a href="#"><img src="{{ asset($danhsach->hinhanh_sp) }}" alt="" class="img-responsive"></a>
                             </li>
+                            @foreach ($hinhanh as $item)
                             <li class="thumbnail">
-                                <a href="#"><img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive"></a>
+                                <a href="#"><img src="{{ asset($item->duongdan_ha) }}" alt="" class="img-responsive"></a>
                             </li>
-                            <li class="thumbnail">
-                                <a href="#"><img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive"></a>
-                            </li>
-                            <li class="thumbnail">
-                                <a href="#"><img src="{{ asset($item->diachi_ha) }}" alt="" class="img-responsive"></a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -69,7 +72,7 @@
 
                 <div class="col-md-6">
                     <div class="right-content">
-                        <a href="#"><h3>{{ $item->ten_sp }}</h3></a>
+                        <a href="#"><h3>{{ $danhsach->ten_sp }}</h3></a>
                         <div class="rated">
                             <ul>
                                 <li><i class="fa fa-star"></i></li>
@@ -81,10 +84,10 @@
                             <span>(24 reviews)</span>
                         </div>
                         {{-- <span class="amount off">$399</span> --}}
-                        <span class="amount">{{ $item->gia_sp }}</span><br>
+                        <span class="amount">{{ $danhsach->gia_sp }}</span><br>
                         <span class="sku">available in stock</span>
                         <h4>Mô tả</h4>
-                        <p>{{ $item->mota_sp }}</p>
+                        <p>{{ $danhsach->mota_sp }}</p>
                         <div class="color-size">
                             <div class="item-color">
                                 <h4>select a colour</h4>
@@ -123,11 +126,11 @@
                         </div>
                         <div class="product-desc">
                             {{-- <span class="item-number"><b>Product Number:</b>  #41121120</span><br> --}}
-                            <span class="item-cat"><b>Loại sản phẩm:</b>{{ $item->ten_lsp }}</span>
+                            <span class="item-cat"><b>Loại sản phẩm:</b>{{ $danhsach->ten_lsp }}</span>
                         </div>
                     </div>
                 </div>
-                @endforeach
+                {{-- @endforeach --}}
                 <div class="col-md-12">
                     {{-- <div class="product-tab">
                         <ul class="nav nav-tabs">

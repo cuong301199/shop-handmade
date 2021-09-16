@@ -8,14 +8,27 @@
     Sửa sản phẩm
 @endsection
 @section('content')
-{{-- {{ dd($danhsach) }} --}}
+    {{-- {{ dd($hinhanh) }} --}}
+    <style>
+        .form-img {
+            display: flex;
+            overflow: auto;
+        }
+
+        .img {
+            margin: 5px;
+            border: 3px solid;
+        }
+
+    </style>
+
     <body>
         {{-- {{ dd($danhsach_sp) }} --}}
         <main class="container">
             <header class="row text-center"></header>
             <section class="row">
                 <div class="col-md-12">
-                    <form action="{{ route('sanpham.update', ['id' => $danhsach->id_sp]) }}" method="post"
+                    <form action="{{ route('sanpham.update', ['id' => $danhsach->id]) }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="card">
@@ -67,9 +80,48 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
+                                        <div class="form-group form-img">
+                                            <img class="img-avatar" src="{{ asset($danhsach->hinhanh_sp) }}"
+                                                width="40%" alt="">
+                                            <input type="hidden" name="hinhAnhHienTai" id=""
+                                                value="{{ $danhsach->hinhanh_sp }}"><br> <label for=""></label>
+                                        </div>
                                         <div class="form-group">
-                                            <img src="{{ asset($danhsach->diachi_ha) }}" width="90%" alt="">
-                                            <input type="hidden" name="hinhAnhHienTai" id="" value="{{ $danhsach->diachi_ha }}"><br>
+                                            <input type="file" name="hinhAnh" id="" class="form-control-file"
+                                                placeholder="Hình ảnh" aria-describedby="helpId">
+                                            <small id="helpId" class="text-muted">Hình ảnh chính cho sản phẩm</small>
+                                        </div>
+                                        <div class="form-group form-img">
+                                            @foreach ($hinhanh as $item)
+                                                <img class="img" src="{{ asset($item->duongdan_ha) }}" width="30%" alt="">
+                                                <input type="hidden" name="imgcurrent[]" id="" class="form-control-file"
+                                                    placeholder="Hình ảnh" aria-describedby="helpId">
+                                             @endforeach
+                                        </div>
+                                        {{-- <div class="form-group">
+                                            @for ($i = 1; $i < 4; $i++)
+                                                <input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"
+                                                    placeholder="Hình ảnh" aria-describedby="helpId"><br>
+                                            @endfor
+                                        </div> --}}
+
+                                        <div class="col">
+                                            {{-- <button type="button" id="addfile" class="btn btn-primary">Thêm ảnh</button> --}}
+                                            <a href="" id="addfile">Thêm hình ảnh chi tiết cho sản phẩm</a>
+                                        </div>
+                                       <div id="insert">
+
+                                       </div>
+
+                                        {{-- <div class="form-group form-img">
+                                            <img class="img" src="{{ asset($danhsach->hinhanh_sp) }}" width="30%" alt="">
+                                            <input type="hidden" name="hinhAnhHienTai" id=""
+                                                value="{{ $danhsach->hinhanh_sp }}"><br>
+                                            @foreach ($hinhanh as $item)
+                                                <img class="img" src="{{ asset($item->duongdan_ha) }}" width="30%" alt="">
+                                                <input type="hidden" name="imgcurrent[]" id="" class="form-control-file"
+                                                    placeholder="Hình ảnh" aria-describedby="helpId"><br>
+                                            @endforeach
                                         </div>
                                         <div class="form-group">
                                             <label for=""></label>
@@ -77,6 +129,11 @@
                                                 placeholder="Hình ảnh" aria-describedby="helpId"><br>
                                             <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
                                         </div>
+                                        @for ($i = 1; $i < 4; $i++)
+                                            <input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"
+                                                placeholder="Hình ảnh" aria-describedby="helpId"><br>
+                                            <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
+                                        @endfor --}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -92,8 +149,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <label for="">Mô tả</label>
-                                            <textarea class="form-control" value="{{ $danhsach->mota_sp }}" name="moTa" id="" rows="3">{{ $danhsach->mota_sp }}</textarea> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -135,9 +190,13 @@
                         }
                     });
                 });
-                // {{-- <option value="{{ $item->id }}" @if ($danhsach->id_lsp == $item->id) selected   @endif>
-                //                                         {{ $item->ten_lsp }}</option> --}}
             });
+            $(document).ready(function(){
+               $('#addfile').click(function (e) {
+                   e.preventDefault();
+                   $('#insert').append('<input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"placeholder="Hình ảnh" aria-describedby="helpId"><br>')
+               });
+            })
         </script>
     @endpush
 @endsection
