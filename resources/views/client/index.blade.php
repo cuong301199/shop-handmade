@@ -213,8 +213,7 @@
 
                 <div class="trendify-prev"></div>
                 <div class="trendify-next"></div>
-
-
+{{-- {{ dd($danhsachsanpham) }} --}}
 
                 <div id="new" class="tab-pane fade in active">
                     @foreach ($danhsachsanpham as $item)
@@ -244,6 +243,7 @@
                                 <del>   </del>{{ $item->gia_sp }} VND
                             </div>
                         </div>
+
                         <!-- Product pop-up -->
                         <div class="product-preview-1 modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">

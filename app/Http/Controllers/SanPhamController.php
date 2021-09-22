@@ -18,7 +18,6 @@ class SanPhamController extends Controller
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-
         ->where('id_ch',$id_ch->id)
         ->select('san_pham.*','cua_hang.*','loai_san_pham.*','san_pham.id')
         ->get();

@@ -87,7 +87,7 @@
                         <span class="amount">{{ $danhsach->gia_sp }}</span><br>
                         <span class="sku">available in stock</span>
                         <h4>Mô tả</h4>
-                        <p>{{ $danhsach->mota_sp }}</p>
+                        <p>{!!$danhsach->mota_sp!!}</p>
                         <div class="color-size">
                             <div class="item-color">
                                 <h4>select a colour</h4>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="product-desc">
                             {{-- <span class="item-number"><b>Product Number:</b>  #41121120</span><br> --}}
-                            <span class="item-cat"><b>Loại sản phẩm:</b>{{ $danhsach->ten_lsp }}</span>
+                            <span class="item-cat"><b>Loại sản phẩm : </b>{{ $danhsach->ten_lsp }}</span>
                         </div>
                     </div>
                 </div>

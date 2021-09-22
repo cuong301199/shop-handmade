@@ -65,7 +65,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/matkhau/{id}/edit',[ThongTinCaNhanController::class,'editpassword'])->name('password.edit');
     Route::post('/matkhau/{id}/update',[ThongTinCaNhanController::class,'updatepassword'])->name('password.update');
 
-    Route::get('/sanpham/hienthi',[HienThiSanPhamController::class,'index'])->name('hienthisp.index');
+    Route::get('/sanpham/hienthi/{id}',[HienThiSanPhamController::class,'index'])->name('hienthisp.index');
 
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
@@ -118,8 +118,13 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 // Route::get('/thu1/{2}',[LoaiSanPhamController::class , 'edit']);
-Route::get('/1/{id}', function(){
-    $avatar_sp = DB::table('san_pham')->where('id',5)->get();
-    dd($avatar_sp);
+// Route::get('/1/{id}', function(){
+//     $avatar_sp = DB::table('san_pham')->where('id',5)->get();
+//     dd($avatar_sp);
 
+// });
+
+
+Route::get('/1', function () {
+    return view('client.loaisanpham');
 });

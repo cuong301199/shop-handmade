@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use DB;
 class HienThiSanPhamController extends Controller
 {
-    public function index(){
-        $danhsachsanpham = DB::table('san_pham')
+    public function index($id){
+        $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-        ->join('hinh_anh','hinh_anh.id_sp','san_pham.id')
+        ->where('san_pham.id_lsp',$id)
         ->get();
-        return view('client.index', compact('danhsachsanpham'));
+        return view('client.sanpham',compact('danhsach'));
     }
 }
