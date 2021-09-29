@@ -1,4 +1,4 @@
-<script src="{{ asset('template-client') }}/js/jquery.min.js"></script>
+    <script src="{{ asset('template-client') }}/js/jquery.min.js"></script>
 	<!-- Bootstrap -->
     <script type="text/javascript" src="{{ asset('template-client') }}/js/bootstrap.min.js"></script>
     <!-- jquery ui -->
@@ -20,3 +20,7 @@
     <script src="{{ asset('template-client') }}/js/smoothscroll.js"></script>
 	<!-- settings -->
     <script type="text/javascript" src="{{ asset('template-client') }}/js/setting.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>

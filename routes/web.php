@@ -14,6 +14,7 @@ use App\Http\Controllers\ChonDanhMucController;
 use App\Http\Controllers\ThongTinCaNhanController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\HienThiSanPhamController;
+use App\Http\Controllers\CartController;
 
 
 
@@ -66,9 +67,11 @@ Route::prefix('/client')->group(function () {
     Route::post('/matkhau/{id}/update',[ThongTinCaNhanController::class,'updatepassword'])->name('password.update');
 
     Route::get('/sanpham/hienthi/{id}',[HienThiSanPhamController::class,'index'])->name('hienthisp.index');
+    Route::get('/cuahang/hienthi/{id}',[CuaHangController::class,'showStore'])->name('hienthich.showStore');
 
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
+    Route::get('/Add-cart/{id}',[CartController::class,'AddCart'])->name('Add.cart');
 
 
 });

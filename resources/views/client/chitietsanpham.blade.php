@@ -128,6 +128,9 @@
                             {{-- <span class="item-number"><b>Product Number:</b>  #41121120</span><br> --}}
                             <span class="item-cat"><b>Loại sản phẩm : </b>{{ $danhsach->ten_lsp }}</span>
                         </div>
+                        <div class="product-desc">
+                            <span class="item-cat"><b>Tên cửa hàng : </b><a href="{{ route('hienthich.showStore', ['id'=>$danhsach->id_ch]) }}">{{ $danhsach->ten_ch }}</a></span>
+                        </div>
                     </div>
                 </div>
                 {{-- @endforeach --}}

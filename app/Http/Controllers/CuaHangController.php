@@ -50,4 +50,17 @@ class CuaHangController extends Controller
         ]);
         return redirect()->back();
     }
+
+    public function showStore($id){
+        $cuahang = DB::table('cua_hang')
+        ->where('id',$id)
+        ->first();
+
+        $sanpham = DB::table('san_pham')
+        ->join('cua_hang','cua_hang.id','san_pham.id_ch')
+        ->where('san_pham.id_ch',$id)
+        ->get();
+
+        return view('client.cuahang',compact('cuahang','sanpham'));
+        }
 }

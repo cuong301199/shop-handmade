@@ -1,6 +1,8 @@
 @extends('client.template.master')
 @section('content')
     <!-- page title -->
+    {{-- <?php $segment = Request::segment(1) ?>
+    {{ dd( $segment) }} --}}
     <div class="page_title_area">
         <div class="container">
             <div class="row">

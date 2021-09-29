@@ -25,7 +25,17 @@
     <!-- / header -->
 
     <!-- slider -->
-    @yield('content')
+    <div class="content">
+        <div class="container">
+            <div class="row">
+               @yield('content')
+               @if (Request::segment(3)=='hienthi')
+                @include('client.template.sidebar')
+               @endif
+
+            </div>
+        </div>
+    </div>
     <!-- / content -->
 
 
@@ -35,7 +45,7 @@
 
     <!-- jQuery -->
     @include('client.template.js')
-
+    @stack('Add-Cart')
 
 </body>
 

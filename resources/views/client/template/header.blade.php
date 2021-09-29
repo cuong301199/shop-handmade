@@ -61,52 +61,8 @@
                         </a>
 
                         <div class="cart-list hidden-xs">
-                            <h5 class="title">your shopping cart <span>(2 items)</span></h5>
-                            <div class="cart-item">
-                                <img class="img-responsive" alt="Single product"
-                                    src="{{ asset('template-client') }}/img/products/1.jpg">
-                                <span class="icon_close close-icon"></span>
-                                <div class="product-info">
-                                    <h5>New Yorker Suit</h5>
-                                    <div class="star-rating">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star-half-full"></i></li>
-                                        </ul>
-                                    </div><br>
-                                    <div class="price">
-                                        <del> $399 </del> $259
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="change-item-cart">
 
-                            <div class="cart-item">
-                                <img class="img-responsive" alt="Single product"
-                                    src="{{ asset('template-client') }}/img/products/1.jpg">
-                                <span class="icon_close close-icon"></span>
-                                <div class="product-info">
-                                    <h5>New Yorker Suit</h5>
-                                    <div class="star-rating">
-                                        <ul>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star-half-full"></i></li>
-                                        </ul>
-                                    </div><br>
-                                    <div class="price">
-                                        <del> $399 </del> $259
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="order-total">
-                                <h5 class="title">TOTAL ON YOUR CART<span class="amount">$166</span>
-                                </h5>
                             </div>
                             <a href="#" class="trendify-btn black-bordered">View Cart</a>
                             <a href="#" class="trendify-btn black-bordered">Checkout</a>

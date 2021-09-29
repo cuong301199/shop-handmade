@@ -1,5 +1,7 @@
 @extends('client.template.master')
 @section('content')
+
+
 <div class="tp-banner-container rev-slider-content">
     <div class="slider_one" >
         <ul>
@@ -223,7 +225,8 @@
                             <div class="actions">
                                 <ul>
                                     <li><a class="zoom" href=""><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                    <li><a id="{{ $item->id }}" class="addcart" href="{{ route('Add.cart', ['id'=>$item->id]) }}"><i class="fa fa-heart-o">ADD-CARD</i></a></li>
+                                    {{-- <li><a onclick="AddCart({{ $item->id }})" href="javascript:"><i class="fa fa-heart-o">ADD-CARD</i></a></li> --}}
                                     <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}">Chi tiết<i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
@@ -287,145 +290,6 @@
                         <!-- / Product pop-up -->
                     </div>
                     @endforeach
-                    {{-- <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html">Chi tiết<i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_4.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_4.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html">Chi tiết<i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_1.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_1.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html">Chi Tiết<i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_2.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html">Chi Tiết<i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html">Chi Tiết<i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
 
                 <div id="latest" class="tab-pane fade">
@@ -1016,4 +880,30 @@
 
     </div>
 </div>
+@push('Add-Cart')
+    <script>
+        $(document).ready(function () {
+            $('a.addcart').click(function (e) {
+                e.preventDefault();
+                var id =$(this).attr('id')
+                $.ajax({
+                    type: "get",
+                    url: "client/Add-cart/"+id,
+                    success: function (response) {
+                       $(".change-item-cart").empty();
+                       $('.change-item-cart').html(response);
+                       alertify.success('Thêm vào giỏ hàng thành công');
+                    }
+                });
+            });
+         });
+
+         $('.icon_close').click(function (e) {
+             e.preventDefault();
+             console.log('123')
+         });
+
+
+    </script>
+@endpush
 @endsection
