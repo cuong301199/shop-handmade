@@ -112,6 +112,8 @@ class SanPhamController extends Controller
         return response()->json($danhsach, 200);
     }
 
+
+
     public function delete($id){
         $hinhAnh= DB::table('hinh_anh')->where('id_sp',$id)->get();
         foreach($hinhAnh as $item){
@@ -218,6 +220,28 @@ class SanPhamController extends Controller
         Session::flash("success","Sửa thành công");
         return redirect()->route('sanpham.index');
 
+
+
+    }
+
+    public function deleteAvatar(Request $request){
+        $idHa = $request->idHa;
+        $idSp = $request->idSp;
+        $delete = DB::table('hinh_anh')->where('id',$idHa)->delete();
+
+        $hinhanh = DB::table('hinh_anh')
+        ->where('id_sp',$idSp)
+        ->get();
+
+         return response()->json($hinhanh, 200);
+        // $idHa=$request->idHa;
+        // dd($idHa);
+    }
+
+    public function loadImageData(Request $request){
+        $idSp = $request->id;
+        $hinhanh = DB::table('hinh_anh')->where('id_sp',$idSp)->get();
+        return response()->json($hinhanh, 200);
     }
 
 

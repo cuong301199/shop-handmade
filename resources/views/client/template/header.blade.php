@@ -10,27 +10,31 @@
                     <div class="right">
                         <ul>
                             <li class="toggle">
-                                @if(Auth::guard('nguoi_dung')->check())
-                                <span style="font-size: 20px"><i class="far fa-user-circle"></i></span>
-                                <span><i class="fa fa-angle-down"></i></span>
+                                @if (Auth::guard('nguoi_dung')->check())
+                                    <span style="font-size: 20px"><i class="far fa-user-circle"></i></span>
+                                    <span><i class="fa fa-angle-down"></i></span>
                                 @else
-                                <li><a href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
+                            <li><a href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
+                            @endif
+                            <ul>
+                                @if (Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 2)
+                                    <li><a href="{{ route('register.store') }}">Đăng kí cửa hàng</a></li>
+                                    <li><a
+                                            href="{{ route('profile.edit', ['id' => Auth::guard('nguoi_dung')->user()->id]) }}">Thông
+                                            tin cá nhân</a></li>
+                                    <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
+
+                                @elseif(Auth::guard('nguoi_dung')->check() &&
+                                    Auth::guard('nguoi_dung')->user()->id_q == 3 )
+                                    <li><a href="{{ route('quanlycuahang.index') }}">Quản lý cửa hàng</a></li>
+                                    <li><a
+                                            href="{{ route('profile.edit', ['id' => Auth::guard('nguoi_dung')->user()->id]) }}">Thông
+                                            tin cá nhân</a></li>
+                                    <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
+
                                 @endif
-                                <ul>
-                                    @if (Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 2)
-                                        <li><a href="{{ route('register.store') }}">Đăng kí cửa hàng</a></li>
-                                        <li><a href="{{ route('profile.edit', ['id'=> Auth::guard('nguoi_dung')->user()->id]) }}">Thông tin cá nhân</a></li>
-                                        <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
 
-                                    @elseif(Auth::guard('nguoi_dung')->check() &&
-                                        Auth::guard('nguoi_dung')->user()->id_q == 3 )
-                                        <li><a href="{{ route('quanlycuahang.index') }}">Quản lý cửa hàng</a></li>
-                                        <li><a href="{{ route('profile.edit', ['id'=> Auth::guard('nguoi_dung')->user()->id]) }}">Thông tin cá nhân</a></li>
-                                        <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
-
-                                    @endif
-
-                                </ul>
+                            </ul>
 
                             </li>
 
@@ -57,14 +61,52 @@
                     <div class="cart">
                         <a href="#">
                             <img alt="cart" src="{{ asset('template-client') }}/img/cart.png">
-                            <span>2</span>
+                            @if(Session::has('Cart')!= null)
+                            <span id="show-total">{{ Session::get('Cart')->totalQuanty }}</span>
+                            @else
+                            <span id="show-total">0</span>
+                            @endif
                         </a>
 
                         <div class="cart-list hidden-xs">
                             <div class="change-item-cart">
+                                @if (Session::has('Cart') != null)
+                                    <h5 class="title">Số lượng sản
+                                        phẩm<span>({{ Session::get('Cart')->totalQuanty }} sản phẩm)</span></h5>
+                                    @foreach (Session::get('Cart')->products as $item)
+                                        <div class="cart-item">
+                                            <img class="img-responsive" alt="Single product"
+                                                src="{{ asset($item['productInfor']->hinhanh_sp) }}">
+                                            <span class="icon_close close-icon"
+                                                data-id="{{ $item['productInfor']->id }}"></span>
+                                            <div class="product-info">
+                                                <h5>{{ $item['productInfor']->ten_sp }}</h5>
+                                                <div class="star-rating">
+                                                    <ul>
+                                                        <li><i class="fa fa-star"></i></li>
+                                                        <li><i class="fa fa-star"></i></li>
+                                                        <li><i class="fa fa-star"></i></li>
+                                                        <li><i class="fa fa-star"></i></li>
+                                                        <li><i class="fa fa-star-half-full"></i></li>
+                                                    </ul>
+                                                </div><br>
+                                                <div class="price">
+                                                    <del>500000.Đ </del>{{ $item['productInfor']->gia_sp }} X
+                                                    {{ $item['quanty'] }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="order-total">
+                                        <h5 class="title">Tổng tiền <span
+                                                class="amount">{{ Session::get('Cart')->totalPrice }}</span>
+                                        </h5>
+                                    </div>
+                                @endif
+
 
                             </div>
-                            <a href="#" class="trendify-btn black-bordered">View Cart</a>
+                            <a href="{{ route('cart.list') }}" class="trendify-btn black-bordered">View Cart</a>
                             <a href="#" class="trendify-btn black-bordered">Checkout</a>
                         </div>
                     </div>
@@ -89,19 +131,23 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <?php $danhmuc = DB::table('danh_muc')->get()?>
+                    <?php $danhmuc = DB::table('danh_muc')->get(); ?>
                     @foreach ($danhmuc as $item)
-                    <li class="dropdown">
+                        <li class="dropdown">
 
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">{{ $item->ten_dm }}</a>
-                        <?php $loaisanpham = DB::table('loai_san_pham')->where('id_dm',$item->id)->get()?>
-                        <ul class="dropdown-menu">
-                            @foreach ($loaisanpham as $item)
-                            <li><a href="{{ route('hienthisp.index', ['id'=>$item->id]) }}">{{ $item->ten_lsp }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">{{ $item->ten_dm }}</a>
+                            <?php $loaisanpham = DB::table('loai_san_pham')
+                                ->where('id_dm', $item->id)
+                                ->get(); ?>
+                            <ul class="dropdown-menu">
+                                @foreach ($loaisanpham as $item)
+                                    <li><a
+                                            href="{{ route('hienthisp.index', ['id' => $item->id]) }}">{{ $item->ten_lsp }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
                     @endforeach
                 </ul>
             </div>

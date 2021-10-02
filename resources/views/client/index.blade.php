@@ -59,7 +59,61 @@
 <div class="content">
     <div class="container">
         <!-- Tredy Offers Collection Tab -->
-        <div class="trendy-offers-tab margin-bottom-60px margin-top-20px">
+        <div class="featured-collection margin-bottom-100px margin-top-30px">
+            <div class="row">
+                <div class="col-md-6 col-sm-12 margin-bottom no-padding-right">
+                    <div class="bag featured-single hover-box-2 fadeInLeft wow" data-wow-delay="0.5s">
+                        <a href="#">
+                            <span class="border-right"></span>
+                            <div class="caption">
+                                <h3 class="heading">BAGS & TOTES</h3>
+                                <h2>WOMEN´S FASHION</h2>
+                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 margin-bottom">
+                    <div class="jackets featured-single hover-box-2 fadeInRight wow" data-wow-delay="0.6s">
+                        <a href="#">
+                            <span class="border-right"></span>
+                            <div class="caption">
+                                <h3 class="heading">COATS & JACKETS</h3>
+                                <h2>WINTER SALE<span class="offer">30%</span></h2>
+                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 margin-bottom no-padding-right">
+                    <div class="shoes featured-single hover-box-2 fadeInLeft wow" data-wow-delay="0.7s">
+                        <a href="#">
+                            <span class="border-right"></span>
+                            <div class="caption">
+                                <h3 class="heading">SHOES & BOOTS</h3>
+                                <h2>WOMEN´S FASHION</h2>
+                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="accessories featured-single hover-box-2 fadeInRight wow" data-wow-delay="0.8s">
+                        <a href="#">
+                            <span class="border-right"></span>
+                            <div class="caption">
+                                <h3 class="heading">ACCESSORIES</h3>
+                                <h2>Shop this look</h2>
+                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- <div class="trendy-offers-tab margin-bottom-60px margin-top-20px">
             <div class="row">
                 <div class="col-md-4">
                     <h3 class="right-dash">trendy fashion offers </h3>
@@ -188,7 +242,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Tredy Offers Collection Tab -->
 
         <!-- new member offer -->
@@ -890,18 +944,40 @@
                     type: "get",
                     url: "client/Add-cart/"+id,
                     success: function (response) {
-                       $(".change-item-cart").empty();
-                       $('.change-item-cart').html(response);
-                       alertify.success('Thêm vào giỏ hàng thành công');
+                        RenderCart(response)
+                        alertify.success('Thêm vào giỏ hàng thành công');
                     }
                 });
             });
          });
 
-         $('.icon_close').click(function (e) {
-             e.preventDefault();
-             console.log('123')
+         $('.change-item-cart ').on("click",".icon_close",function(){
+            $.ajax({
+                type: "get",
+                url: "client/Delete-cart/"+ $(this).data("id"),
+                success: function (response) {
+                    RenderCart(response)
+                    alertify.success('Xoa thanh cong');
+                }
+            });
          });
+
+         function RenderCart(response){
+            $(".change-item-cart").empty();
+            $('.change-item-cart').html(response);
+            $('#show-total').text($('#total-item-cart').val())
+         }
+        // function AddCart(id){
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "client/Add-cart/"+id,
+        //             success: function (response) {
+        //                $(".change-item-cart").empty();
+        //                $('.change-item-cart').html(response);
+        //                alertify.success('Thêm vào giỏ hàng thành công');
+        //         }
+        //     });
+        // }
 
 
     </script>

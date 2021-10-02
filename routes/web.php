@@ -51,6 +51,10 @@ Route::prefix('/client')->group(function () {
     Route::get('/sanpham/{id}/sua', [SanPhamController::class,'edit'])->name('sanpham.edit');
     Route::post('/sanpham/{id}/sua-sp',[SanPhamController::class, 'update'] )->name('sanpham.update');
     Route::get('/get-product-type/{idCat}',[SanPhamController::class,'getProductTypeByCat'])->name('sanpham.get-product-type');
+    // Route::get('/get-image-avatar/{id}',[SanPhamController::class,'getImageAvatar'])->name('sanpham.get-image-avatar');
+    Route::get('/delete-image-edit',[SanPhamController::class,'deleteAvatar'])->name('avatar.delete');
+    Route::get('/load-image',[SanPhamController::class,'loadImageData'])->name('image.load');
+
 
     Route::get('/quanlydanhmuc',[ChonDanhMucController::class,'index'] )->name('quanlydanhmuc.index');
     Route::get('/quanlydanhmuc/them',[ChonDanhMucController::class,'create'] )->name('quanlydanhmuc.create');
@@ -72,6 +76,10 @@ Route::prefix('/client')->group(function () {
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
     Route::get('/Add-cart/{id}',[CartController::class,'AddCart'])->name('Add.cart');
+    Route::get('/Delete-cart/{id}',[CartController::class,'DeleteItemCart'])->name('Delete.cart');
+    Route::get('/cart-list',[CartController::class,'index'])->name('cart.list');
+    Route::get('/Delete-list-cart/{id}',[CartController::class,'DeleteListItemCart'])->name('Delete-list.cart');
+    Route::get('client/cart-list-update/{id}/{quanty}',[CartController::class,'UpdateCart'])->name('cart.update');
 
 
 });

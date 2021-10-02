@@ -70,12 +70,6 @@
                                             <select class="form-control loaiSanPham" name="loaiSanPham" id="">
                                                 <option class="itemLSP" value="{{ $danhsach->id_lsp }}">
                                                     {{ $danhsach->ten_lsp }}</option>
-                                                @foreach ($danhsach_lsp as $item)
-                                                    {{-- <option value="{{ $item->id }}" @if ($danhsach->id_lsp == $item->id) selected   @endif>
-                                                        {{ $item->ten_lsp }}</option> --}}
-
-                                                @endforeach
-
                                             </select>
                                         </div>
                                     </div>
@@ -91,49 +85,19 @@
                                                 placeholder="Hình ảnh" aria-describedby="helpId">
                                             <small id="helpId" class="text-muted">Hình ảnh chính cho sản phẩm</small>
                                         </div>
-                                        <div class="form-group form-img">
-                                            @foreach ($hinhanh as $item)
-                                                <img class="img" src="{{ asset($item->duongdan_ha) }}" width="30%" alt="">
+                                        <div class="form-group form-img" id="show-image" data-id= "{{ $danhsach->id }}">
+                                            {{-- @foreach ($hinhanh as $item) --}}
+                                                {{-- <img class="img" src="{{ asset($item->duongdan_ha) }}" width="30%" alt="">
                                                 <input type="hidden" name="imgcurrent[]" id="" class="form-control-file"
                                                     placeholder="Hình ảnh" aria-describedby="helpId">
-                                             @endforeach
+                                                    <i data-id-ha="{{ $item->id }}"data-id-pro="{{ $item->id_sp }}" id="delete-image" class="far fa-times-circle"></i> --}}
+                                                     {{-- <a data-id-ha="{{ $item->id }}"data-id-pro="{{ $item->id_sp }}" href="{{ route('avatar.delete', ['id'=>])}}" id="delete-image" ><i class="far fa-times-circle"></i></a> --}}
+                                            {{-- @endforeach --}}
                                         </div>
-                                        {{-- <div class="form-group">
-                                            @for ($i = 1; $i < 4; $i++)
-                                                <input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"
-                                                    placeholder="Hình ảnh" aria-describedby="helpId"><br>
-                                            @endfor
-                                        </div> --}}
-
                                         <div class="col">
-                                            {{-- <button type="button" id="addfile" class="btn btn-primary">Thêm ảnh</button> --}}
                                             <a href="" id="addfile">Thêm hình ảnh chi tiết cho sản phẩm</a>
                                         </div>
-                                       <div id="insert">
-
-                                       </div>
-
-                                        {{-- <div class="form-group form-img">
-                                            <img class="img" src="{{ asset($danhsach->hinhanh_sp) }}" width="30%" alt="">
-                                            <input type="hidden" name="hinhAnhHienTai" id=""
-                                                value="{{ $danhsach->hinhanh_sp }}"><br>
-                                            @foreach ($hinhanh as $item)
-                                                <img class="img" src="{{ asset($item->duongdan_ha) }}" width="30%" alt="">
-                                                <input type="hidden" name="imgcurrent[]" id="" class="form-control-file"
-                                                    placeholder="Hình ảnh" aria-describedby="helpId"><br>
-                                            @endforeach
-                                        </div>
-                                        <div class="form-group">
-                                            <label for=""></label>
-                                            <input type="file" name="hinhAnh" id="" class="form-control-file"
-                                                placeholder="Hình ảnh" aria-describedby="helpId"><br>
-                                            <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
-                                        </div>
-                                        @for ($i = 1; $i < 4; $i++)
-                                            <input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"
-                                                placeholder="Hình ảnh" aria-describedby="helpId"><br>
-                                            <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
-                                        @endfor --}}
+                                        <div id="insert"></div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -157,7 +121,7 @@
                                         <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
                                     </div>
                                 </div>
-
+                                <input id=" id-product"type="hidden" value={{ $danhsach->id }}>
                             </div>
                         </div>
                     </form>
@@ -165,10 +129,12 @@
             </section>
         </main>
 
+
     </body>
     @push('ajax-add-product')
         <script>
             $(document).ready(function() {
+                load_data();
                 const BASE_URL = window.location.origin //lấy base url
                 $('select.danhMuc').change(function(e) {
                     e.preventDefault();
@@ -190,13 +156,76 @@
                         }
                     });
                 });
-            });
-            $(document).ready(function(){
-               $('#addfile').click(function (e) {
+                $(document).ready(function(){
+                $('#addfile').click(function (e) {
                    e.preventDefault();
                    $('#insert').append('<input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"placeholder="Hình ảnh" aria-describedby="helpId"><br>')
-               });
-            })
+                    });
+                })
+
+
+                // $('i#delete-image').click(function () {
+                //     // e.preventDefault();
+                //     var idSp = $(this).data('id-pro')
+                //     var idHa = $(this).data('id-ha')
+                //     console.log(idSp)
+                //     $('#show-image').empty();
+                //     $.ajaxSetup({
+                //         headers: {
+                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //         }
+                //     });
+
+                //     $.ajax({
+                //         type: "get",
+                //         url: BASE_URL + "/client/delete-image-edit/" ,
+                //         data: { idSp:idSp,
+                //             idHa:idHa},
+                //         success: function (response) {
+                //             console.log(response)
+                //             for(let i =0 ; i<response.length;i++){
+                //                 $('#show-image').append('<img class="img" src=" asset("'+response[i].duongdan_ha+'")" width="30%">')
+                //                 $('#show-image').append('<input type="hidden" name="imgcurrent[]" id="" class="form-control-file" placeholder="Hình ảnh" aria-describedby="helpId">')
+                //                 $('#show-image').append(  '<i data-id-ha=" '+response[i].id+'"data-id-pro=" '+response[i].id_sp+'" id="delete-image" class="far fa-times-circle"></i>')
+
+                //             }
+
+
+                //          }
+                //     });
+                // });
+
+                function load_data(){
+                    const BASE_URL = window.location.origin
+                    var id= $('#show-image').data('id')
+                   $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL + "/client/load-image" ,
+                        data: { id:id
+                           },
+                        success: function (response) {
+                            // console.log(response)
+                            for(let i =0 ; i<response.length;i++){
+                                $('#show-image').append('<img class="img" src="'+BASE_URL+'/'+response[i].duongdan_ha+'" width="30%">')
+                                $('#show-image').append('<input type="hidden" name="imgcurrent[]" id="" class="form-control-file" placeholder="Hình ảnh" aria-describedby="helpId">')
+                                // $('#show-image').append(  '<i data-idha=" '+response[i].id+'"data-id-pro=" '+response[i].id_sp+'" id="delete-image" class="far fa-times-circle"></i>')
+                                $('#show-image').append('<a onclick="deleteImg()" data-id-ha="'+response[i].id+'"data-id-pro="'+response[i].id_sp+'" href="javascript:" id="delete-image" ><i class="far fa-times-circle"></i></a>')
+                                // console.log('href="{{ route('avatar.delete', ['id'=>'+response[i].id+'])}}')
+                            }
+                         }
+                    });
+                }
+
+
+            });
+
+
+
         </script>
     @endpush
 @endsection

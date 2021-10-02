@@ -72,7 +72,7 @@
                                             alt="">
                                         <div class="form-group">
                                             <label for=""></label>
-                                            <input type="file" name="hinhAnh" id="" class="form-control-file"
+                                            <input type="file" name="hinhAnh" id="avatar-image" class="form-control-file"
                                                 placeholder="Hình ảnh" aria-describedby="helpId"><br>
                                             <small id="helpId" class="text-muted">Hình ảnh sản phẩm là bắt buộc</small>
                                         </div>
@@ -116,11 +116,13 @@
         <script>
             $(document).ready(function() {
                 const BASE_URL = window.location.origin //lấy base url
+
                 $('select.danhMuc').change(function(e) {
                     e.preventDefault();
                     var getIDCat = $(this).children("option:selected").val();
                     console.log(getIDCat);
                     $('.itemLSP').remove();
+
                     $.ajax({
                         type: "get",
                         url: BASE_URL + "/client/get-product-type/" + getIDCat,
@@ -135,6 +137,19 @@
                     });
                 });
 
+            });
+            $('#avatar-image').change(function(e) {
+                e.preventDefault();
+                const BASE_URL = window.location.origin //lấy base url
+                $.ajax({
+                    type: "get",
+                    url: "url",
+                    data: "data",
+                    dataType: "dataType",
+                    success: function(response) {
+
+                    }
+                });
             });
         </script>
     @endpush
