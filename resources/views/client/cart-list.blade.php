@@ -180,8 +180,8 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <input type="submit" name="checkout" value="proceed checkout"
-                                class="btn-black calculate margin-bottom-100px">
+                            <a href="{{ route('checkout.index') }}" style="width:250px;"><input type="submit" name="checkout" value="checkout"
+                                class="btn-black calculate margin-bottom-100px"></a>
                         </div>
                     </div>
                 </div>

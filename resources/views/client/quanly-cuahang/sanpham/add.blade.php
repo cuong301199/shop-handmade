@@ -100,7 +100,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
+                                        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
                                     </div>
                                 </div>
 

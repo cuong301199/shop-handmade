@@ -19,14 +19,13 @@ class CreateHoaDonTable extends Migration
             $table->bigInteger('id_nd')->unsigned();
             $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
-            $table->bigInteger('id_sp')->unsigned();
-            $table->foreign('id_sp')->references('id')->on('san_pham')->onDelete('cascade');
+            $table->bigInteger('id_ch')->unsigned();
+            $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
 
-            $table->bigInteger('id_gh')->unsigned();
-            $table->foreign('id_gh')->references('id')->on('gio_hang')->onDelete('cascade');
 
-            $table->string('ten_hd')->nullable();
             $table->string('ghi_chu')->nullable();
+            $table->string('phuong_thuc_thanh_toan')->nullable();
+            $table->string('tong_sp')->nullable();
             $table->string('dia_chi')->nullable();
             $table->string('tong_tien')->nullable();
 

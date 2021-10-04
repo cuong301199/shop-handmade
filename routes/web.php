@@ -15,6 +15,9 @@ use App\Http\Controllers\ThongTinCaNhanController;
 use App\Http\Controllers\ChiTietSanPhamController;
 use App\Http\Controllers\HienThiSanPhamController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ThanhToanController;
+
+
 
 
 
@@ -30,6 +33,7 @@ use App\Http\Controllers\CartController;
 */
 
 Route::get('',[AuthController::class,'home'])->name('client.index');
+
 Route::prefix('/client')->group(function () {
 
 
@@ -82,6 +86,10 @@ Route::prefix('/client')->group(function () {
     Route::get('client/cart-list-update/{id}/{quanty}',[CartController::class,'UpdateCart'])->name('cart.update');
 
 
+});
+Route::middleware(['checkNguoiDung'])->group(function () {
+    Route::get('/checkout',[ThanhToanController::class,'index'])->name('checkout.index');
+    Route::post('/checkout',[ThanhToanController::class,'store'])->name('checkout.store');
 });
 
 
