@@ -272,16 +272,16 @@
 {{-- {{ dd($danhsachsanpham) }} --}}
 
                 <div id="new" class="tab-pane fade in active">
-                    @foreach ($danhsachsanpham as $item)
+                   @foreach ($danhsachsanpham as $item)
                     <div class="product-single">
                         <div class="product-img">
                             <img class="img-responsive" alt="Single product" src="{{ asset($item->hinhanh_sp) }}">
                             <div class="actions">
                                 <ul>
-                                    <li><a class="zoom" href=""><i class="fa fa-search"></i></a></li>
-                                    <li><a id="{{ $item->id }}" class="addcart" href="{{ route('Add.cart', ['id'=>$item->id]) }}"><i class="fa fa-heart-o">ADD-CARD</i></a></li>
+                                    <li><a class="zoom" href="{{ asset($item->hinhanh_sp) }}"><i class="fa fa-search"></i></a></li>
+                                    <li><a id="{{ $item->id }}" class="addcart" href="{{ route('Add.cart', ['id'=>$item->id]) }}"><i class="fa fa-cart-plus"></i></a></li>
                                     {{-- <li><a onclick="AddCart({{ $item->id }})" href="javascript:"><i class="fa fa-heart-o">ADD-CARD</i></a></li> --}}
-                                    <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}">Chi tiết<i class="fa fa-expand"></i></a></li>
+                                    <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><i class="fa fa-expand"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -302,19 +302,19 @@
                         </div>
 
                         <!-- Product pop-up -->
-                        <div class="product-preview-1 modal fade" tabindex="-1" role="dialog">
+                         <div class="product-preview-1 modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <a class="close" href="#" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
 
                                     <div class="modal-body col-md-12">
                                         <div class="col-md-5 no-padding-left">
-                                            <img src="{{ asset('template-client') }}/img/single_2.jpg" class="img-responsive" alt="" />
+                                            <img src="{{ asset($item->hinhanh_sp) }}" class="img-responsive" alt="" />
                                         </div>
                                         <div class="col-md-7">
                                             <div class="right-content">
-                                                <a href="#"><h3>{{ $item->ten_sp }}</h3></a>
-                                                {{-- <span class="amount off">$50</span> --}}
+                                                <a href="#"><h3>{{ $item->ten_sp }}</h3></a> --}}
+                                                {{-- <span class="amount off">$50</span> looooo--}}
                                                 <span class="amount">{{ $item->gia_sp }}</span><br>
                                                 <span class="sku">available in stock</span>
                                                 <h4>DESCRIPTION</h4>
@@ -342,10 +342,10 @@
                             </div>
                         </div>
                         <!-- / Product pop-up -->
-                    </div>
+                     </div>
                     @endforeach
-                </div>
 
+                </div>
                 <div id="latest" class="tab-pane fade">
                     <div class="product-single">
                         <div class="product-img">
@@ -937,12 +937,13 @@
 @push('Add-Cart')
     <script>
         $(document).ready(function () {
+            const BASE_URL = window.location.origin;
             $('a.addcart').click(function (e) {
                 e.preventDefault();
                 var id =$(this).attr('id')
                 $.ajax({
                     type: "get",
-                    url: "client/Add-cart/"+id,
+                    url:"client/Add-cart/"+id,
                     success: function (response) {
                         RenderCart(response)
                         alertify.success('Thêm vào giỏ hàng thành công');

@@ -75,7 +75,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group form-img">
-                                            <img class="img-avatar" src="{{ asset($danhsach->hinhanh_sp) }}"
+                                            <img class="img" src="{{ asset($danhsach->hinhanh_sp) }}"
                                                 width="40%" alt="">
                                             <input type="hidden" name="hinhAnhHienTai" id=""
                                                 value="{{ $danhsach->hinhanh_sp }}"><br> <label for=""></label>
@@ -85,17 +85,54 @@
                                                 placeholder="Hình ảnh" aria-describedby="helpId">
                                             <small id="helpId" class="text-muted">Hình ảnh chính cho sản phẩm</small>
                                         </div>
-                                        <div class="form-group form-img" id="show-image" data-id= "{{ $danhsach->id }}">
-                                            {{-- @foreach ($hinhanh as $item) --}}
-                                                {{-- <img class="img" src="{{ asset($item->duongdan_ha) }}" width="30%" alt="">
+
+                                        <div class="form-group form-img" id="show-image" data-id="{{ $danhsach->id }}">
+                                            @foreach ($hinhanh as $item)
+                                                <img class="img" src="{{ asset($item->duongdan_ha) }}"
+                                                width="30%"  alt="">
                                                 <input type="hidden" name="imgcurrent[]" id="" class="form-control-file"
                                                     placeholder="Hình ảnh" aria-describedby="helpId">
-                                                    <i data-id-ha="{{ $item->id }}"data-id-pro="{{ $item->id_sp }}" id="delete-image" class="far fa-times-circle"></i> --}}
-                                                     {{-- <a data-id-ha="{{ $item->id }}"data-id-pro="{{ $item->id_sp }}" href="{{ route('avatar.delete', ['id'=>])}}" id="delete-image" ><i class="far fa-times-circle"></i></a> --}}
-                                            {{-- @endforeach --}}
+                                                <a data-id-ha="{{ $item->id }}" data-id-pro="{{ $item->id_sp }}"
+                                                    href="{{ route('image-edit.delete', ['id' => $item->id]) }}"
+                                                    id="delete-image"><i class="far fa-times-circle"></i></a>
+                                            @endforeach
                                         </div>
                                         <div class="col">
-                                            <a href="" id="addfile">Thêm hình ảnh chi tiết cho sản phẩm</a>
+                                            {{-- <a href="" id="addfile">Thêm hình ảnh chi tiết cho sản phẩm</a> --}}
+                                            {{-- <input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"placeholder="Hình ảnh" aria-describedby="helpId"><br> --}}
+
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModalLong">
+                                                    Thêm hình ảnh chi tiết
+                                                </button>
+
+                                                <div class="modal fade" id="exampleModalLong" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLongTitle"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLongTitle">Modal
+                                                                    title</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <input type="file" name="hinhAnhChiTiet" id=""
+                                                                    class="form-control-file" placeholder="Hình ảnh"
+                                                                    aria-describedby="helpId"><br>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Hủy</button>
+                                                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                         </div>
                                         <div id="insert"></div>
                                     </div>
@@ -121,7 +158,7 @@
                                         <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
                                     </div>
                                 </div>
-                                <input id=" id-product"type="hidden" value={{ $danhsach->id }}>
+                                <input id=" id-product" type="hidden" value={{ $danhsach->id }}>
                             </div>
                         </div>
                     </form>
@@ -134,7 +171,6 @@
     @push('ajax-add-product')
         <script>
             $(document).ready(function() {
-                load_data();
                 const BASE_URL = window.location.origin //lấy base url
                 $('select.danhMuc').change(function(e) {
                     e.preventDefault();
@@ -156,76 +192,13 @@
                         }
                     });
                 });
-                $(document).ready(function(){
-                $('#addfile').click(function (e) {
-                   e.preventDefault();
-                   $('#insert').append('<input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"placeholder="Hình ảnh" aria-describedby="helpId"><br>')
-                    });
-                })
-
-
-                // $('i#delete-image').click(function () {
-                //     // e.preventDefault();
-                //     var idSp = $(this).data('id-pro')
-                //     var idHa = $(this).data('id-ha')
-                //     console.log(idSp)
-                //     $('#show-image').empty();
-                //     $.ajaxSetup({
-                //         headers: {
-                //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //         }
+                // $(document).ready(function(){
+                // $('#addfile').click(function (e) {
+                //    e.preventDefault();
+                //    $('#insert').append('<input type="file" name="hinhAnhChiTiet[]" id="" class="form-control-file"placeholder="Hình ảnh" aria-describedby="helpId"><br>')
                 //     });
-
-                //     $.ajax({
-                //         type: "get",
-                //         url: BASE_URL + "/client/delete-image-edit/" ,
-                //         data: { idSp:idSp,
-                //             idHa:idHa},
-                //         success: function (response) {
-                //             console.log(response)
-                //             for(let i =0 ; i<response.length;i++){
-                //                 $('#show-image').append('<img class="img" src=" asset("'+response[i].duongdan_ha+'")" width="30%">')
-                //                 $('#show-image').append('<input type="hidden" name="imgcurrent[]" id="" class="form-control-file" placeholder="Hình ảnh" aria-describedby="helpId">')
-                //                 $('#show-image').append(  '<i data-id-ha=" '+response[i].id+'"data-id-pro=" '+response[i].id_sp+'" id="delete-image" class="far fa-times-circle"></i>')
-
-                //             }
-
-
-                //          }
-                //     });
-                // });
-
-                function load_data(){
-                    const BASE_URL = window.location.origin
-                    var id= $('#show-image').data('id')
-                   $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        }
-                    });
-                    $.ajax({
-                        type: "get",
-                        url: BASE_URL + "/client/load-image" ,
-                        data: { id:id
-                           },
-                        success: function (response) {
-                            // console.log(response)
-                            for(let i =0 ; i<response.length;i++){
-                                $('#show-image').append('<img class="img" src="'+BASE_URL+'/'+response[i].duongdan_ha+'" width="30%">')
-                                $('#show-image').append('<input type="hidden" name="imgcurrent[]" id="" class="form-control-file" placeholder="Hình ảnh" aria-describedby="helpId">')
-                                // $('#show-image').append(  '<i data-idha=" '+response[i].id+'"data-id-pro=" '+response[i].id_sp+'" id="delete-image" class="far fa-times-circle"></i>')
-                                $('#show-image').append('<a onclick="deleteImg()" data-id-ha="'+response[i].id+'"data-id-pro="'+response[i].id_sp+'" href="javascript:" id="delete-image" ><i class="far fa-times-circle"></i></a>')
-                                // console.log('href="{{ route('avatar.delete', ['id'=>'+response[i].id+'])}}')
-                            }
-                         }
-                    });
-                }
-
-
+                // })
             });
-
-
-
         </script>
     @endpush
 @endsection

@@ -55,9 +55,9 @@ Route::prefix('/client')->group(function () {
     Route::get('/sanpham/{id}/sua', [SanPhamController::class,'edit'])->name('sanpham.edit');
     Route::post('/sanpham/{id}/sua-sp',[SanPhamController::class, 'update'] )->name('sanpham.update');
     Route::get('/get-product-type/{idCat}',[SanPhamController::class,'getProductTypeByCat'])->name('sanpham.get-product-type');
-    // Route::get('/get-image-avatar/{id}',[SanPhamController::class,'getImageAvatar'])->name('sanpham.get-image-avatar');
-    Route::get('/delete-image-edit',[SanPhamController::class,'deleteAvatar'])->name('avatar.delete');
-    Route::get('/load-image',[SanPhamController::class,'loadImageData'])->name('image.load');
+    Route::get('/delete-image/{id}',[SanPhamController::class,'deleteImage'])->name('image-edit.delete');
+    // Route::get('/add-image-edit/{id}',[SanPhamController::class,'addImage'])->name('image-eidt.add');
+    // Route::get('/load-image',[SanPhamController::class,'loadImageData'])->name('image.load');
 
 
     Route::get('/quanlydanhmuc',[ChonDanhMucController::class,'index'] )->name('quanlydanhmuc.index');
@@ -74,7 +74,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/matkhau/{id}/edit',[ThongTinCaNhanController::class,'editpassword'])->name('password.edit');
     Route::post('/matkhau/{id}/update',[ThongTinCaNhanController::class,'updatepassword'])->name('password.update');
 
-    Route::get('/sanpham/hienthi/{id}',[HienThiSanPhamController::class,'index'])->name('hienthisp.index');
+    Route::get('/sanpham/hienthi/{id}',[SanPhamController::class,'getProductByCat'])->name('hienthisp.index');
     Route::get('/cuahang/hienthi/{id}',[CuaHangController::class,'showStore'])->name('hienthich.showStore');
 
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
@@ -85,7 +85,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/Delete-list-cart/{id}',[CartController::class,'DeleteListItemCart'])->name('Delete-list.cart');
     Route::get('client/cart-list-update/{id}/{quanty}',[CartController::class,'UpdateCart'])->name('cart.update');
 
-
+    Route::get('/thanh-toan',[thanhtoanController::class,'thanhToan'])->name('thanhtoan.index');
 });
 Route::middleware(['checkNguoiDung'])->group(function () {
     Route::get('/checkout',[ThanhToanController::class,'index'])->name('checkout.index');

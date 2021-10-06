@@ -190,62 +190,46 @@ class SanPhamController extends Controller
                 File::delete( $hinhAnhHienTai);
             }
         }
-        if($request->hasFile('hinhAnhChiTiet')){
-            $hinhAnh = $request->File('hinhAnhChiTiet');
-            foreach($hinhAnh as $file){
-                if(isset($file)){
-                    $tenFile = $file->getClientOriginalName();
-                    $file->move(public_path('hinh-anh-san-pham/'), $file->getClientOriginalName());
-                    $insertHinhAnh = DB::table('hinh_anh')->insert(
-                        [
-                            'id_sp' =>$id,
-                            'duongdan_ha'=>'hinh-anh-san-pham/'.$file->getClientOriginalName()
-                        ]
-                    );
-
-                }
-            }
-        }
-
-
-
-        // $img_current = $request->imgcurrent;
-        // foreach($img_current as $file){
-        //     if(isset($file)){
-        //         File::delete( $file);
+        // if($request->hasFile('hinhAnhChiTiet')){
+        //     $hinhAnh = $request->File('hinhAnhChiTiet');
+        //     foreach($hinhAnh as $file){
+        //         if(isset($file)){
+        //             $tenFile = $file->getClientOriginalName();
+        //             $file->move(public_path('hinh-anh-san-pham/'), $file->getClientOriginalName());
+        //             $insertHinhAnh = DB::table('hinh_anh')->insert(
+        //                 [
+        //                     'id_sp' =>$id,
+        //                     'duongdan_ha'=>'hinh-anh-san-pham/'.$file->getClientOriginalName()
+        //                 ]
+        //             );
+        //         }
         //     }
         // }
-
-
+        if($request->hasFile('hinhAnhChiTiet')){
+            $hinhAnh = $request->file('hinhAnhChiTiet');
+            $tenFile = $hinhAnh->getClientOriginalName();
+            $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
+            $insertHinhAnh = DB::table('hinh_anh')->insert(
+                [
+                    'id_sp' =>$id,
+                    'duongdan_ha'=>'hinh-anh-san-pham/'.$tenFile
+                ]
+                );
+            }
         Session::flash("success","Sửa thành công");
-        return redirect()->route('sanpham.index');
-
-
-
+        return redirect()->back();
     }
 
-    public function deleteAvatar(Request $request){
-        $idHa = $request->idHa;
-        $idSp = $request->idSp;
-        $delete = DB::table('hinh_anh')->where('id',$idHa)->delete();
+    public function deleteImage($id){
+        $delete = DB::table('hinh_anh')->where('id',$id)->delete();
+        return redirect()->back();
+    }
 
-        $hinhanh = DB::table('hinh_anh')
-        ->where('id_sp',$idSp)
+    public function getProductByCat($id){
+        $danhsach = DB::table('san_pham')
+        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        ->where('san_pham.id_lsp',$id)
         ->get();
-
-         return response()->json($hinhanh, 200);
-        // $idHa=$request->idHa;
-        // dd($idHa);
+        return view('client.sanpham.sanpham',compact('danhsach'));
     }
-
-    public function loadImageData(Request $request){
-        $idSp = $request->id;
-        $hinhanh = DB::table('hinh_anh')->where('id_sp',$idSp)->get();
-        return response()->json($hinhanh, 200);
-    }
-
-
-
-
-
 }

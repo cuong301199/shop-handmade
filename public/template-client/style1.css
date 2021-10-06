@@ -1,4 +1,4 @@
-/* /*=========================
+/*=========================
 Template Name: Trendify - Fashion eCommerce HTML5 Template.
 Author: KL-Webmedia
 Author URI: http://themeforest.net/user/kl-webmedia
@@ -47,8 +47,7 @@ Author URI: http://themeforest.net/user/kl-webmedia
 ========================================================================*/
 
 @font-face {
-    font-family: 'Montserrat Light',sans-serif;
-
+    font-family: 'Montserrat Light';
     src: url('fonts/montserrat-light.eot');
     src: url('fonts/montserrat-lightd41d.eot?#iefix') format('embedded-opentype'), url('fonts/montserrat-light.html') format('woff2'), url('fonts/montserrat-light.woff') format('woff'), url('fonts/montserrat-light.ttf') format('truetype'), url('fonts/montserrat-light.svg#montserratlight') format('svg');
     font-weight: normal;
@@ -56,9 +55,7 @@ Author URI: http://themeforest.net/user/kl-webmedia
 }
 
 @font-face {
-    font-family: 'Montserrat Semi Bold',sans-serif;
-
-
+    font-family: 'Montserrat Semi Bold';
     src: url('fonts/montserrat-semibold-webfont.eot');
     src: url('fonts/montserrat-semibold-webfontd41d.eot?#iefix') format('embedded-opentype'), url('fonts/montserrat-semibold-webfont.html') format('woff2'), url('fonts/montserrat-semibold-webfont.woff') format('woff'), url('fonts/montserrat-semibold-webfont.ttf') format('truetype'), url('fonts/montserrat-semibold-webfont.svg#montserratsemi_bold') format('svg');
     font-weight: normal;
@@ -69,8 +66,7 @@ Author URI: http://themeforest.net/user/kl-webmedia
     padding: 0;
 }
 body {
-     /* font: 12px 'Open Sans', Arial, Helvetica, sans-serif; */
-    font: 12px 'Open Sans', Arial, Roboto, sans-serif;
+    font: 12px 'Open Sans', Arial, Helvetica, sans-serif;
     color: #707070;
     line-height: 32px;
 	text-rendering: optimizeLegibility !important;
@@ -147,7 +143,7 @@ h5,
 h6 {
     margin: 0 0 5px;
     line-height: 1.35;
-    font-family: 'sans-serif';
+    font-family: 'Montserrat Semi Bold';
     text-transform: uppercase;
 }
 h1 {
@@ -226,9 +222,7 @@ ol {
 /* custom heading */
 .trendify-heading {
     position: relative;
-    font-family: 'Montserrat Semi Bold',sans-serif;
-
-
+    font-family: 'Montserrat Semi Bold';
     height: 100px;
 }
 .trendify-heading > * { position: absolute }
@@ -403,16 +397,14 @@ ol {
 }
 .featured-single h3.heading {
     color: #9560f5;
-    /* font-family: 'Montserrat Light'; */
-    font-family:'sans-serif';
+    font-family: 'Montserrat Light';
     letter-spacing: 0.4em;
 	font-size: 14px;
 	margin-bottom: 10px;
 }
 .coats-jackets .caption h4.heading {
     font-size: 14px;
-    /* font-family: 'Montserrat Light'; */
-    font-family:'sans-serif';
+    font-family: 'Montserrat Light';
     letter-spacing: 0.8em;
 	color: #1a1a1a;
     margin-bottom: 20px;
@@ -423,8 +415,7 @@ ol {
 .coats-jackets .caption h3.heading {
     font-size: 16px;
     color: #9560f5;
-    /* font-family: 'Montserrat Light'; */
-    font-family:'sans-serif';
+    font-family: 'Montserrat Light';
     letter-spacing: 0.05em;
     margin-bottom: 50px;
 }
@@ -437,8 +428,7 @@ ol {
     overflow: hidden;
 }
 .boxed-el h2 {
-    /* font-family: 'Montserrat Semi Bold'; */
-    font-family:'sans-serif';
+    font-family: 'Montserrat Semi Bold';
     right: 15px;
     text-align: right;
     top: 100px;
@@ -462,8 +452,7 @@ ol {
 .boxed-el h3 {
     font-size: 14px;
     letter-spacing: 0.8em;
-    /* font-family: 'Montserrat Light'; */
-    font-family:'sans-serif';
+    font-family: 'Montserrat Light';
 }
 .boxed-el h2,
 .boxed-el h3,
@@ -586,8 +575,7 @@ ol {
     text-decoration: none;
     text-transform: uppercase;
     font-size: 13px;
-    /* font-family: 'Montserrat Light'; */
-    font-family:'sans-serif';
+    font-family: 'Montserrat Light';
     display: inline-block;
     padding: 12px 0;
 	letter-spacing: 0.05em;
@@ -602,7 +590,6 @@ ol {
     border-bottom: 2px solid #1a1a1a;
 }
 .product-single .product-img {
-    height: 230px;
     overflow: hidden;
     position: relative;
 }
@@ -675,7 +662,7 @@ ol {
 .product-single .product-info .star-rating ul li i { color: #ffc925 }
 .product-single .product-info .price {
     font-size: 15px;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
     color: #1a1a1a;
 	letter-spacing: 0.05em;
 }
@@ -732,7 +719,7 @@ ol {
     letter-spacing: 0.8em;
 	line-height: 100%;
     font-size: 14px;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
     padding: 5px;
     text-transform: uppercase;
 }
@@ -803,7 +790,7 @@ ol {
 .latest-blogs .news-content h2 {
     color: #292929;
     font-size: 14px;
-    font-family: 'Montserrat Semi Bold',sans-serif;
+    font-family: 'Montserrat Semi Bold';
     text-transform: uppercase;
     border-bottom: 2px solid #292929;
     padding-bottom: 10px;
@@ -859,7 +846,7 @@ span.offer {
     font-size: 10px;
     margin: -3px 10px;
     position: absolute;
-    font-family: Raleway Medium,sans-serif;
+    font-family: Raleway Medium;
     background-color: #9560f5;
     color: #fff;
     padding: 2px 6px;
@@ -1068,7 +1055,7 @@ span.offer:before {
     line-height: 25px;
     padding: 0 10px;
 	letter-spacing: 0.05em;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
 }
 .single-masonry-product span:not(.new2) {
     top: 0;
@@ -1232,7 +1219,7 @@ span.offer:before {
 }
 .boxed-content span.hours {
     font-size: 66px;
-    font-family: 'Playfair Display', serif,sans-serif;
+    font-family: 'Playfair Display', serif;
 	font-weight: 400;
     color: #1a1a1a;
 }
@@ -1243,7 +1230,7 @@ span.offer:before {
     font-weight: 600;
 }
 .boxed-content span.and {
-    font-family: 'Playfair Display', serif,sans-serif;
+    font-family: 'Playfair Display', serif;
 	font-weight: 400;
     font-size: 15px;
     color: #c4ab7f;
@@ -1315,7 +1302,7 @@ span.post-no {
 .latest h4 {
     color: #b6b9c0;
     letter-spacing: 5px;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
 }
 .latest h2.trendify-heading:after {
     content: "";
@@ -1330,7 +1317,7 @@ span.post-no {
     float: right;
     margin: 30px 0 0 0;
     color: #1a1a1a;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
 	text-transform: uppercase;
 }
 .latest a span.arrow_right {
@@ -1354,7 +1341,7 @@ span.post-no {
 }
 .featured-product .news-content h2 {
     font-size: 16px;
-    font-family: 'Raleway Medium',sans-serif;
+    font-family: 'Raleway Medium';
     font-weight: 500;
 	margin-bottom: 20px;
 }
@@ -1364,7 +1351,7 @@ span.post-no {
 }
 .featured-product .price {
     font-size: 15px;
-    font-family: 'Montserrat Light'sans-serif;
+    font-family: 'Montserrat Light';
     color: #1a1a1a;
 	margin-bottom: 20px;
 }
@@ -1380,7 +1367,7 @@ span.post-no {
 .featured-product .news-content a {
     margin: 39px 0 0 0;
     color: #1a1a1a;
-    font-family: 'Montserrat Light'sans-serif;
+    font-family: 'Montserrat Light';
     text-transform: uppercase;
 }
 .featured-product .single-news {
@@ -1424,7 +1411,7 @@ span.post-no {
 .home4 .new-member-offer h3 {
     font-size: 14px;
     letter-spacing: 5px;
-    font-family: 'Montserrat Light'sans-serif;
+    font-family: 'Montserrat Light';
     color: #1a1a1a;
 }
 .new-member-offer input[type="email"] {
@@ -1464,7 +1451,7 @@ body.home5 .slide-items .caption h4 {
     font-size: 20px;
     color: #1a1a1a;
     letter-spacing: 10px;
-	font-family: 'Playfair Display', serif,sans-serif;
+	font-family: 'Playfair Display', serif;
 	font-weight: 400;
 }
 
@@ -1517,7 +1504,7 @@ body.home6 .left-arrow:hover:after {
     padding: 10px 0px 0px 5px;
     color: #fff;
     text-transform: uppercase;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
 }
 .single-latest-product .actions ul{
     padding: 0;
@@ -1589,7 +1576,7 @@ span.price-label {
 	letter-spacing: 0.05em;
     line-height: 25px;
     padding: 0 10px;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
     background: #1a1a1a;
 	top: 0;
     left: 0;
@@ -1779,11 +1766,11 @@ span.price-label {
 .page_title_area .bredcrumb ul li a{
 	color: #9f9f9f;
     font-weight: normal;
-    font-family: Open Sans,sans-serif;
+    font-family: Open Sans;
 }
 .page_title_area .bredcrumb ul li:after{
 	position: absolute;
-	font-family: 'FontAwesome',sans-serif;
+	font-family: 'FontAwesome';
 	top: 0;
 	right: -14px;
 	content: "\f105";
@@ -1869,7 +1856,7 @@ span.price-label {
 	color: #262b2f;
 	font-size: 13px;
 	font-weight: 600;
-	font-family: 'Montserrat Light',sans-serif;
+	font-family: 'Montserrat Light';
 }
 .progress .bar_over{
 	background: #d5d5d5 none repeat scroll 0 0;
@@ -1928,7 +1915,7 @@ span.price-label {
 .side-bar h4 {
     font-size: 14px;
     text-transform: uppercase;
-    font-family: 'Montserrat Semi Bold',sans-serif;
+    font-family: 'Montserrat Semi Bold';
     color: #292929;
     border-bottom: 2px solid #000;
     padding-bottom: 15px;
@@ -2196,7 +2183,7 @@ label.css-label {
     padding: 2px 30px 3px 20px;
     text-transform: uppercase;
     background-color: transparent;
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
 }
 @-moz-document url-prefix() {
 	.view-navigation .right-content .input-select select {
@@ -2244,7 +2231,7 @@ label.css-label {
     margin-right: 15px;
     pointer-events: none;
     box-sizing: border-box;
-    font-family: FontAwesome,sans-serif;
+    font-family: FontAwesome;
 }
 .view-navigation .right-content .input-select select option {
     font-size: 10px;
@@ -2319,7 +2306,7 @@ label.css-label {
     text-align: center !important;
     font-size: 14px;
     color: #292929;
-    font-family: 'Montserrat Semi Bold'sans-serif;
+    font-family: 'Montserrat Semi Bold';
     text-transform: uppercase;
 }
 
@@ -2402,7 +2389,7 @@ span.amount-subtotal {
     font-size: 11px;
     text-transform: uppercase;
     color: #292929;
-    font-family: 'Montserrat Light'sans-serif;
+    font-family: 'Montserrat Light';
     width: 40% !important;
     padding: 5px !important;
 }
@@ -2415,7 +2402,7 @@ span.amount-subtotal {
 .cupon-code th {
     font-size: 14px;
     color: #272727;
-    font-family: 'Raleway Medium'sans-serif;
+    font-family: 'Raleway Medium';
     font-weight: 600;
     text-transform: uppercase;
     padding: 10px 30px;
@@ -2507,7 +2494,7 @@ span.amount-subtotal {
     font-size: 15px;
 	color: #1a1a1a;
     margin-right: 25px;
-	font-family: 'Montserrat Light'sans-serif;
+	font-family: 'Montserrat Light';
 }
 .off {
 	color: #cbcbcb !important;
@@ -2517,7 +2504,7 @@ span.sku {
     color: #868686;
     font-style: italic;
     font-size: 12px;
-    font-family: 'Open Sans'sans-serif;
+    font-family: 'Open Sans';
     overflow: hidden;
     display: block;
     margin-bottom: 12px;
@@ -2605,7 +2592,7 @@ span.sku {
     color: #292929;
     text-transform: uppercase;
     margin-right: 20px;
-    font-family: 'Montserrat Semi Bold',sans-serif;
+    font-family: 'Montserrat Semi Bold';
 }
 
 .quantity input {
@@ -2802,7 +2789,7 @@ ul.pagination-number li:hover {
     color: #292929;
     font-size: 14px;
 	margin-bottom: 30px;
-    font-family: 'Montserrat Semi Bold',sans-serif;
+    font-family: 'Montserrat Semi Bold';
 }
 .login label {
     color: #292929;
@@ -2822,7 +2809,7 @@ label.label-remember {
     color: #a0a0a0;
     font-size: 12px;
     text-transform: none;
-	font-family: 'Open Sans',sans-serif;
+	font-family: 'Open Sans';
 	margin-bottom: 20px;
 }
 .login input[type="checkbox"] {
@@ -2858,7 +2845,7 @@ label.label-remember {
 }
 
 .login-method a {
-    font-family: 'Montserrat Light',sans-serif;
+    font-family: 'Montserrat Light';
     color: #fff;
     padding: 10px 35px;
     background-color: #5A84EE;
@@ -2967,7 +2954,7 @@ label.label-remember {
     text-transform: uppercase;
     font-size: 13px;
     color: #292929;
-    font-family: 'Raleway SemiBold',sans-serif;
+    font-family: 'Raleway SemiBold';
     margin-top: 15px;
 }
 .checkout input, .checkout select {
@@ -2983,7 +2970,7 @@ label.label-remember {
 	cursor: pointer;
     padding: 10px 0 10px 20px;
 	border: 1px solid #E3E3E3;
-	font-family: 'Montserrat Light',sans-serif;
+	font-family: 'Montserrat Light';
 }
 .cart-totals table th {
     font-weight: bold;
@@ -3019,7 +3006,7 @@ label.label-remember {
     font-size: 14px;
     color: #292929;
     margin: 30px 0 0 30px;
-	font-family: 'Raleway SemiBold',sans-serif;
+	font-family: 'Raleway SemiBold';
 }
 .payment p{
     margin: 0 0 15px 30px;
@@ -3066,7 +3053,7 @@ label.label-remember {
     letter-spacing: 0.4em;
 	color: #9560f5;
 	font-size: 14px;
-	font-family: 'Montserrat Light',sans-serif;
+	font-family: 'Montserrat Light';
 }
 .cat-info {
     padding: 40px 0 30px 40px;
@@ -3214,7 +3201,7 @@ article.add_blog_post{
 .standard_blog_post h4,
 .single_blog_post h4{
 	font-style: italic;
-	font-family: 'Open Sans',sans-serif;
+	font-family: 'Open Sans';
 	font-size: 12px;
 	margin-bottom: 15px;
 }
@@ -3257,7 +3244,7 @@ nav.blog_pagination ul {
 }
 nav.blog_pagination ul li {
 	display: inline;
-	font-family: "Raleway Medium",sans-serif;
+	font-family: "Raleway Medium";
 	font-size: 15px;
 }
 nav.blog_pagination ul li a {
@@ -3355,12 +3342,12 @@ nav.blog_pagination ul li:hover a:after{
 
 .single_recent_post h3 {
 	color: #292929;
-	font-family: "raleway",sans-serif;
+	font-family: "raleway";
 	font-size: 13px;
 	text-transform: none;
 }
 .single_recent_post h4 {
-	font-family: "Open Sans",sans-serif;
+	font-family: "Open Sans";
 	font-size: 12px;
 	text-transform: none;
 }
@@ -3374,7 +3361,7 @@ nav.blog_pagination ul li:hover a:after{
 	border: 1px solid #c0c0c0;
 	color: #c0c0c0;
 	display: inline-block;
-	font-family: "raleway medium",sans-serif;
+	font-family: "raleway medium";
 	padding: 0 25px;
 	text-decoration: none;
 	text-transform: uppercase;
@@ -3442,7 +3429,7 @@ article.single_blog_post{
 }
 
 .post_metas {
-	font-family: "raleway semi bold",sans-serif;
+	font-family: "raleway semi bold";
 	text-transform: uppercase;
 	margin-top: 40px;
 }
@@ -3500,12 +3487,12 @@ article.single_blog_post{
 
 .blog_content .media.this_post_author h3 {
 	color: #292929;
-	font-family: "Montserrat",sans-serif;
+	font-family: "Montserrat";
 	font-size: 13px;
 }
 .blog_content .media.this_post_author h3 span {
 	color: #9c9c9c;
-	font-family: "Open Sans",sans-serif;
+	font-family: "Open Sans";
 	font-size: 12px;
 	font-style: italic;
 	margin-left: 15px;
@@ -3570,14 +3557,14 @@ article.single_blog_post{
 }
 .post_comments .media-heading span {
 	color: #9c9c9c;
-	font-family: "open sans",sans-serif;
+	font-family: "open sans";
 	font-size: 12px;
 	text-transform: none;
 }
 .post_comments .media-heading a.author_comment {
 	background: #eedbb9 none repeat scroll 0 0;
 	color: #fff;
-	font-family: "raleway semiBold",sans-serif;
+	font-family: "raleway semiBold";
 	margin: 0 0 0 20px;
 	padding: 7px 20px;
 }
@@ -3594,7 +3581,7 @@ article.single_blog_post{
 .comment_form label {
 	display: block;
 	color: #292929;
-	font-family: "raleway semiBold",sans-serif;
+	font-family: "raleway semiBold";
 	font-size: 12px;
 	text-transform: uppercase;
 }
@@ -3640,4 +3627,3 @@ article.single_blog_post{
 .comment_form .text_area_form{
 	margin-bottom: 35px;
 }
-

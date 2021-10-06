@@ -116,13 +116,11 @@
         <script>
             $(document).ready(function() {
                 const BASE_URL = window.location.origin //lấy base url
-
                 $('select.danhMuc').change(function(e) {
                     e.preventDefault();
                     var getIDCat = $(this).children("option:selected").val();
                     console.log(getIDCat);
                     $('.itemLSP').remove();
-
                     $.ajax({
                         type: "get",
                         url: BASE_URL + "/client/get-product-type/" + getIDCat,

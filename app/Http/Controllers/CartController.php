@@ -23,9 +23,6 @@ class CartController extends Controller
             $newCart->AddCart($product, $product->id);
             $request->Session()->put('Cart',$newCart);
             // dd($newCart);
-
-
-
         return view('client.cart');
 
     }
@@ -65,7 +62,9 @@ class CartController extends Controller
         // dd($newCart);
         return view('client.cart-list-ajax');
 
-}
+    }
+
+
 
 
 }

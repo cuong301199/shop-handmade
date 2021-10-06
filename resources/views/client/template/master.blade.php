@@ -32,7 +32,6 @@
                @if (Request::segment(3)=='hienthi')
                 @include('client.template.sidebar')
                @endif
-
             </div>
         </div>
     </div>
@@ -47,6 +46,7 @@
     @include('client.template.js')
     @stack('Add-Cart')
     @stack('Add-list-cart')
+    @stack('Add-Cart-product')
 </body>
 
 <!-- Mirrored from kl-webmedia.com/demo/trendify/home-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Sep 2018 07:46:11 GMT -->
