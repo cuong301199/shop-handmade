@@ -14,7 +14,8 @@
                                     <span style="font-size: 20px"><i class="far fa-user-circle"></i></span>
                                     <span><i class="fa fa-angle-down"></i></span>
                                 @else
-                            <li><a href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
+                                <li><a href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
+                                <li><a href="{{ route('nguoidung.login') }}">Đăng ký</a></li>
                             @endif
                             <ul>
                                 @if (Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 2)

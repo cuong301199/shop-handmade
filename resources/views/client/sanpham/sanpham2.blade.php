@@ -1,4 +1,4 @@
-@extends('client.template.master')
+{{-- @extends('client.template.master')
 @section('content')
 <div class="page_title_area">
     <div class="container">
@@ -51,7 +51,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row change-product-by-cat">
+
             @foreach ( $danhsach as $item )
             <div class="col-md-4 col-sm-6">
                 <div class="product-single margin-bottom-70px">
@@ -62,7 +63,7 @@
                                 <li><a class="zoom" href="{{ asset($item->hinhanh_sp) }}"><i class="fa fa-search"></i></a></li>
                                 <li><a id="{{ $item->id }}" class="addcart" href="{{ route('Add.cart', ['id'=>$item->id]) }}"><i class="fa fa-cart-plus"></i></a></li>
                                 {{-- <li><a onclick="AddCart({{ $item->id }})" href="javascript:"><i class="fa fa-heart-o">ADD-CARD</i></a></li> --}}
-                                <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><i class="fa fa-expand"></i></a></li>
+                                {{-- <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><i class="fa fa-expand"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -85,10 +86,10 @@
             </div>
             @endforeach
         </div>
-    </div>
+    </div> --}}
 
     <!-- pagination -->
-    <div class="pagination">
+    {{-- <div class="pagination">
         <div class="col-xs-1 no-padding">
             <a href="#"><span class="pagicon arrow_left"></span></a>
         </div>
@@ -105,10 +106,10 @@
         <div class="col-xs-1 no-padding text-right">
             <a href="#"><span class="pagicon arrow_right"></span></a>
         </div>
-    </div>
+    </div>  --}}
     <!-- / pagination -->
 
-</div>
+{{-- </div>
 @push('Add-Cart')
     <script>
         $(document).ready(function () {
@@ -142,9 +143,9 @@
             $(".change-item-cart").empty();
             $('.change-item-cart').html(response);
             $('#show-total').text($('#total-item-cart').val())
-         }
+         } --}}
         // function AddCart(id){
-        //     $.ajax({
+        {{-- //     $.ajax({
         //         type: "GET",
         //         url: "client/Add-cart/"+id,
         //             success: function (response) {
@@ -154,7 +155,19 @@
         //         }
         //     });
         // }
+        // $('a.triangle').click(function (e) {
+        //     e.preventDefault();
+        //     var id = $(this).data('id');
+        //     $.ajax({
+        //         type: "get",
+        //         url: "/client/get-product-by-cat/" +id,
+        //         success: function (response) {
+        //             $(".change-product-by-cat").empty();
+        //             $('.change-product-by-cat').html(response);
+        //         }
+        //     });
+        // });
 
     </script>
 @endpush
-@endsection
+@endsection --}}

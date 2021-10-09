@@ -1,64 +1,29 @@
-<
+<<?php
+    $danhmuc = DB::table('danh_muc')->get();
+    $loaisanpham = DB::table('loai_san_pham')->get();
+?>
             <div class="col-md-3 col-md-pull-9 col-sm-12">
                 <div class="side-bar">
                     <div class="sidebar-list widget">
-                        <h4> Categories</h4>
+                        <h4>Danh mục</h4>
                         <ul>
-                            <li><a href="#" class="triangle">Loungewear <span>(8)</span></a></li>
-                            <li><a href="#" class="triangle">Oversized & Longline <span>(10)</span></a></li>
-                            <li><a href="#" class="triangle">Polo Shirts <span>(30)</span></a></li>
-                            <li><a href="#" class="triangle">Shirts <span>(41)</span></a></li>
-                            <li><a href="#" class="triangle">Shorts <span>(31)</span></a></li>
-                            <li><a href="#" class="triangle">Suits & Blazers <span>(16)</span></a></li>
-                            <li><a href="#" class="triangle">Sunglasses <span>(12)</span></a></li>
-                            <li><a href="#" class="triangle">Swimwear <span>(52)</span></a></li>
-                            <li><a href="#" class="triangle">Trousers & Chinos <span>(31)</span></a></li>
+                            @foreach ($danhmuc as $item)
+                            <li><a data-id="{{ $item->id }}" href="{{ route('sanpham.danhmuc', ['id'=>$item->id]) }}" class="triangle">{{ $item->ten_dm }}<span>(8)</span></a></li>
+                            @endforeach
                         </ul>
                     </div>
 
                     <div class="checkboxes widget">
                         <h4> Select a brand</h4>
                         <ul>
-                            <li>
+                            {{-- <li>
                                 <input type="checkbox" name="aberrombie" id="aberrombie" class="css-checkbox" />
                                 <label for="aberrombie" class="css-label">Aberrombie</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="adidas" id="adidas" class="css-checkbox" />
-                                <label for="adidas" class="css-label">Adidas</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="antony-morato" id="antony-morato" class="css-checkbox" />
-                                <label for="antony-morato" class="css-label">Antony Morato</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="armani-jeans" id="armani-jeans" class="css-checkbox" />
-                                <label for="armani-jeans" class="css-label">Armani Jeans</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="baldessarini" id="baldessarini" class="css-checkbox" />
-                                <label for="baldessarini" class="css-label">Baldessarini</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="bench" id="bench" class="css-checkbox" />
-                                <label for="bench" class="css-label">Bench</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="boxfresh" id="boxfresh" class="css-checkbox" />
-                                <label for="boxfresh" class="css-label">Boxfresh</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="bjorn-borg" id="bjorn-borg" class="css-checkbox" />
-                                <label for="bjorn-borg" class="css-label">Bjorn Borg</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="boom-bap" id="boom-bap" class="css-checkbox" />
-                                <label for="boom-bap" class="css-label">Boom Bap</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" name="boss" id="boss" class="css-checkbox" />
-                                <label for="boss" class="css-label">Boss</label>
-                            </li>
+                            </li> --}}
+                            @foreach ($danhmuc as $item)
+                            <li><a href="" class="triangle">{{ $item->ten_dm }}<span>(8)</span></a></li>
+                            @endforeach
+
                         </ul>
                     </div>
 

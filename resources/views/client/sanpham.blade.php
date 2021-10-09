@@ -1,119 +1,11 @@
 @extends('client.template.master')
 @section('content')
-{{-- <style>
-     *{
-        margin: 0px;
-        padding: 0px;
-    }
-    .page_title_area{
-        margin:0;
-          padding:0px;
-          background-color: white;
-    }
-
-    .page_title{
-        box-sizing: border-box;
-        /* width: 500px;*/
-        height: 150px;
-        background-color: #4d4d4d;
-        /* border: 1px solid #4d4d4d; */
-        border-radius: 5px;
-        margin: 10px 0 10px 0;
-
-    }
-
-    .avatar{
-        width: 80px;
-        height: 80px;
-        margin: 15px 0px 0px 30px;
-        border: 4px solid #9f9f9f;
-    }
-    .love{
-        box-sizing: content-box;
-        background-color: red;
-        width: 60px;
-        height: 30px;
-        border-radius: 5px;
-        margin-left: 0px 0px 50px 20px;
-        position:absolute;
-        left: 55px;
-        bottom: -4px;
-    }
-    .love p {
-        margin-bottom: 10px;
-        color:white;
-        font-size: 10px;
-        height: 25px;
-        padding-left: 5px;
-
-    }
-    .name-store{
-        margin-top: 20px;
-    }
-    .name-store .p{
-        color: white;
-        font-size:20px ;
-    }
-    .name-store p{
-        color: green;
-    }
-    .box{
-        padding: 0px;
-    }
-
-    .contact{
-        width: 160px;
-        height: 30px;
-        border: 1px solid;
-        border-color:white;
-        border-radius: 3px;
-    }
-    .see{
-        margin:5px 0px 0px 30px;
-    }
-    .chat{
-        margin: 5px 0px 0px 3px;
-    }
-    .character {
-        color: white;
-        font-size: 13px;
-        text-align: center;
-    }
-    .infor{
-        margin: 20px 0px 0px 40px;
-        font-size: 13px;
-        font-weight: bold;
-    }
-    span{
-        color: red;
-        font-weight:20px;
-    } */
-
-
-
-</style> --}}
-<style>
-    .benner{
-        background: url("{{ asset('hinh-anh-san-pham/banner.jpg') }}") no-repeat center center;
-        padding: 100px 0;
-        background-size: cover;
-    }
-    .benner{
-        background-image:  url("{{ asset('hinh-anh-san-pham/banner.jpg') }}");
-    }
-    .page_title_area{
-        margin-top: 10px
-    }
-</style>
-
-<div class="benner">
-</div>
 <div class="page_title_area">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
                 <div class="page_title">
-                    <h1>SHOPPING CART</h1>
+                    <h1>Thanh Toán</h1>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -121,19 +13,16 @@
                     <ul>
                         <li><a href="#">Home</a></li>
                         <li><a href="#">Shop</a></li>
-                        <li><a href="#">Cart</a></li>
+                        <li><a href="#">Thanh Toán</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
 <div class="col-md-9 col-md-push-3 col-sm-12">
     <div class="trendify-banner">
-        {{-- <img src="{{ asset('template-client') }}/img/banner.jpg" class="img-responsive" alt="image banner"> --}}
+        <img src="{{ asset('hinh-anh-san-pham') }}/banner2.jpg" class="img-responsive" alt="image banner">
         <div class="banner-text">
             <h3 class="animate fadeInDown wow">ELEGANT & MODERN fashion</h3>
             <h4 class="animate fadeInDown wow" data-wow-delay="0.5s">CLOTHES & STYLES FOR EVEYRONE</h4>
@@ -162,25 +51,23 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
-            @foreach ($sanpham as $item )
-
-
+            @foreach ( $danhsach as $item )
             <div class="col-md-4 col-sm-6">
                 <div class="product-single margin-bottom-70px">
                     <div class="product-img">
-                        <img class="img-responsive" alt="Single product" src="{{ asset($item->hinhanh_sp) }}">
+                        <img style="width: 262px;"  class="img-responsive" alt="Single product" src="{{ asset($item->hinhanh_sp) }}">
                         <div class="actions">
                             <ul>
-                                <li><a class="zoom" href=""><i class="fa fa-search"></i></a></li>
-                                <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                <li><a class="zoom" href="{{ asset($item->hinhanh_sp) }}"><i class="fa fa-search"></i></a></li>
+                                <li><a id="{{ $item->id }}" class="addcart" href="{{ route('Add.cart', ['id'=>$item->id]) }}"><i class="fa fa-cart-plus"></i></a></li>
+                                {{-- <li><a onclick="AddCart({{ $item->id }})" href="javascript:"><i class="fa fa-heart-o">ADD-CARD</i></a></li> --}}
+                                <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><i class="fa fa-expand"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="product-info">
-                        <h2>New Look Stripe T-Shirt</h2>
+                        <h2>{{ $item->ten_sp }}</h2>
                         <div class="star-rating">
                             <ul>
                                 <li><i class="fa fa-star"></i></li>
@@ -191,7 +78,7 @@
                             </ul>
                         </div>
                         <div class="price">
-                            <del> $50 </del> $40
+                            <del>{{ $item->gia_sp + ($item->gia_sp*20/100) }} VND</del>{{ $item->gia_sp }} VND
                         </div>
                     </div>
                 </div>
@@ -199,7 +86,7 @@
             @endforeach
         </div>
     </div>
-{{-- {{ dd($sanpham) }} --}}
+
     <!-- pagination -->
     <div class="pagination">
         <div class="col-xs-1 no-padding">
@@ -221,5 +108,53 @@
     </div>
     <!-- / pagination -->
 
- </div>
+</div>
+@push('Add-Cart')
+    <script>
+        $(document).ready(function () {
+            const BASE_URL = window.location.origin;
+            $('a.addcart').click(function (e) {
+                e.preventDefault();
+                var id =$(this).attr('id')
+                $.ajax({
+                    type: "get",
+                    url:"/client/Add-cart/"+id,
+                    success: function (response) {
+                        RenderCart(response)
+                        alertify.success('Thêm vào giỏ hàng thành công');
+                        // console.log(response);
+                    }
+                });
+            });
+         });
+
+         $('.change-item-cart').on("click",".icon_close",function(){
+            $.ajax({
+                type: "get",
+                url: "/client/Delete-cart/"+ $(this).data("id"),
+                success: function (response) {
+                    RenderCart(response)
+                    alertify.success('Xoa thanh cong');
+                }
+            });
+         });
+         function RenderCart(response){
+            $(".change-item-cart").empty();
+            $('.change-item-cart').html(response);
+            $('#show-total').text($('#total-item-cart').val())
+         }
+        // function AddCart(id){
+        //     $.ajax({
+        //         type: "GET",
+        //         url: "client/Add-cart/"+id,
+        //             success: function (response) {
+        //                $(".change-item-cart").empty();
+        //                $('.change-item-cart').html(response);
+        //                alertify.success('Thêm vào giỏ hàng thành công');
+        //         }
+        //     });
+        // }
+
+    </script>
+@endpush
 @endsection

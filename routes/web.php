@@ -85,7 +85,10 @@ Route::prefix('/client')->group(function () {
     Route::get('/Delete-list-cart/{id}',[CartController::class,'DeleteListItemCart'])->name('Delete-list.cart');
     Route::get('client/cart-list-update/{id}/{quanty}',[CartController::class,'UpdateCart'])->name('cart.update');
 
-    Route::get('/thanh-toan',[thanhtoanController::class,'thanhToan'])->name('thanhtoan.index');
+    // Route::get('/thanh-toan',[thanhtoanController::class,'thanhToan'])->name('thanhtoan.index');
+    Route::get('/sanpham/hienthi/danhmuc/{id}',[SanPhamController::class,'productCat'])->name('sanpham.danhmuc');
+
+
 });
 Route::middleware(['checkNguoiDung'])->group(function () {
     Route::get('/checkout',[ThanhToanController::class,'index'])->name('checkout.index');

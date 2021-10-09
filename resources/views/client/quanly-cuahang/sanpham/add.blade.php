@@ -119,11 +119,10 @@
                 $('select.danhMuc').change(function(e) {
                     e.preventDefault();
                     var getIDCat = $(this).children("option:selected").val();
-                    console.log(getIDCat);
                     $('.itemLSP').remove();
                     $.ajax({
                         type: "get",
-                        url: BASE_URL + "/client/get-product-type/" + getIDCat,
+                        url: BASE_URL+ "/client/get-product-type/" + getIDCat,
                         //  data: "data",
                         dataType: "json",
                         success: function(response) {
@@ -136,19 +135,19 @@
                 });
 
             });
-            $('#avatar-image').change(function(e) {
-                e.preventDefault();
-                const BASE_URL = window.location.origin //lấy base url
-                $.ajax({
-                    type: "get",
-                    url: "url",
-                    data: "data",
-                    dataType: "dataType",
-                    success: function(response) {
+            // $('#avatar-image').change(function(e) {
+            //     e.preventDefault();
+            //     const BASE_URL = window.location.origin //lấy base url
+            //     $.ajax({
+            //         type: "get",
+            //         url: "url",
+            //         data: "data",
+            //         dataType: "dataType",
+            //         success: function(response) {
 
-                    }
-                });
-            });
+            //         }
+            //     });
+            // });
         </script>
     @endpush
 @endsection

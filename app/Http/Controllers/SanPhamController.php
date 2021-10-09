@@ -229,7 +229,17 @@ class SanPhamController extends Controller
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->where('san_pham.id_lsp',$id)
+        ->select('san_pham.id','san_pham.*',)
         ->get();
-        return view('client.sanpham.sanpham',compact('danhsach'));
+        return view('client.sanpham',compact('danhsach'));
+    }
+
+    public function productCat($id){
+        $danhsach = DB::table('san_pham')
+        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
+        ->where('loai_san_pham.id_dm',$id)
+        ->get();
+        return view('client.sanpham',compact('danhsach'));
     }
 }

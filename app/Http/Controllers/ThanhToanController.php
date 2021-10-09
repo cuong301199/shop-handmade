@@ -44,17 +44,14 @@ class ThanhToanController extends Controller
                     'id_hd'=>$insert,
                     'so_luong'=>$key['quanty'],
                 ]);
-    }
-
-
-        if($insert){
-           dd('thah cong');
-        }else{
-            dd('ko thanh cong');
         }
+        Session::flash("success", "Đặt hàng thành công");
+        $request->Session()->forget('Cart');
+        return redirect()->route('thanhtoan.index');
+
     }
 
     public function thanhToan(){
-        return view('client.cart-demo')
-;    }
+        return view('client.cart-demo');
+    }
 }
