@@ -10,6 +10,7 @@ class ThanhToanController extends Controller
 {
     public function index(){
         $cart = Session::get('Cart');
+        // $cart = Session::get('Cart')->groupBy('id_ch', $preserveKeys = true);
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
         $nguoidung = DB::table('nguoi_dung')->where('id',$id_nd)->first();
         return view('client.thanhtoan',compact('nguoidung'));

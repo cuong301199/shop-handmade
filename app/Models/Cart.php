@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // class Cart extends Model
 class Cart
 {
-    // use HasFactory;
+    use HasFactory;
     public $products = null;
     public $totalPrice = 0;
     public $totalQuanty = 0;
@@ -18,7 +18,6 @@ class Cart
             $this->products = $cart->products;
             $this->totalPrice = $cart->totalPrice;
             $this->totalQuanty = $cart->totalQuanty;
-
         }
     }
     public function AddCart($product, $id){
