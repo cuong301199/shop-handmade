@@ -49,7 +49,7 @@
     }
 
 </style>
-@if (Session::has('Cart') != null)
+
 <div class="page_title_area">
     <div class="container">
         <div class="row">
@@ -70,6 +70,7 @@
         </div>
     </div>
 </div>
+@if (Cart::content() != null)
 <div class="container">
     <div class="row">
         {{-- <div class=" infor-user">
@@ -105,41 +106,58 @@
                 </div>
             </div>
         </div>
+        {{-- {{ dd(Cart::content()->groupBy('options.id_ch')) }} --}}
 
     </div>
-    <form action="{{ route('checkout.store')}}" method="post">
+
+    @foreach (Cart::content()->groupBy('options.id_ch') as $item => $key)
+    <?php
+        $totalPrice = 0;
+        $quanty = 0;
+     ?>
+    <form action="{{ route('checkout.store', ['id'=>$item]) }}" method="post">
         @csrf
         <div class="row row-container">
             <div class="col-md-7 product-cart">
                 <div class="row">
                 <div class="col-md-12">
-                        Tên của hàng
+                        <?php
+                            $tenCuaHang = DB::table('cua_hang')->where('id',$item)->first();
+                        ?>
+                        Tên cửa hàng : <a href="">{{ $tenCuaHang->ten_ch }}</a>
                 </div>
                 </div>
-                @foreach (Session::get('Cart')->products as $item)
-                <div class="row">
+                @foreach ($key as $value )
+                <div class="row" id="input-total-price">
                     <div class="col-md-3">
                         <div class="image-product">
-                            <a href=""><img src="{{ asset($item['productInfor']->hinhanh_sp) }}" alt=""></a>
-
+                            <a href=""><img src="{{ asset($value->options['duongdan_ha'] ) }}" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="content-product">
                             <h4>Black Father Classic T-Shirt New Dad Shirt Dad Shirt Daddy Shirt Father's Day Shirt Best Dad shirt Gift for Dad</h4>
                             <div class="price">
-                                <del>500000 VND </del>{{ $item['price'] }} VND
+                                <del>500000 VND </del>{{ $value->price }} VND
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                             <div class="quantity">
                             <input id="quanty" type="number" step="1" min="0" max="99" name="cart"
-                                    value="{{ $item['quanty'] }}" title="Qty" class="qty">
+                                    value="{{ $value->qty }}" title="Qty" class="qty">
                         </div>
                     </div>
+                    <?php
+                        $totalPrice+=$value->qty * $value->price;
+                        $quanty+=$value->qty;
+                    ?>
                 </div>
                 @endforeach
+
+                <input id="total" type="text" name="tong_tien" value="{{$totalPrice}}">
+                <input id="total" type="text" name="tong_sp" value="{{ $quanty}}">
+
                 <div class="row">
                 <div class="col-md-6">
                         <div class="textarea-note">
@@ -179,14 +197,13 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {{-- <span>PayPal</span>
-                        <p>At vero eos et accusam et justo duo dolores et ea rebum. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed. More information here.</p> --}}
+
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="">Tổng tiền</label>
                             </div>
                             <div class="col-md-6 no padding-left">
-                                <p>1000000</p>
+                                <p>{{ $totalPrice }}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -202,7 +219,7 @@
                                 <label for="">Tổng hóa đơn</label>
                             </div>
                             <div class="col-md-6 no padding-left">
-                                <p>1000000</p>
+                                <p>{{ $totalPrice }}</p>
                             </div>
                         </div>
                     </div>
@@ -210,7 +227,16 @@
                 </div>
             </div>
         </div>
+
     </form>
+    @endforeach
 </div>
 @endif
 @endsection
+@push('input-total-price')
+    <script>
+        var a=[];
+        a = $('#input-total-price input#total').val()
+        console.log(a);
+    </script>
+@endpush

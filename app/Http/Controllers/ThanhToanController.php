@@ -1,54 +1,58 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Cart;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
 use Session;
+use Cart;
 class ThanhToanController extends Controller
 {
     public function index(){
-        $cart = Session::get('Cart');
-        // $cart = Session::get('Cart')->groupBy('id_ch', $preserveKeys = true);
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
         $nguoidung = DB::table('nguoi_dung')->where('id',$id_nd)->first();
         return view('client.thanhtoan',compact('nguoidung'));
     }
-    public function store(Request $request){
-        $cart = Session::get('Cart');
-        $diaChi = $request->diaChi;
-        $ghiChu =$request->ghiChu;
-        $tongTien = $request->tongTien;
-
-
+    public function store(Request $request, $id){
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-        foreach ($cart ->products as $key) {
-                $insert =DB::table('hoa_don')->insertGetId(
-                    [
-                        'id_nd'=>$id_nd,
-                        'id_ch'=>$key["productInfor"]->id_ch,
-                        'ghi_chu'=>$ghiChu,
-                        'tong_tien'=>$tongTien,
-                        'dia_chi'=>$diaChi,
-                        'tong_tien'=>$cart->totalPrice,
-                        'tong_sp'=>$cart->totalQuanty,
+        $ghiChu =$request->ghiChu;
+        $phuongThucThanhToan = $request->phuongThucThanhToan;
+        $tong_sp = $request->tong_sp;
+        $diaChi = $request->diaChi;
+        $tongTien = $request->tong_tien;
 
-                    ]);
+        $inserth = DB::table('hoa_don')->insertGetId(
+            [
+                'id_nd'=>$id_nd,
+                'id_ch'=>$id,
+                'ghi_chu'=>$ghiChu,
+                'phuong_thuc_thanh_toan'=>$phuongThucThanhToan,
+                'tong_sp'=> $tong_sp,
+                'dia_chi'=>$diaChi,
+                'tong_tien'=>$tongTien
+            ]
+        );
+
+        foreach(Cart::content()->groupBy('options.id_ch') as $key => $value){
+            if($key==$id){
+                foreach($value as $item){
+                    $insert = DB::table('chi_tiet_hoa_don')->insert(
+                        [
+                            'id_hd'=>$inserth,
+                            'id_nd'=>$id_nd,
+                            'id_sp'=>$item->id,
+                            'id_ch'=>$key,
+                            'so_luong'=>$item->qty,
+                            'gia_sp'=>$item->price
+                        ]
+                    );
+
+                }
+            }
         }
-        foreach ($cart ->products as $key) {
-            $insert =DB::table('chi_tiet_hoa_don')->insert(
-                [
-                    'id_nd'=>$id_nd,
-                    'id_ch'=>$key["productInfor"]->id_ch,
-                    'id_sp'=>$key["productInfor"]->id,
-                    'id_hd'=>$insert,
-                    'so_luong'=>$key['quanty'],
-                ]);
-        }
+
         Session::flash("success", "Đặt hàng thành công");
-        $request->Session()->forget('Cart');
-        return redirect()->route('thanhtoan.index');
+        return redirect()->route('checkout.index');
 
     }
 

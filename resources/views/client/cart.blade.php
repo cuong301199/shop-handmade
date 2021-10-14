@@ -1,4 +1,5 @@
-@if (Session::has('Cart') != null)
+
+
 <h5 class="title">Số lượng sản phẩm<span>({{ Session::get('Cart')->totalQuanty }} sản phẩm)</span></h5>
 @foreach (Session::get('Cart')->products as $item)
 <div class="cart-item">
@@ -28,5 +29,6 @@
     </h5>
     <input hidden type="number" id="total-item-cart" value="{{ Session::get('Cart')->totalQuanty }}">
 </div>
-@endif
 
+
+{{-- {{ dd(Cart::content()) }} --}}

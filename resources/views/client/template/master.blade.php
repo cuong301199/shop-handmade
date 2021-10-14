@@ -47,6 +47,7 @@
     @stack('Add-Cart')
     @stack('Add-list-cart')
     @stack('Add-Cart-product')
+    @stack('input-total-price')
 </body>
 
 <!-- Mirrored from kl-webmedia.com/demo/trendify/home-3.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Sep 2018 07:46:11 GMT -->

@@ -62,8 +62,8 @@
                     <div class="cart">
                         <a href="#">
                             <img alt="cart" src="{{ asset('template-client') }}/img/cart.png">
-                            @if(Session::has('Cart')!= null)
-                            <span id="show-total">{{ Session::get('Cart')->totalQuanty }}</span>
+                            @if(Cart::content()!= null)
+                            <span id="show-total">{{Cart::count() }}</span>
                             @else
                             <span id="show-total">0</span>
                             @endif
@@ -71,17 +71,17 @@
 
                         <div class="cart-list hidden-xs">
                             <div class="change-item-cart">
-                                @if (Session::has('Cart') != null)
+                                @if (Cart::content()!=null)
                                     <h5 class="title">Số lượng sản
-                                        phẩm<span>({{ Session::get('Cart')->totalQuanty }} sản phẩm)</span></h5>
-                                    @foreach (Session::get('Cart')->products as $item)
+                                        phẩm<span>({{Cart::count() }} sản phẩm)</span></h5>
+                                    @foreach (Cart::content() as $item)
                                         <div class="cart-item">
                                             <img class="img-responsive" alt="Single product"
-                                                src="{{ asset($item['productInfor']->hinhanh_sp) }}">
-                                            <span class="icon_close close-icon"
-                                                data-id="{{ $item['productInfor']->id }}"></span>
+                                                src="{{ asset($item->options['duongdan_ha'])}}">
+                                           <span ><a href="{{ route('Delete.cart', ['rowId'=>$item->rowId]) }}"class="icon_close close-icon"
+                                            data-id="{{ $item->rowId }}"></a></span>
                                             <div class="product-info">
-                                                <h5>{{ $item['productInfor']->ten_sp }}</h5>
+                                                <h5>{{$item->ten}}</h5>
                                                 <div class="star-rating">
                                                     <ul>
                                                         <li><i class="fa fa-star"></i></li>
@@ -92,15 +92,15 @@
                                                     </ul>
                                                 </div><br>
                                                 <div class="price">
-                                                    <del>500000.Đ </del>{{ $item['productInfor']->gia_sp }} X
-                                                    {{ $item['quanty'] }}
+                                                    <del>500000.Đ </del>{{ $item->price }} X
+                                                    {{ $item->qty }}
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
-                                    <div class="order-total">
+                                     <div class="order-total">
                                         <h5 class="title">Tổng tiền <span
-                                                class="amount">{{ Session::get('Cart')->totalPrice }}</span>
+                                                class="amount">{{  Cart::subtotal() }}</span>
                                         </h5>
                                     </div>
                                 @endif

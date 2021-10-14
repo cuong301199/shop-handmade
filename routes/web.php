@@ -79,11 +79,12 @@ Route::prefix('/client')->group(function () {
 
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
+    //CART
     Route::get('/Add-cart/{id}',[CartController::class,'AddCart'])->name('Add.cart');
-    Route::get('/Delete-cart/{id}',[CartController::class,'DeleteItemCart'])->name('Delete.cart');
+    Route::get('/Delete-cart/{rowId}',[CartController::class,'DeleteItemCart'])->name('Delete.cart');
     Route::get('/cart-list',[CartController::class,'index'])->name('cart.list');
     Route::get('/Delete-list-cart/{id}',[CartController::class,'DeleteListItemCart'])->name('Delete-list.cart');
-    Route::get('client/cart-list-update/{id}/{quanty}',[CartController::class,'UpdateCart'])->name('cart.update');
+    Route::get('client/cart-list-update/{id}/{qty}',[CartController::class,'UpdateCart'])->name('cart.update');
 
     // Route::get('/thanh-toan',[thanhtoanController::class,'thanhToan'])->name('thanhtoan.index');
     Route::get('/sanpham/hienthi/danhmuc/{id}',[SanPhamController::class,'productCat'])->name('sanpham.danhmuc');
@@ -92,7 +93,7 @@ Route::prefix('/client')->group(function () {
 });
 Route::middleware(['checkNguoiDung'])->group(function () {
     Route::get('/checkout',[ThanhToanController::class,'index'])->name('checkout.index');
-    Route::post('/checkout',[ThanhToanController::class,'store'])->name('checkout.store');
+    Route::post('/checkout/{id}',[ThanhToanController::class,'store'])->name('checkout.store');
 });
 
 

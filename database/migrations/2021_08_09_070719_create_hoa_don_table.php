@@ -22,6 +22,8 @@ class CreateHoaDonTable extends Migration
             $table->bigInteger('id_ch')->unsigned();
             $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
 
+            $table->bigInteger('id_tt')->unsigned()->default('2');
+            $table->foreign('id_tt')->references('id')->on('trang_thai_don_hang')->onDelete('cascade');
 
             $table->string('ghi_chu')->nullable();
             $table->string('phuong_thuc_thanh_toan')->nullable();

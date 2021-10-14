@@ -21,9 +21,10 @@
             </div>
         </div>
     </div>
+    {{-- {{ dd(Cart::content()) }} --}}
     <!--/ page title -->
     <!-- Shopping Cart -->
-    @if (Session::has('Cart') != null)
+    @if (Cart::content() != null)
         <div class="shopping-cart margin-bottom-70px"  id="list-cart">
             <div class="container">
                 <div class="row">
@@ -39,39 +40,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (Session::get('Cart')->products as $item)
+                                @foreach (Cart::content() as $item)
                                     <tr class="cart_item">
                                         <td class="product-remove">
                                             {{-- <a id="delete-list-item-cart" data-id="{{$item['productInfor']->id  }}" href="{{ route('Delete-list.cart', ['id'=>$item['productInfor']->id]) }}" class="remove" title="Remove this item"><img
                                                  src="{{ asset('template-client') }}/img/icons/remove.png"
                                                     alt="" /></a> --}}
-                                                    <a id="delete-list-item-cart" onclick="DeleteCartItem();" data-id="{{$item['productInfor']->id  }}" href="javascript:" class="remove" title="Remove this item"><img
+                                                    <a  data-id="" href="{{ route('Delete.cart', ['rowId'=>$item->rowId]) }}" class="remove" title="Remove this item"><img
                                                         src="{{ asset('template-client') }}/img/icons/remove.png"
                                                         alt="" ></a>
                                         </td>
                                         <td class="product-thumbnail">
                                             <a   href="#"><img width="70" height="70"
-                                                    src="{{ asset($item['productInfor']->hinhanh_sp) }}"
+                                                    src="{{ asset($item->options['duongdan_ha']) }}"
                                                     alt="Adventure"></a>
                                         </td>
                                         <td class="product-info">
-                                            <a href="#">{{ $item['productInfor']->ten_sp }}</a>
+                                            <a href="#">{{ $item->name }}</a>
                                             <p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
                                         </td>
                                         <td class="product-quantity">
                                             <div class="quantity">
-                                                <input onchange="ChangeQuanty({{ $item['productInfor']->id  }})" id="quanty-item-{{ $item['productInfor']->id }}"type="number" step="1" min="0" max="99" name="cart"
-                                                    value="{{ $item['quanty'] }}" title="Qty" class="qty">
+                                                <input id="quanty-item" data-rowId="{{$item->rowId}}"type="number" step="1" min="0" max="99" name="cart"
+                                                    value="{{ $item->qty }}" title="Qty" class="qty">
                                             </div>
                                         </td>
                                         <td class="product-number">
                                             <span>AFN - 924222122</span>
                                         </td>
                                         <td class="product-price">
-                                            <span class="amount">{{ $item['productInfor']->gia_sp }}</span>
+                                            <span class="amount-subtotal">{{ $item->price }}</span>
                                         </td>
                                         <td class="product-subtotal">
-                                            <span class="amount-subtotal">{{ $item['price'] }}</span>
+                                            <span class="amount-subtotal">{{ $item->qty * $item->price }}</span>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -168,15 +169,15 @@
                                 <tbody>
                                     <tr class="cart-subtotal">
                                         <th>Tổng tiền</th>
-                                        <td><span class="subtotal">{{ Session::get('Cart')->totalPrice }}</span></td>
+                                        <td><span class="amount-subtotal">{{  Cart::subtotal() }}</span></td>
                                     </tr>
                                     <tr class="order-shipping">
                                         <th>Phí ship</th>
-                                        <td><span class="shipping">free Shipping</span></td>
+                                        <td><span class="amount-subtotal">free Shipping</span></td>
                                     </tr>
                                     <tr class="order-total">
                                         <th>Tổng đơn hàng</th>
-                                        <td><span class="amount"><strong>{{ Session::get('Cart')->totalPrice }}</strong></span></td>
+                                        <td><span class="amount-subtotal">{{  Cart::subtotal()}}</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -190,31 +191,34 @@
     @endif
     @push('Add-list-cart')
     <script>
-            function DeleteCartItem(){
-                var id = $('#delete-list-item-cart').data('id')
+            $(document).ready(function () {
+
+            $('#quanty-item').change(function (e) {
+                e.preventDefault();
+                var qty = $('#quanty-item').val()
+                var rowId = $(this).data('rowid')
+                // console.log(rowId)
                 $.ajax({
                     type: "get",
-                    url: "Delete-list-cart/"+id,
+                    url: 'client/cart-list-update/'+rowId+'/'+qty,
                     success: function (response) {
-                        $('#list-cart').empty();
-                        $('#list-cart').html(response)
-                        alertify.success('Xóa thành công');
-
+                        location.reload();
                     }
                 });
-            }
-
-            function ChangeQuanty(id){
-                var a = $('#quanty-item-'+id).val()
-                $.ajax({
-                    type: "get",
-                    url: 'client/cart-list-update/'+id+'/'+a,
-                    success: function (response) {
-                        $('#list-cart').empty();
-                        $('#list-cart').html(response)
-                    }
                 });
-            }
+            });
+
+            // function ChangeQuanty(id){
+            //     var a = $('#quanty-item-'+id).val()
+            //     $.ajax({
+            //         type: "get",
+            //         url: 'client/cart-list-update/'+id+'/'+a,
+            //         success: function (response) {
+            //             $('#list-cart').empty();
+            //             $('#list-cart').html(response)
+            //         }
+            //     });
+            // }
             //     $('a#delete-list-item-cart').click(function (e) {
             //     e.preventDefault();
             //     $.ajax({
