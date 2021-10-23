@@ -16,8 +16,8 @@ class CreateSanPhamTable extends Migration
         Schema::create('san_pham', function (Blueprint $table) {
             $table->id('id');
 
-            $table->bigInteger('id_ch')->unsigned();
-            $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
+            $table->bigInteger('id_nb')->unsigned();
+            $table->foreign('id_nb')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
             $table->bigInteger('id_dm')->unsigned();
             $table->foreign('id_dm')->references('id')->on('danh_muc')->onDelete('cascade');

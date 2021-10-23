@@ -15,15 +15,17 @@ class CreateChiTietHoaDonTable extends Migration
     {
         Schema::create('chi_tiet_hoa_don', function (Blueprint $table) {
             $table->id('id');
-            $table->bigInteger('id_nd')->unsigned();
-            $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
+            // $table->bigInteger('id_nm')->unsigned();
+            // $table->foreign('id_nm')->references('id')->on('nguoi_dung')->onDelete('cascade');
             $table->bigInteger('id_sp')->unsigned();
             $table->foreign('id_sp')->references('id')->on('san_pham')->onDelete('cascade');
-            $table->bigInteger('id_ch')->unsigned();
-            $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
+            // $table->bigInteger('id_nb')->unsigned();
+            // $table->foreign('id_nb')->references('id')->on('nguoi_dung')->onDelete('cascade');
             $table->bigInteger('id_hd')->unsigned();
             $table->foreign('id_hd')->references('id')->on('hoa_don')->onDelete('cascade');
+
             $table->integer('so_luong');
+
             $table->integer('gia_sp');
 
             $table->timestamps();

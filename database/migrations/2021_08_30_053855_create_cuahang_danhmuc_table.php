@@ -15,8 +15,8 @@ class CreateCuahangDanhmucTable extends Migration
     {
         Schema::create('cuahang_danhmuc', function (Blueprint $table) {
 
-            $table->bigInteger('id_ch')->unsigned();
-            $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
+            $table->bigInteger('id_nb')->unsigned();
+            $table->foreign('id_nb')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
             $table->bigInteger('id_dm')->unsigned();
             $table->foreign('id_dm')->references('id')->on('danh_muc')->onDelete('cascade');

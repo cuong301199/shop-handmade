@@ -22,8 +22,7 @@ class CreateNguoiDungTable extends Migration
             $table->string('ten_nd')->nullable();
             $table->string('email_nd')->nullable();
             $table->string('gioitinh_nd')->nullable();
-            $table->bigInteger('id_q')->unsigned()->default('2');
-            $table->foreign('id_q')->references('id')->on('quyen')->onDelete('cascade');
+
 
 
 

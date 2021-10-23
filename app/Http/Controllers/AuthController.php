@@ -16,13 +16,7 @@ class AuthController extends Controller
         return view('admin.index');
     }
 
-    public function home(){
-        $danhsachsanpham = DB::table('san_pham')
-        ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-        ->select('san_pham.*')
-        ->get();
-        return view('client.index',compact('danhsachsanpham'));
-    }
+    
 
     /**
      * Show the form for creating a new resource.

@@ -13,27 +13,24 @@ class SanPhamController extends Controller
     public function index(){
 
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-        $id_ch=DB::table('cua_hang')->select('id')->where('id_nd',$id_nd)->first();
 
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('cua_hang','cua_hang.id','san_pham.id_ch')
-        ->where('id_ch',$id_ch->id)
-        ->select('san_pham.*','cua_hang.*','loai_san_pham.*','san_pham.id')
+        ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
+        ->where('id_nb',$id_nd)
+        ->select('san_pham.*','loai_san_pham.*','san_pham.id')
         ->get();
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
     }
 
     public function create(){
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-        $id_ch=DB::table('cua_hang')->select('id')->where('id_nd',$id_nd)->first();
-
         $danhsach_lsp=DB::table('loai_san_pham')
         ->get();
         $danhsach_dm =DB::table('cuahang_danhmuc')
         ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
         ->select('cuahang_danhmuc.*','ten_dm')
-        ->where('cuahang_danhmuc.id_ch',$id_ch->id)
+        ->where('cuahang_danhmuc.id_nb',$id_nd)
         ->get();
         return view('client.quanly-cuahang.sanpham.add', compact('danhsach_lsp','danhsach_dm'));
 
@@ -47,7 +44,6 @@ class SanPhamController extends Controller
         $moTa = $request->moTa;
 
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-        $id_ch=DB::table('cua_hang')->select('id')->where('id_nd',$id_nd)->first();
 
         if($request->hasFile('hinhAnh')){
             $hinhAnh = $request->file('hinhAnh');
@@ -57,7 +53,7 @@ class SanPhamController extends Controller
 
             $insert =DB::table('san_pham')->insertGetId(
                 [
-                    'id_ch'=>$id_ch->id,
+                    'id_nb'=>$id_nd,
                     'id_lsp'=>$loaiSanPham,
                     'ten_sp'=>$tenSanPham,
                     'mota_sp'=>$moTa,

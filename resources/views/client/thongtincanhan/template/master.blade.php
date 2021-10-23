@@ -21,7 +21,7 @@
 <body>
 
     <!-- header -->
-    @include('client.thongtincanhan.template.header')
+    @include('client.template.header')
     <!-- / header -->
 
 		<!-- page title -->

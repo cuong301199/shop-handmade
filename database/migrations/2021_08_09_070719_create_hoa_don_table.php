@@ -16,19 +16,27 @@ class CreateHoaDonTable extends Migration
         Schema::create('hoa_don', function (Blueprint $table) {
             $table->id('id');
 
-            $table->bigInteger('id_nd')->unsigned();
-            $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
+            $table->bigInteger('id_nm')->unsigned();
+            $table->foreign('id_nm')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
-            $table->bigInteger('id_ch')->unsigned();
-            $table->foreign('id_ch')->references('id')->on('cua_hang')->onDelete('cascade');
+            $table->bigInteger('id_nb')->unsigned();
+            $table->foreign('id_nb')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
             $table->bigInteger('id_tt')->unsigned()->default('2');
             $table->foreign('id_tt')->references('id')->on('trang_thai_don_hang')->onDelete('cascade');
 
+            $table->bigInteger('id_pttt')->unsigned();
+            $table->foreign('id_pttt')->references('id')->on('phuong_thuc_thanh_toan')->onDelete('cascade');
+
+            $table->bigInteger('id_ttvc')->unsigned();
+            $table->foreign('id_ttvc')->references('id')->on('thong_tin_van_chuyen')->onDelete('cascade');
+
             $table->string('ghi_chu')->nullable();
+
             $table->string('phuong_thuc_thanh_toan')->nullable();
+
             $table->string('tong_sp')->nullable();
-            $table->string('dia_chi')->nullable();
+
             $table->string('tong_tien')->nullable();
 
             $table->timestamps();

@@ -24,6 +24,7 @@
     {{-- {{ dd(Cart::content()) }} --}}
     <!--/ page title -->
     <!-- Shopping Cart -->
+    {{-- {{ dd(Cart::content()) }} --}}
     @if (Cart::content() != null)
         <div class="shopping-cart margin-bottom-70px"  id="list-cart">
             <div class="container">
@@ -181,8 +182,16 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <a href="{{ route('checkout.index') }}" style="width:250px;"><input type="submit" name="checkout" value="checkout"
-                                class="btn-black calculate margin-bottom-100px"></a>
+
+                            <?php $id_nd= Auth::guard('nguoi_dung')->user()->id ?>
+                            <?php  $ttvc = DB::table('thong_tin_van_chuyen')->where('id_nm',$id_nd)->first()?>
+
+                            @if ($ttvc != null)
+                                <a href="{{ route('checkout.index') }}" style="width:250px;"><input type="submit" name="checkout" value="checkout"
+                                    class="btn-black calculate margin-bottom-100px"></a>
+                            @else
+                                {{ dd('thanh toan') }}
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -191,45 +200,20 @@
     @endif
     @push('Add-list-cart')
     <script>
-            $(document).ready(function () {
+            // $(document).ready(function () {
 
-            $('#quanty-item').change(function (e) {
-                e.preventDefault();
-                var qty = $('#quanty-item').val()
-                var rowId = $(this).data('rowid')
-                // console.log(rowId)
-                $.ajax({
-                    type: "get",
-                    url: 'client/cart-list-update/'+rowId+'/'+qty,
-                    success: function (response) {
-                        location.reload();
-                    }
-                });
-                });
-            });
-
-            // function ChangeQuanty(id){
-            //     var a = $('#quanty-item-'+id).val()
-            //     $.ajax({
-            //         type: "get",
-            //         url: 'client/cart-list-update/'+id+'/'+a,
-            //         success: function (response) {
-            //             $('#list-cart').empty();
-            //             $('#list-cart').html(response)
-            //         }
-            //     });
-            // }
-            //     $('a#delete-list-item-cart').click(function (e) {
+            // $('#quanty-item').change(function (e) {
             //     e.preventDefault();
-            //     $.ajax({
-            //         type: "get",
-            //         url: "Delete-list-cart/"+ $(this).data('id'),
-            //         success: function (response) {
-            //             $('#list-cart').empty();
-            //             $('#list-cart').html(response)
-            //             alertify.success('Xoa thanh cong');
-
-            //         }
+            //     var qty = $('#quanty-item').val()
+            //     var rowId = $(this).data('rowid')
+            //     console.log(rowId)
+            //     // $.ajax({
+            //     //     type: "get",
+            //     //     url: 'client/cart-list-update/'+rowId+'/'+qty,
+            //     //     success: function (response) {
+            //     //         location.reload();
+            //     //     }
+            //     // });
             //     });
             // });
 

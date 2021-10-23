@@ -1,6 +1,7 @@
 @extends('client.template.master')
 @section('content')
 {{-- {{ dd(Cart::content())}} --}}
+{{-- {{ dd(Session::get('fee')) }} --}}
 <div class="tp-banner-container rev-slider-content">
     <div class="slider_one" >
         <ul>
@@ -271,7 +272,7 @@
 {{-- {{ dd($danhsachsanpham) }} --}}
 
                 <div id="new" class="tab-pane fade in active">
-                   @foreach ($danhsachsanpham as $item)
+                        @foreach ($danhsachsanpham as $item)
                     <div class="product-single">
                         <div class="product-img">
                             <img class="img-responsive" alt="Single product" src="{{ asset($item->hinhanh_sp) }}">
@@ -284,6 +285,7 @@
                                 </ul>
                             </div>
                         </div>
+
                         <div class="product-info">
                             <h2>{{ $item->ten_sp }}</h2>
                             <div class="star-rating">
@@ -301,7 +303,7 @@
                         </div>
 
                         <!-- Product pop-up -->
-                         <div class="product-preview-1 modal fade" tabindex="-1" role="dialog">
+                          <div class="product-preview-1 modal fade" tabindex="-1" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <a class="close" href="#" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
@@ -340,7 +342,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- / Product pop-up -->
+
                      </div>
                     @endforeach
 
@@ -945,52 +947,6 @@
     </script>
 @endif
     <script>
-
-        // $(document).ready(function () {
-        //     const BASE_URL = window.location.origin;
-        //     $('a.addcart').click(function (e) {
-        //         e.preventDefault();
-        //         var id =$(this).attr('id')
-        //         $.ajax({
-        //             type: "get",
-        //             url:"client/Add-cart/"+id,
-        //             success: function (response) {
-        //                 RenderCart(response)
-        //                 alertify.success('Thêm vào giỏ hàng thành công');
-        //             }
-        //         });
-        //     });
-        //  });
-
-        //  $('.change-item-cart ').on("click",".icon_close",function(){
-        //     $.ajax({
-        //         type: "get",
-        //         url: "client/Delete-cart/"+ $(this).data("id"),
-        //         success: function (response) {
-        //             RenderCart(response)
-        //             alertify.success('Xoa thanh cong');
-        //         }
-        //     });
-        //  });
-
-        //  function RenderCart(response){
-        //     $(".change-item-cart").empty();
-        //     $('.change-item-cart').html(response);
-        //     $('#show-total').text($('#total-item-cart').val())
-        //  }
-        // function AddCart(id){
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "client/Add-cart/"+id,
-        //             success: function (response) {
-        //                $(".change-item-cart").empty();
-        //                $('.change-item-cart').html(response);
-        //                alertify.success('Thêm vào giỏ hàng thành công');
-        //         }
-        //     });
-        // }
-
-
     </script>
 @endpush
 @endsection

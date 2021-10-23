@@ -11,13 +11,13 @@ class CartController extends Controller
 
 
     public function index(){
-        return view('client.cart-list');
+        return view('client.cart');
     }
     public function AddCart(Request $request ,$id){
         $product = DB::table('san_pham')->where('id',$id)->first();
-        Cart::add($product->id,$product->ten_sp, 1,$product->gia_sp,'770', ['id_ch' => $product->id_ch,'duongdan_ha' => $product->hinhanh_sp]);
+        Cart::add($product->id,$product->ten_sp, 1,$product->gia_sp,'770', ['id_nb' => $product->id_nb,'duongdan_ha' => $product->hinhanh_sp]);
         Session::flash("success","Thêm thành công");
-        return \redirect()->route('client.index');
+        return \redirect()->back();
         // Cart::destroy();
     }
 
@@ -45,13 +45,13 @@ class CartController extends Controller
     }
 
 
-    public function total_item(){
-        Cart()::content()->groupBy('options.id_ch');
-        foreach (Cart::content()->groupBy('options.id_ch') as $item => $key){
-            foreach($key as $value){
-                $total+=$value->qty * $value->price;
-            }
-        }
-    }
+    // public function total_item(){
+    //     Cart()::content()->groupBy('options.id_nb');
+    //     foreach (Cart::content()->groupBy('options.id_nb') as $item => $key){
+    //         foreach($key as $value){
+    //             $total+=$value->qty * $value->price;
+    //         }
+    //     }
+    // }
 
 }

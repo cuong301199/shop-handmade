@@ -23,7 +23,7 @@
                         <label for="">Tên danh mục</label>
                         {{-- {{ dd($danhsach_lsp) }} --}}
                         {{-- {{ dd($danhsach) }} --}}
-                        <select name="tenDanhMuc" id="">
+                        <select name="tenDanhMuc" id="" class="form-control">
 
                             @foreach ($danhsach as $item)
                                 <option value="{{ $item->id }}"

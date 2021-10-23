@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuyenTable extends Migration
+class CreatePhuongThucThanhToanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateQuyenTable extends Migration
      */
     public function up()
     {
-        Schema::create('quyen', function (Blueprint $table) {
+        Schema::create('phuong_thuc_thanh_toan', function (Blueprint $table) {
             $table->id('id');
-            $table->string('ten_q');
+            $table->string('ten_pttt');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateQuyenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quyen');
+        Schema::dropIfExists('phuong_thuc_thanh_toan');
     }
 }

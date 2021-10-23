@@ -5,9 +5,7 @@
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">
             <?php $id_nd = Auth::guard('nguoi_dung')->user()->id;
-                  $id_ch = DB::table('cua_hang')
-                           ->where('id', $id_nd)
-                           ->first(); ?> {{ $id_ch->ten_ch }}
+                   ?>
             </span>
     </a>
 
@@ -39,7 +37,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="" class="nav-link">
+                    <a href="{{ route('manage_oder.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Quản lý đơn hàng
@@ -51,6 +49,14 @@
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Quản lý danh mục
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('phivanchuyen.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Quản lý phí vận chuyển
                         </p>
                     </a>
                 </li>

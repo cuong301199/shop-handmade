@@ -50,6 +50,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('coupon.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Mã giảm giá
+                        </p>
+                    </a>
+                </li>
                 @if (Auth::guard('quan_tri')->check())
                     <li class="nav-item">
                         <a href="{{ route('admin.logout') }}" class="nav-link">

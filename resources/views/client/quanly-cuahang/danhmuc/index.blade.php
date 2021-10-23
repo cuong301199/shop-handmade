@@ -51,7 +51,7 @@
                                     <td>
 
                                         <a
-                                            href="{{ route('quanlydanhmuc.delete', ['id_ch' => $item->id_ch, 'id_dm' => $item->id_dm]) }}"><button
+                                            href="{{ route('quanlydanhmuc.delete', ['id_nb' => $item->id_nb, 'id_dm' => $item->id_dm]) }}"><button
                                                 class='btn btn-danger'>delete</button></a>
                                     </td>
 

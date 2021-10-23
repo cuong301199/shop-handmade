@@ -110,51 +110,17 @@
 
 </div>
 @push('Add-Cart')
+@if (Session::has('success'))
     <script>
-        $(document).ready(function () {
-            const BASE_URL = window.location.origin;
-            $('a.addcart').click(function (e) {
-                e.preventDefault();
-                var id =$(this).attr('id')
-                $.ajax({
-                    type: "get",
-                    url:"/client/Add-cart/"+id,
-                    success: function (response) {
-                        RenderCart(response)
-                        alertify.success('Thêm vào giỏ hàng thành công');
-                        // console.log(response);
-                    }
-                });
-            });
-         });
-
-         $('.change-item-cart').on("click",".icon_close",function(){
-            $.ajax({
-                type: "get",
-                url: "/client/Delete-cart/"+ $(this).data("id"),
-                success: function (response) {
-                    RenderCart(response)
-                    alertify.success('Xoa thanh cong');
-                }
-            });
-         });
-         function RenderCart(response){
-            $(".change-item-cart").empty();
-            $('.change-item-cart').html(response);
-            $('#show-total').text($('#total-item-cart').val())
-         }
-        // function AddCart(id){
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "client/Add-cart/"+id,
-        //             success: function (response) {
-        //                $(".change-item-cart").empty();
-        //                $('.change-item-cart').html(response);
-        //                alertify.success('Thêm vào giỏ hàng thành công');
-        //         }
-        //     });
-        // }
-
+        alertify.success('Thêm vào giỏ hàng thành công');
+    </script>
+@endif
+@if (Session::has('success-deleteItemCart'))
+    <script>
+        alertify.success('Xóa sản phẩm thành công');
+    </script>
+@endif
+    <script>
     </script>
 @endpush
 @endsection

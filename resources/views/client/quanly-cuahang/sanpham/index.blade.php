@@ -38,7 +38,7 @@
                             @foreach ($danhsach as $item)
                                 <tr>
                                     <th scope="row">{{ $stt++ }}</th>
-                                    <td>{{ $item->ten_sp }}</td>
+                                    <td>{{ $item->ten_sp  }}</td>
                                     <td>
                                         <img src="{{ asset($item->hinhanh_sp) }}" alt="" width = 50px heigth=50px>
                                     </td>
@@ -47,9 +47,9 @@
                                     <td>{{ $item->soluong_sp }}</td>
                                     <td>
                                         <a href="{{ route('sanpham.edit', ['id' => $item->id]) }}"><button
-                                                class='btn btn-warning'>edit</button></a>
+                                                class='btn btn-warning'>Chỉnh sửa</button></a>
                                         <a href="{{ route('sanpham.delete', ['id' => $item->id]) }}"><button
-                                                class='btn btn-danger'>delete</button></a>
+                                                class='btn btn-danger'>Xóa</button></a>
                                     </td>
                                 </tr>
                             @endforeach

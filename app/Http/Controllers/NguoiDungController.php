@@ -76,18 +76,15 @@ class NguoiDungController extends Controller
             'username'=> $request->tenDangNhap,
             'password'=>$request->matKhau
         ];
-
-
-
         if(Auth::guard('nguoi_dung')->attempt($arr)){
 
             return redirect()->route('client.index');
-
         }else{
             Session::flash("error-login", "Sai tên đăng nhập hoặc mật khẩu");
             return redirect()->back();
         }
     }
+    
 
 
     public function logOut(){

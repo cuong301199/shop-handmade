@@ -9,7 +9,7 @@ class ChiTietSanPhamController extends Controller
     public function index($id){
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('cua_hang','cua_hang.id','san_pham.id_ch')
+        ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
         ->where('san_pham.id',$id)
         ->first();
 

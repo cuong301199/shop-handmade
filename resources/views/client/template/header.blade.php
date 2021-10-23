@@ -11,6 +11,7 @@
                         <ul>
                             <li class="toggle">
                                 @if (Auth::guard('nguoi_dung')->check())
+                                    <a>Xin chào {{ Auth::guard('nguoi_dung')->user()->ten_nd }}</a>
                                     <span style="font-size: 20px"><i class="far fa-user-circle"></i></span>
                                     <span><i class="fa fa-angle-down"></i></span>
                                 @else
@@ -18,16 +19,8 @@
                                     <li><a href="{{ route('nguoidung.login') }}">Đăng ký</a></li>
                                 @endif
                             <ul>
-                                @if (Auth::guard('nguoi_dung')->check() && Auth::guard('nguoi_dung')->user()->id_q == 2)
-                                    <li><a href="{{ route('register.store') }}">Đăng kí cửa hàng</a></li>
-                                    <li><a
-                                            href="{{ route('profile.edit', ['id' => Auth::guard('nguoi_dung')->user()->id]) }}">Thông
-                                            tin cá nhân</a></li>
-                                    <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
-
-                                @elseif(Auth::guard('nguoi_dung')->check() &&
-                                    Auth::guard('nguoi_dung')->user()->id_q == 3 )
-                                    <li><a href="{{ route('quanlycuahang.index') }}">Quản lý cửa hàng</a></li>
+                                @if (Auth::guard('nguoi_dung')->check() )
+                                    <li><a href="{{ route('quanlycuahang.index') }}">Quản lý bán hàng</a></li>
                                     <li><a
                                             href="{{ route('profile.edit', ['id' => Auth::guard('nguoi_dung')->user()->id]) }}">Thông
                                             tin cá nhân</a></li>
@@ -50,8 +43,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12 search">
-                    <form>
-                        <input type="text" name="search" placeholder="Search for something" />
+                    <form action="{{ route('search.index') }}" method="get">
+                        @csrf
+                        <input type="text" name="search" placeholder="Tìm kiếm sản phẩm" />
                         <button type="submit"><span class="arrow_right"></span></button>
                     </form>
                 </div>

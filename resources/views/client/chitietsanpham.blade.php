@@ -134,7 +134,7 @@
                                         value="1" title="Qty" class="qty">
                                 </div>
                                 <div class="add-to-cart">
-                                    <a href="#" class="trendify-btn black-bordered">Thêm vào giỏ hàng</a>
+                                    <a  href="{{ route('Add.cart', ['id'=>$danhsach->id]) }}" class="trendify-btn black-bordered">Thêm vào giỏ hàng</a>
                                 </div>
                             </div>
                             <div class="product-desc">
@@ -142,9 +142,10 @@
                                 <span class="item-cat"><b>Loại sản phẩm : </b>{{ $danhsach->ten_lsp }}</span>
                             </div>
                             <div class="product-desc">
-                                <span class="item-cat"><b>Tên cửa hàng : </b><a
-                                        href="{{ route('hienthich.showStore', ['id' => $danhsach->id_ch]) }}">{{ $danhsach->ten_ch }}</a></span>
+                                <span class="item-cat"><b>Tên người bán : </b><a
+                                        href="{{ route('hienthich.showStore', ['id' => $danhsach->id_nb]) }}">{{ $danhsach->ten_nd }}</a></span>
                             </div>
+
                         </div>
                     </div>
                     {{-- @endforeach --}}

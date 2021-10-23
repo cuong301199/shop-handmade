@@ -38,7 +38,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="">Số lượng</label>
-                                            <input type="text" name="soLuong" id="" class="form-control" placeholder=""
+                                            <input type="number" name="soLuong" id="" class="form-control" placeholder=""
                                                 aria-describedby="helpId">
                                             <small id="helpId" class="text-muted">Số lượng là bắt buộc</small>
                                         </div>
