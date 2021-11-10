@@ -15,7 +15,8 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="{{ route('admin.index') }}" class="d-block">Trang chủ</a>
+                <a href="{{ route('admin.index') }}" class="d-block">Admin</a>
+                <a href="{{ route('admin.logout') }}">Đăng xuất</a>
             </div>
         </div>
 
@@ -28,7 +29,7 @@
                     <a href="{{ route('danhmuc.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Danh mục
+                            Quản lý danh mục
                         </p>
                     </a>
                 </li>
@@ -38,27 +39,27 @@
 
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Loại sản phẩm
+                            Quan lý loại sản phẩm
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('cuahang.index') }}" class="nav-link">
+                    <a href="{{ route('user.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Cửa hàng
+                            Quản lý người dùng
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('coupon.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Mã giảm giá
                         </p>
                     </a>
-                </li>
-                @if (Auth::guard('quan_tri')->check())
+                </li> --}}
+                {{-- @if (Auth::guard('quan_tri')->check())
                     <li class="nav-item">
                         <a href="{{ route('admin.logout') }}" class="nav-link">
                             <i class="nav-icon fas fa-th"></i>
@@ -68,7 +69,7 @@
                         </a>
                     </li>
 
-                @endif
+                @endif --}}
 
 
 

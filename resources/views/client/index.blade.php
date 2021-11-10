@@ -1,8 +1,42 @@
 @extends('client.template.master')
 @section('content')
-{{-- {{ dd(Cart::content())}} --}}
-{{-- {{ dd(Session::get('fee')) }} --}}
-<div class="tp-banner-container rev-slider-content">
+{{-- {{ dd($now) }} --}}
+{{-- @foreach ($report as $item )
+    {{ dd($item->id_sp) }}
+@endforeach --}}
+<style>
+  .category{
+      width: auto;
+
+      border: 1px solid;
+
+  }
+  .category img{
+    width: 120px;
+      height: 120px;
+      padding-left: 0 auto;
+
+      border-radius:50%;
+    -moz-border-radius:15%;
+    -webkit-border-radius:30%;
+
+  }
+  .category-product span{
+      margin: 0 auto;
+      text-align: center;
+
+  }
+  .category a{
+    color: black;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  .product-info i{
+      margin: auto 4px;
+  }
+
+</style>
+{{-- <div class="tp-banner-container rev-slider-content">
     <div class="slider_one" >
         <ul>
             <!-- slide one -->
@@ -52,889 +86,876 @@
 
         </ul>
     </div>
-</div>
+</div> --}}
 <!-- / slider -->
 
 <!-- content -->
+{{-- <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="clients">
+                <ul class="client-carousel">
+                    <li>
+                        <a href="#"><img alt="clients logo" src="{{ asset('template-client') }}/img/clients/1.png"></a>
+                        <span></span>
+                    </li>
+                    <li>
+                        <a href="#"><img alt="clients logo" src="{{ asset('template-client') }}/img/clients/2.png"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img alt="clients logo" src="{{ asset('template-client') }}/img/clients/3.png"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img alt="clients logo" src="{{ asset('template-client') }}/img/clients/4.png"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img alt="clients logo" src="{{ asset('template-client') }}/img/clients/5.png"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> --}}
 <div class="content">
     <div class="container">
-        <!-- Tredy Offers Collection Tab -->
-        <div class="featured-collection margin-bottom-100px margin-top-30px">
-            <div class="row">
-                <div class="col-md-6 col-sm-12 margin-bottom no-padding-right">
-                    <div class="bag featured-single hover-box-2 fadeInLeft wow" data-wow-delay="0.5s">
-                        <a href="#">
-                            <span class="border-right"></span>
-                            <div class="caption">
-                                <h3 class="heading">BAGS & TOTES</h3>
-                                <h2>WOMEN´S FASHION</h2>
-                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12 margin-bottom">
-                    <div class="jackets featured-single hover-box-2 fadeInRight wow" data-wow-delay="0.6s">
-                        <a href="#">
-                            <span class="border-right"></span>
-                            <div class="caption">
-                                <h3 class="heading">COATS & JACKETS</h3>
-                                <h2>WINTER SALE<span class="offer">30%</span></h2>
-                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-12 margin-bottom no-padding-right">
-                    <div class="shoes featured-single hover-box-2 fadeInLeft wow" data-wow-delay="0.7s">
-                        <a href="#">
-                            <span class="border-right"></span>
-                            <div class="caption">
-                                <h3 class="heading">SHOES & BOOTS</h3>
-                                <h2>WOMEN´S FASHION</h2>
-                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <div class="accessories featured-single hover-box-2 fadeInRight wow" data-wow-delay="0.8s">
-                        <a href="#">
-                            <span class="border-right"></span>
-                            <div class="caption">
-                                <h3 class="heading">ACCESSORIES</h3>
-                                <h2>Shop this look</h2>
-                                <p class="trendify-btn other-look">VIEW PRODUCTS <span class="elg-icon arrow_right"></span></p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{-- <div class="trendy-offers-tab margin-bottom-60px margin-top-20px">
-            <div class="row">
-                <div class="col-md-4">
-                    <h3 class="right-dash">trendy fashion offers </h3>
-                </div>
-                <div class="col-md-8">
-                    <div class="trendify-tab-title">
-                        <ul>
-                            <li class="active"><a data-toggle="tab" href="#latest-offer">Latest Trends</a></li>
-                            <li><a data-toggle="tab" href="#men-offer">Men's Fashion</a></li>
-                            <li><a data-toggle="tab" href="#women-offer">Women's Fashion</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                 <div class="tab-content">
-                    <div id="latest-offer" class="tab-pane fade in active masonry">
-                        <div class="col-sm-3">
-                            <div class="single-masonry-product">
-                                <span>$279</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-bag.png" alt="bag">
-                                <h4>White Leather Handbag</h4>
-                            </div>
-                            <div class="single-masonry-product">
-                                <span>$69</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-braclet.png" alt="Bracelet">
-                                <h4>Thing Stack Bracelet</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="single-masonry-product">
-                                <span>$229</span>
-                                <span class="new2">New</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-cala.png" alt="Grey Winter Jacket Women">
-                                <h4>Grey Winter Jacket Women</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="single-masonry-product">
-                                <span>$169</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-shoe.png" alt="Modern Biege Leather Shoes">
-                                <h4>Modern Biege Leather Shoes</h4>
-                            </div>
-                            <div class="single-masonry-product">
-                                <span>$169</span>
-                                <span class="new2">New</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-watch.png" alt="Brown Tan Leather Men Watch">
-                                <h4>Brown Tan Leather Men Watch</h4>
-                            </div>
-                        </div>
-                     </div>
-
-                    <div id="men-offer" class="tab-pane fade">
-                        <div class="col-sm-4">
-                            <div class="single-masonry-product">
-                                <span>$169</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-shoe.png" alt="Modern Biege Leather Shoes">
-                                <h4>Modern Biege Leather Shoes</h4>
-                            </div>
-                            <div class="single-masonry-product">
-                                <span>$169</span>
-                                <span class="new2">New</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-watch.png" alt="Brown Tan Leather Men Watch">
-                                <h4>Brown Tan Leather Men Watch</h4>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-5">
-                            <div class="single-masonry-product">
-                                <span>$229</span>
-                                <span class="new2">New</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-cala.png" alt="Grey Winter Jacket Women">
-                                <h4>Grey Winter Jacket Women</h4>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="single-masonry-product">
-                                <span>$279</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-bag.png" alt="bag">
-                                <h4>White Leather Handbag</h4>
-                            </div>
-                            <div class="single-masonry-product">
-                                <span>$69</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-braclet.png" alt="Bracelet">
-                                <h4>Thing Stack Bracelet</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="women-offer" class="tab-pane fade">
-                         <div class="col-sm-5">
-                            <div class="single-masonry-product">
-                                <span>$229</span>
-                                <span class="new2">New</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-cala.png" alt="Grey Winter Jacket Women">
-                                <h4>Grey Winter Jacket Women</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="single-masonry-product">
-                                <span>$169</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-shoe.png" alt="Modern Biege Leather Shoes">
-                                <h4>Modern Biege Leather Shoes</h4>
-                            </div>
-                            <div class="single-masonry-product">
-                                <span>$169</span>
-                                <span class="new2">New</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-watch.png" alt="Brown Tan Leather Men Watch">
-                                <h4>Brown Tan Leather Men Watch</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="single-masonry-product">
-                                <span>$279</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-bag.png" alt="bag">
-                                <h4>White Leather Handbag</h4>
-                            </div>
-                            <div class="single-masonry-product">
-                                <span>$69</span>
-                                <img class="img-responsive" src="{{ asset('template-client') }}/img/masonary-braclet.png" alt="Bracelet">
-                                <h4>Thing Stack Bracelet</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
+        {{-- <div class="row">
+            <div class="col-sm-12 margin-bottom-50px">
+                <h2 class="trendify-heading middle-align"><span class="lg">shopping</span><span class="sm">popular products -</span></h2>
             </div>
         </div> --}}
-        <!-- Tredy Offers Collection Tab -->
+        <!-- trendify items -->
 
-        <!-- new member offer -->
-        <div class="new-member-offer banner1 margin-bottom-60px text-center">
+        <div class="new-member-offer banner1 margin-bottom-30px text-center">
             <div class="row">
-                <h2>WE OFFER BRAND NEW STYLES</h2>
+                {{-- <h2>WE OFFER BRAND NEW STYLES</h2>
                 <h3>SIGN UP NOW AND GET 50% OFF</h3>
-                <a class="trendify-btn default-bordered margin-top-30px" href="#">SIGN UP NOW</a>
+                <a class="trendify-btn default-bordered margin-top-30px" href="#">SIGN UP NOW</a> --}}
             </div>
         </div>
-        <!-- / new member offer -->
 
-        <!-- Latest items -->
-        <div class="latest-items margin-bottom-70px">
+        <div class="category">
+            @foreach ($danhmuc as $item )
+            <div class="col-md-2 text-center">
+                <a href="{{ route('sanpham.danhmuc', ['id'=>$item->id]) }}">
+                    <img class="center-block" src="{{ asset($item->hinhanh_dm) }}" alt="">
+                    <span>{{ $item->ten_dm }}</span>
+                </a>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="trendify-items">
             <div class="trendify-tab-title">
                 <ul>
-                    <li class="active"><a data-toggle="tab" href="#new">New Arrivals</a></li>
-                    <li><a data-toggle="tab" href="#latest">Latest Trends</a></li>
+                    <li class="active"><a data-toggle="tab" href="#new">Sản phẩm mới</a></li>
+                    {{-- <li><a data-toggle="tab" href="#latest">Latest Trends</a></li>
                     <li><a data-toggle="tab" href="#men">Men's Fashion</a></li>
-                    <li><a data-toggle="tab" href="#women">Women's Fashion</a></li>
+                    <li><a data-toggle="tab" href="#women">Women's Fashion</a></li> --}}
                 </ul>
             </div>
             <div class="tab-content">
+                <div id="all_product"></div>
 
-                <div class="trendify-prev"></div>
-                <div class="trendify-next"></div>
-{{-- {{ dd($danhsachsanpham) }} --}}
 
+
+
+
+
+                {{-- @foreach ($danhsachsanpham as $item)
                 <div id="new" class="tab-pane fade in active">
-                        @foreach ($danhsachsanpham as $item)
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset($item->hinhanh_sp) }}">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset($item->hinhanh_sp) }}"><i class="fa fa-search"></i></a></li>
-                                    <li><a id="{{ $item->id }}" class="addcart" href="{{ route('Add.cart', ['id'=>$item->id]) }}"><i class="fa fa-cart-plus"></i></a></li>
-                                    {{-- <li><a onclick="AddCart({{ $item->id }})" href="javascript:"><i class="fa fa-heart-o">ADD-CARD</i></a></li> --}}
-                                    <li><a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-2 col-sm-6">
+                        <div class="product-single fadeInUp wow" data-wow-delay="0.5s">
+                            <div class="product-img">
+                                <a href = "{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><img height="100px" class="img-responsive" alt="Single product" src="{{ $item->hinhanh_sp }}"></a>
+                            </div>
+                            <div class="product-info">
+                                <h2>{{ Str::limit($item->ten_sp, 15); }}</h2>
+                                <span style="font-size:14px; font-weight:bold; color:rgb(92, 17, 17)"> {{ number_format($item->gia_sp) }} VDN</span>
+
+                                <p><i class="fa fa-clock"></i>{{ \Carbon\Carbon::parse($item->created_at)->subHours(7)->diffForHumans() }}</p>
+                                <p><i class="fa fa-map-marker-alt"></i>{{ $item->name_tp }}</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+                @endforeach --}}
+                <!-- / new -->
 
-                        <div class="product-info">
-                            <h2>{{ $item->ten_sp }}</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
+                {{-- <div id="latest" class="tab-pane">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/1.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/1.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="price">
-                                <del>   </del>{{ $item->gia_sp }} VND
-                            </div>
-                        </div>
-
-                        <!-- Product pop-up -->
-                          <div class="product-preview-1 modal fade" tabindex="-1" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <a class="close" href="#" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a>
-
-                                    <div class="modal-body col-md-12">
-                                        <div class="col-md-5 no-padding-left">
-                                            <img src="{{ asset($item->hinhanh_sp) }}" class="img-responsive" alt="" />
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="right-content">
-                                                <a href="#"><h3>{{ $item->ten_sp }}</h3></a> --}}
-                                                {{-- <span class="amount off">$50</span> looooo--}}
-                                                <span class="amount">{{ $item->gia_sp }}</span><br>
-                                                <span class="sku">available in stock</span>
-                                                <h4>DESCRIPTION</h4>
-                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. </p>
-
-                                                <div class="clear-fix"></div>
-                                                <div>
-                                                    <div class="quantity">
-                                                        <label>Quantity</label>
-                                                        <input type="number" step="1" min="0" max="99" name="cart" value="1" title="Qty" class="qty">
-                                                    </div>
-                                                    <div class="add-to-cart">
-                                                        <input type="submit" name="add-to-cart" value="Add To Cart" class="calculate">
-                                                    </div>
-                                                </div>
-                                                <div class="clear-fix"></div>
-                                                <div>
-                                                    <span class="item-number"><b>Product Number:</b>  #41121120</span><br>
-                                                    <span class="item-tag"><b>Tags:</b>  elegant, men, suits, beige, modern</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="product-info">
+                                <h2>New Look Blue Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
                                 </div>
                             </div>
                         </div>
-
-                     </div>
-                    @endforeach
-
-                </div>
-                <div id="latest" class="tab-pane fade">
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_2.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/2.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/2.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>New Yorker Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/3.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/3.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_4.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_4.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>Cusual White Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_1.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_1.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/4.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/4.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_2.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>Business Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/5.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/5.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="men" class="tab-pane fade">
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_2.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>New Look Blue Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/6.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/6.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_4.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_4.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>New Yorker Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_1.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_1.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/7.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/7.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_2.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_2.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>Cusual White Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/single_3.jpg">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/single_3.jpg"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/8.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/8.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="women" class="tab-pane fade">
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/women.png">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/women.png"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>Business Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div> --}}
+                <!-- / latest -->
 
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/women2.png">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/women2.png"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                {{-- <div id="men" class="tab-pane">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/1.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/1.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>New Look Blue Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/women3.png">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/women3.png"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/2.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/2.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/women.png">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/women.png"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>New Yorker Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/women2.png">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/women2.png"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/3.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/3.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="product-single">
-                        <div class="product-img">
-                            <img class="img-responsive" alt="Single product" src="{{ asset('template-client') }}/img/women3.png">
-                            <div class="actions">
-                                <ul>
-                                    <li><a class="zoom" href="{{ asset('template-client') }}/img/women3.png"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h2>New Look Stripe T-Shirt</h2>
-                            <div class="star-rating">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star-half-full"></i></li>
-                                </ul>
-                            </div>
-                            <div class="price">
-                                <del> $50 </del> $40
+                            <div class="product-info">
+                                <h2>Cusual White Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/4.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/4.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Business Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/5.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/5.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>New Look Blue Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/6.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/6.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>New Yorker Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/7.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/7.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Cusual White Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/8.jpg">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/8.jpg"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Business Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                <!-- / men -->
 
+                {{-- <div id="women" class="tab-pane">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w3.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w3.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>New Look Blue Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w1.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w1.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>New Yorker Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w2.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w2.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Cusual White Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w3.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w3.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Business Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w1.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w1.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>New Look Blue Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w2.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w2.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>New Yorker Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w3.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w3.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Cusual White Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
+                            <div class="product-img">
+                                <img class="img-responsive" alt="Single product" src="img/products/w1.png">
+                                <div class="actions">
+                                    <ul>
+                                        <li><a class="zoom" href="img/products/w1.png"><i class="fa fa-search"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2>Business Suit</h2>
+                                <div class="star-rating">
+                                    <ul>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star-half-full"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price">
+                                    <del> $399 </del> $259
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+                <!-- / men -->
             </div>
         </div>
         <!-- Latest items -->
+        <div class="clear-fix" ></div>
 
-        <!-- location -->
-        <div class="location margin-bottom-90px">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h2 class="trendify-heading middle-align">
-                        <span class="lg">OUR LOCATION</span>
-                        <span class="sm">fashion store locator</span>
-                    </h2>
+        <!-- trendify supports -->
+        <div class="trendify-supports">
+            <div class="col-md-4 col-sm-6">
+                <div class="trendify-single-support xs-mb-40">
+                    <div class="support-img">
+                        <img src="img/icons/support-icon1.png" alt="" />
+                    </div>
+                    <div class="support-text">
+                        <h2>fast delivery time</h2>
+                        <p>Stet clita kasd gubergren, no takima</p>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <img class="store img-responsive" src="{{ asset('template-client') }}/img/store.jpg" alt="store image">
-                    <div class="store-info-box">
-                        <h4>Where Do You Find Our Store?</h4>
-                        <ul>
-                            <li>78 Fashion Street, Beverly Hill <br> Abony, NYC 12045</li>
-                            <li> Phone: <span>(800) 0123 4567 8910</span> <br> E-mail:  trendify@envato.com</li>
-                        </ul>
-                        <div></div>
-                        <h4>Opening Hours</h4>
-                        <ul>
-                            <li>Monday - Friday 8:00 AM - 8:00 PM</li>
-                            <li>Saturday from 9:00 AM - 6:00 PM</li>
-                        </ul>
+            <div class="col-md-4 col-sm-6">
+                <div class="trendify-single-support xs-mb-40">
+                    <div class="support-img">
+                        <img src="img/icons/support-icon2.png" alt="" />
+                    </div>
+                    <div class="support-text">
+                        <h2>Money back guarantee</h2>
+                        <p>Stet clita kasd gubergren, no sea takima</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <div class="trendify-single-support xs-mb-40">
+                    <div class="support-img">
+                        <img src="img/icons/support-icon3.png" alt="" />
+                    </div>
+                    <div class="support-text">
+                        <h2>24/7 customer support</h2>
+                        <p>Stet clita kasd gubergren, no sea takima</p>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- / location -->
-
-        <div class="footer-top margin-bottom-50px text-center">
-            <!--  Boxed Content -->
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="boxed-content-container sm-mb-40">
-                         <div class="dh-overlay"></div>
-                        <div class="boxed-content" data-wow-delay="0.5s">
-                            <h4>fast delivery</h4>
-                            <p>within<span class="hours"> 48h</span></p>
-                            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="boxed-content-container sm-mb-40">
-                        <div class="dh-overlay"></div>
-                        <div class="boxed-content" data-wow-delay="0.9s">
-                            <h4>support area</h4>
-                            <p class="phone-email">Phone: (800) 0123 4567 890</p>
-                            <span class="and">&</span>
-                            <p class="phone-email">E-mail:  trendify@envato.com</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <div class="boxed-content-container">
-                        <div class="dh-overlay"></div>
-                        <div class="boxed-content" data-wow-delay="0.9s">
-                            <h4>OUR NEWSLETTER</h4>
-                            <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Stet clita kasd gubergren, no sea takimata sanctus es.</p>
-                            <form class="subscribe">
-                                <input type="email" name="email" placeholder="enter your email address" />
-                                <input type="image" src="{{ asset('template-client') }}/img/long-right-arrow.png" alt="submit" />
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- / Boxed Content -->
-        </div>
-
+        <!--/ trendify supports -->
     </div>
 </div>
+@push('Add-Cart')
+<script>
+    load_more_product();
+    function load_more_product(id=''){
+       $.ajax({
+           type: "get",
+           url: "/client/load-more-product/",
+           data: {
+               id:id,
+           },
+           success: function (data) {
+                $('#load-more-button').remove();
+                $('#all_product').append(data);
+           }
+       });
+   }
+
+   $(document).on('click','#load-more-button', function () {
+       var id = $(this).data('id')
+       load_more_product(id);
+   });
+
+</script>
+@endpush
 @push('Add-Cart')
 @if (Session::has('success'))
     <script>
@@ -946,7 +967,7 @@
         alertify.success('Xóa sản phẩm thành công');
     </script>
 @endif
-    <script>
-    </script>
+    {{-- <script>
+    </script> --}}
 @endpush
 @endsection

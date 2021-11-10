@@ -37,7 +37,7 @@
                             </select>
                             <label for="">Phí vận chuyển</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" name="phiVanChuyen"
-                                placeholder="Tên">
+                                placeholder="Nhập phí vận chuyển">
                             <br>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>

@@ -1,10 +1,11 @@
 @extends('client.template.master')
 @section('content')
-    {{-- {{ dd(Session::get('id_nb')) }} --}}
-    {{-- {{ dd(Session::get('coupon')) }} --}}
+
+    {{-- {{ dd(Session::get('fee')) }} --}}
     {{-- @foreach (Session::get('coupon') as $item => $coup)
         {{ dd($coup['coupon_condition']) }}
     @endforeach --}}
+
     <style>
         .image-product img {
             width: 170px;
@@ -16,8 +17,8 @@
         }
 
         /* .product-cart{
-                                        border-top: 1px solid #333;
-                                    } */
+                                            border-top: 1px solid #333;
+                                        } */
         .quantity input {
             padding-left: 10px;
             width: 72%;
@@ -142,12 +143,12 @@
                                 @endforeach
 
 
-                                <input id="total" type="hidden" name="tong_sp" value="{{ $quanty }}">
-                                <input id="total" type="hidden" name="id_nb" value="{{ $item }}">
+                                <input id="quanty" type="hidden" name="tong_sp" value="{{ $quanty }}">
+                                <input id="id_nb" type="hidden" name="id_nb" value="{{ $item }}">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="textarea-note">
-                                            <textarea class="textarea" placeholder="Ghi chú" name="ghiChu"
+                                            <textarea class="textarea ghiChu" placeholder="Ghi chú" name="ghiChu"
                                                 value=""></textarea>
                                         </div>
                                     </div>
@@ -162,6 +163,39 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="payment">
+                                    <h3>Thông tin vận chuyển</h3>
+                                    <div class="payment-method">
+                                        <div class="form-group">
+                                            <label for="">Tên thành phố</label>
+                                            <select name="id_city" id="" class="form-control thanhPho">
+                                                <option value="">Chọn thành phố</option>
+                                                @foreach ($tp as $item )
+                                                    <option value="{{ $item->matp }}">{{ $item->name_tp }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Tên quận huyện</label>
+                                            <select name="id_qh" id="" class="form-control quanHuyen">
+                                                <option value="">Chọn quận huyện</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Tên xã phường</label>
+                                            <select name="id_xp" id="" class="form-control xaPhuong">
+                                                <option value="">Chọn xã phường</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Số nhà</label>
+                                            <input name="diaChi" type="text" class="form-control" >
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Số điện thoại</label>
+                                            <input name="sdt" type="text" class="form-control" >
+                                        </div>
+                                          <button type="submit" class="btn btn-default check-feeship">Tính phí vận chuyển</button>
+                                    </div>
                                     <h3>Tổng đơn hàng</h3>
                                     <div class="payment-method">
                                         <table>
@@ -169,7 +203,7 @@
                                                 <tr class="">
                                                     <th>
                                                         <h4 class="pttt">Thanh toán khi nhận hàng</h4>
-                                                        <input type="radio" name="phuongThucThanhToan" id="mastercard"
+                                                        <input type="radio"name="phuongThucThanhToan" id="mastercard"
                                                             value="2">
                                                     </th>
                                                     <th>
@@ -189,9 +223,16 @@
                                                 <p>{{ $totalPrice }} VND</p>
                                             </div>
                                         </div>
+                                        <input id="total" type="hidden" name="tong_tien" value="{{ $totalPrice }}">
+                                        @if(Session::has('fee'))
+                                        <div class="fee-ship">
+
+                                        </div>
+                                        @endif
+
 
                                         {{-- //////////////// --}}
-                                        @if (Session::has('coupon'))
+                                        {{-- @if (Session::has('coupon'))
                                             @foreach (Session::get('coupon') as $item => $cou)
                                                 @if ($cou['coupon_condition'] == 1)
                                                     <div class="row">
@@ -211,7 +252,9 @@
                                                             <p>{{ $total_coupon }} VND</p>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    <
+                                                            <label for="">Tổng tiền</label>
+                                                        </ddiv class="row">
                                                         <div class="col-md-3">
                                                             <label for="">Phí giao hàng</label>
                                                         </div>
@@ -220,9 +263,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-3">
-                                                            <label for="">Tổng tiền</label>
-                                                        </div>
+                                                        <div class="col-md-3">iv>
                                                         <div class="col-md-6 no padding-left">
                                                             <p>{{ $totalPrice - $total_coupon + Session::get('fee') }}
                                                                 VND</p>
@@ -230,8 +271,8 @@
                                                     </div>
 
                                                     @foreach (Session::get('coupon') as $item => $cou)
-                                                    <input id="total" type="hidden" name="coupon"
-                                                    value="{{ $cou['coupon_code']}}">
+                                                        <input id="total" type="hidden" name="coupon"
+                                                            value="{{ $cou['coupon_code'] }}">
                                                     @endforeach
 
                                                 @else
@@ -262,15 +303,15 @@
                                                     </div>
 
                                                     @foreach (Session::get('coupon') as $item => $cou)
-                                                    <input id="total" type="hidden" name="coupon"
-                                                    value="{{ $cou['coupon_code']}}">
+                                                        <input id="total" type="hidden" name="coupon"
+                                                            value="{{ $cou['coupon_code'] }}">
                                                     @endforeach
                                                 @endif
                                             @endforeach
-                                        @endif
+                                        @endif --}}
                                         {{-- //////////// --}}
 
-                                        @if (!Session::has('coupon'))
+                                        {{-- @if (!Session::has('coupon'))
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <label for="">Phí giao hàng</label>
@@ -289,14 +330,14 @@
                                             </div>
 
                                             <input id="total" type="hidden" name="coupon" value="">
-                                        @endif
-                                        <input id="total" type="hidden" name="tong_tien"
-                                        value="{{ $totalPrice}}">
+                                        @endif --}}
+
                                     </div>
+
                                 </div>
                             </div>
                         </form>
-                        <div class="col-md-5">
+                        {{-- <div class="col-md-5">
                             <div class="payment">
                                 <h3>Thông tin vận chuyển</h3>
                                 <div class="payment-method">
@@ -335,8 +376,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <form action="{{ route('check.coupon') }}" method="post">
+                        </div> --}}
+                        {{-- <form action="{{ route('check.coupon') }}" method="post">
                             @csrf
                             <div class="col-md-5">
                                 <div class="payment">
@@ -356,7 +397,7 @@
 
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
         </div>
     @endif
@@ -364,11 +405,80 @@
     @endif
 @endsection
 @push('input-total-price')
-        {{-- <script>
-           function onclick(){
-               alert('ban co muon dat hang')
-           }
-        </script> --}}
+
+<script>
+    $(document).ready(function() {
+        const BASE_URL = window.location.origin //lấy base url
+        $('select.thanhPho').change(function(e) {
+            e.preventDefault();
+            var getIDCity = $(this).children("option:selected").val();
+            $('.itemProvince').remove();
+            $.ajax({
+                type: "get",
+                url: BASE_URL+ "/client/get-province/" + getIDCity,
+                dataType: "json",
+                success: function(response) {
+                    for (let i = 0; i < response.length; i++) {
+                        $('.quanHuyen').append('<option value="' + response[i].maqh +
+                            '" class="itemProvince" >' + response[i].name_qh + '</option>');
+                    }
+                }
+            });
+        });
+        $('select.quanHuyen').change(function(e) {
+            e.preventDefault();
+            var getIDProvince = $(this).children("option:selected").val();
+            // console.log(getIDCity);
+            // console.log('124')
+            $('.itemWards').remove();
+            $.ajax({
+                type: "get",
+                url: BASE_URL+"/client/get-wards/" + getIDProvince,
+                dataType: "json",
+                success: function(response) {
+                    for (let i = 0; i < response.length; i++) {
+                        $('.xaPhuong').append('<option value="' + response[i].maxa +
+                            '"class="itemWards" >' + response[i].name_xa + '</option>');
+
+                    }
+
+                }
+            });
+        });
+        $('.check-feeship').click(function (e) {
+            e.preventDefault();
+            var id_city = $('.thanhPho').val();
+            var id_qh = $('.quanHuyen').val();
+            var id_xp = $('.xaPhuong').val();
+            var total_price = $('#total').val();
+
+            $.ajax({
+                type: "get",
+                url: "/check-feeship",
+                data:{
+                    id_city: id_city,
+                    total_price:total_price,
+                },
+                // dataType: "dataType",
+                success: function (data) {
+                    $('.fee-ship').html(data);
+                }
+            });
+
+        });
+        // $('button.checkout').click(function (e) {
+        //     e.preventDefault();
+        //     var ghiChu =
+
+        // });
+
+    });
+
+
+
+
+</script>
+
 @endpush
 {{-- <div class="row">
                         <div class="cupon-code margin-top-20px">

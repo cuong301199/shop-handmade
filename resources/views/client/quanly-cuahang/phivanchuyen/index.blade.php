@@ -21,38 +21,54 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">STT</th>
-                                <th scope="col">Tỉnh/thành phố</th>
-                                <th scope="col">Quận/huyện</th>
-                                <th scope="col">Xã/phường</th>
-                                <th scope="col">Phí vận chuyển</th>
-                                <th scope="col">Thao tác</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="card">
+                        <div class="card-header">
+                          <h3 class="card-title">Bordered Table</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                          <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th style="width:5%">STT</th>
+                                <th style="width:5%">Tỉnh/thành phố</th>
+                                <th style="width:5%">Quận/huyện</th>
+                                <th style="width:5%">Xã/phường</th>
+                                <th style="width:5%">Phí vận chuyển</th>
+                                <th style="width:5%">Thao tác</th>
+                              </tr>
+                            </thead>
                             <?php $stt = 1; ?>
-                            @foreach ($danhsach as $item)
+
+                            <tbody>
+                                @foreach ($danhsach as $item)
                                 <tr>
                                     <th scope="row">{{ $stt++ }}</th>
                                     <td>{{ $item->name_tp }}</td>
                                     <td>{{ $item->name_qh }}</td>
                                     <td>{{ $item->name_xa }}</td>
-                                    <td>{{ $item->phi_pvc }} VND</td>
+                                    <td>{{ number_format( $item->phi_pvc) }} VND</td>
                                     <td>
-                                        <a href=""><button
-                                                class='btn btn-warning'>Chỉnh sửa</button></a>
-                                        <a href=""><button
-                                                class='btn btn-danger'>Xóa</button></a>
+                                        <a href=""><span class="badge bg-warning">Chi tiết</span></a>
+                                        <a href=""><span class="badge bg-danger">Xóa</span></a>
                                     </td>
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer clearfix">
+                          <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                          </ul>
+                        </div>
+                      </div>
                 </div>
-
             </div>
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->

@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use Session;
 use Hash;
+use File;
 class ThongTinCaNhanController extends Controller
 {
     public function edit($id){
@@ -18,19 +19,29 @@ class ThongTinCaNhanController extends Controller
     public function update(Request $request , $id){
         $hoVaTen = $request ->hoVaTen;
         $email = $request ->email;
-        $diaChi = $request ->diaChi;
+        // $diaChi = $request ->diaChi;
         $soDienThoai = $request ->soDienThoai;
 
         $update = DB::table('nguoi_dung')->where('id',$id)->update(
             [
                 'ten_nd'=>$hoVaTen,
                 'email_nd'=>$email,
-                'diachi_nd'=>$diaChi,
+                // 'diachi_nd'=>$diaChi,
                 'sdt_nd'=>$soDienThoai,
 
 
             ]);
+            if($request->hasFile('anhdaidien_nd')){
+                $hinhAnh = $request->File('anhdaidien_nd');
+                        $tenFile =  $hinhAnh->getClientOriginalName();
+                        $hinhAnh->move(public_path('anh-dai-dien/'), $hinhAnh->getClientOriginalName());
+                        $insertHinhAnh = DB::table('nguoi_dung')->where('id',$id)->update(
+                            [
 
+                                'anhdaidien_nd'=>'anh-dai-dien/'. $hinhAnh->getClientOriginalName()
+                            ]
+                        );
+                }
             return redirect()->back();
     }
 

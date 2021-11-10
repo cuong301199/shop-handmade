@@ -1,22 +1,35 @@
 @extends('client.template.master')
 @section('content')
+{{-- {{ dd($danhsach) }} --}}
     <style>
-        .name-user {
-            margin-top: 1px
+        /* .name-user {
+                margin-top: 1px
+            }
+
+            .comment {
+                margin-top: 50px;
+                padding: 0px;
+            }
+            .star{
+                margin-top: -10px
+            }
+            h5{
+                clear: both;
+                font-weight:550;
+                text-transform: lowercase;
+                font-size: 15px;
+            } */
+
+        .infor {
+            width: auto;
+            height: 40px;
+            border: 1px solid;
         }
 
-        .comment {
-            margin-top: 50px;
-            padding: 0px;
-        }
-        .star{
-            margin-top: -10px
-        }
-        h5{
-            clear: both;
-            font-weight:550;
-            text-transform: lowercase;
-            font-size: 15px;
+        .modal-content {
+            padding: 20px;
+
+
         }
 
     </style>
@@ -42,281 +55,187 @@
     </div>
     <!--/ page title -->
 
-
+    {{-- {{ dd($danhsach) }} --}}
     <!-- content area -->
-    <div class="content">
+    <div class="single-product">
         <div class="container">
             <div class="row">
-                <div class="col-sm-12">
-                    {{-- @foreach ($danhsach as $item) --}}
-                    <div class="col-md-6">
-                        <div class="single-slider-item">
-                            <ul class="owl-slider">
+                <div class="col-md-6">
+                    <div class="pro-single-sd margin-bottom-50px">
+                        <ul class="owl-slider">
+                            <li class="item">
+                                <div class="single-latest-product">
+                                    <span class="price-label"> {{ number_format($danhsach->gia_sp) }} VND </span>
+                                    <img style="height:500;width:550px;" class="img-responsive"
+                                        src="{{ asset($danhsach->hinhanh_sp) }}" alt="Shoe">
+                                    <a href="#">
+                                        <h3>Leather Watch</h3>
+                                    </a>
+                                </div>
+                            </li>
+                            @foreach ($hinhanh as $item)
+
                                 <li class="item">
-                                    <img src="{{ asset($danhsach->hinhanh_sp) }}" alt="" class="img-responsive">
-                                    <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
-                                </li>
-
-                                @foreach ($hinhanh as $item)
-                                    <li class="item">
-                                        <img src="{{ asset($item->duongdan_ha) }}" alt="" class="img-responsive">
-                                        <a class="expand-img" href="#"><i class="fa fa-expand"></i></a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                            <ul class="thumbnails-wrapper">
-                                <li class="thumbnail">
-                                    <a href="#"><img src="{{ asset($danhsach->hinhanh_sp) }}" alt=""
-                                            class="img-responsive"></a>
-                                </li>
-                                @foreach ($hinhanh as $item)
-                                    <li class="thumbnail">
-                                        <a href="#"><img src="{{ asset($item->duongdan_ha) }}" alt=""
-                                                class="img-responsive"></a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-6">
-                        <div class="right-content">
-                            <a href="#">
-                                <h3>{{ $danhsach->ten_sp }}</h3>
-                            </a>
-                            <div class="rated">
-                                <ul>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li class="un-rated"><i class="fa fa-star"></i></li>
-                                </ul>
-                                <span>(24 reviews)</span>
-                            </div>
-                            {{-- <span class="amount off">$399</span> --}}
-                            <span class="amount">{{ $danhsach->gia_sp }}</span><br>
-                            <span class="sku">available in stock</span>
-                            <h4>Mô tả</h4>
-                            <p>{!! $danhsach->mota_sp !!}</p>
-                            <div class="color-size">
-                                <div class="item-color">
-                                    <h4>select a colour</h4>
-                                    <ul>
-                                        <li class="raffia active"></li>
-                                        <li class="bombay"></li>
-                                        <li class="steel-gray"></li>
-                                        <li class="anzac"></li>
-                                        <li class="mine-shaft"></li>
-                                    </ul>
-                                </div>
-
-                                <div class="clear-fix"></div>
-
-                                <div class="item-size">
-                                    <h4>chọn kích cỡ</h4>
-                                    <ul>
-                                        <li class="x-small">XS</li>
-                                        <li class="small">S</li>
-                                        <li class="medium active">M</li>
-                                        <li class="large">L</li>
-                                        <li class="x-large">XL</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <div class="clear-fix"></div>
-
-                            <div>
-                                <div class="quantity">
-                                    <label>Số lượng</label><input type="number" step="1" min="0" max="99" name="cart"
-                                        value="1" title="Qty" class="qty">
-                                </div>
-                                <div class="add-to-cart">
-                                    <a  href="{{ route('Add.cart', ['id'=>$danhsach->id]) }}" class="trendify-btn black-bordered">Thêm vào giỏ hàng</a>
-                                </div>
-                            </div>
-                            <div class="product-desc">
-                                {{-- <span class="item-number"><b>Product Number:</b>  #41121120</span><br> --}}
-                                <span class="item-cat"><b>Loại sản phẩm : </b>{{ $danhsach->ten_lsp }}</span>
-                            </div>
-                            <div class="product-desc">
-                                <span class="item-cat"><b>Tên người bán : </b><a
-                                        href="{{ route('hienthich.showStore', ['id' => $danhsach->id_nb]) }}">{{ $danhsach->ten_nd }}</a></span>
-                            </div>
-
-                        </div>
-                    </div>
-                    {{-- @endforeach --}}
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="product-tab">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav active"><a data-toggle="tab" href="#tab1">PRODUCT DESCRIPTION</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-7">
-                                <div class="col-md-1 comment">
-                                    <img src="{{ asset('template-client') }}/img/avatar1.png" width="90%"
-                                        class="img-circle" alt="">
-                                </div>
-                                <div class="col-md-11 comment">
-                                    <a class="name-user">Tiến Cường</a>
-                                    <div class="rated">
-                                        <ul>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="un-rated star"><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h5>I love love love this bag. It is very well done, an authentic piece made with love and passion. I am very happy :) The team and Katerina are very nice, easy to deal with and very
-                                             professional and friendly. I really hope that enterprises like this </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-7">
-                                <div class="col-md-1 comment">
-                                    <img src="{{ asset('template-client') }}/img/avatar1.png" width="90%"
-                                        class="img-circle" alt="">
-                                </div>
-                                <div class="col-md-11 comment">
-                                    <a class="name-user">Tiến Cường</a>
-                                    <div class="rated">
-                                        <ul>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="un-rated star"><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h5>I love love love this bag. It is very well done, an authentic piece made with love and passion. I am very happy :) The team and Katerina are very nice, easy to deal with and very
-                                             professional and friendly. I really hope that enterprises like this </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-7">
-                                <div class="col-md-1 comment">
-                                    <img src="{{ asset('template-client') }}/img/avatar1.png" width="90%"
-                                        class="img-circle" alt="">
-                                </div>
-                                <div class="col-md-11 comment">
-                                    <a class="name-user">Tiến Cường</a>
-                                    <div class="rated">
-                                        <ul>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="un-rated star"><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-                                    <div>
-                                        <h5>I love love love this bag. It is very well done, an authentic piece made with love and passion. I am very happy :) The team and Katerina are very nice, easy to deal with and very
-                                             professional and friendly. I really hope that enterprises like this </h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-7">
-                                <div class="col-md-1 comment">
-                                    <img src="{{ asset('template-client') }}/img/avatar1.png" width="90%"
-                                        class="img-circle" alt="">
-                                </div>
-                                <div class="col-md-11 comment">
-                                    <a class="name-user">Tiến Cường</a>
-                                    <div class="rated">
-                                        <ul>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="star"><i class="fa fa-star"></i></li>
-                                            <li class="un-rated star"><i class="fa fa-star"></i></li>
-                                        </ul>
-                                    </div>
-
-                                    <div>
-                                        <h5>I love love love this bag. It is very well done, an authentic piece made with love and passion. I am very happy :) The team and Katerina are very nice, easy to deal with and very
-                                             professional and friendly. I really hope that enterprises like this </h5>
-                                    </div>
-                                    <div>
-                                        26-9-2019
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="related-products margin-top-70px">
-                            <h4>related products</h4>
-                            <ul class="related-products-slider">
-                                <li class="item">
-                                    <div class="product-single">
-                                        <div class="product-img">
-                                            <img class="img-responsive" alt="Single product" src="img/single_4.jpg">
-                                            <div class="actions">
-                                                <ul>
-                                                    <li><a class="zoom" href="img/single_4.jpg"><i
-                                                                class="fa fa-search"></i></a></li>
-                                                    <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                                    <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <h2>New Look Stripe T-Shirt</h2>
-                                            <div class="star-rating">
-                                                <ul>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star"></i></li>
-                                                    <li><i class="fa fa-star-half-full"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="price">
-                                                <del> $50 </del> $40
-                                            </div>
-                                        </div>
+                                    <div class="single-latest-product">
+                                        <span class="price-label"> {{ number_format($danhsach->gia_sp) }} VND</span>
+                                        <img style="height:500;width:550px;" class="img-responsive"
+                                            src="{{ asset($item->duongdan_ha) }}" alt="Shoe">
+                                        <a href="#">
+                                            <h3>Leather Watch</h3>
+                                        </a>
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
-                        <!-- pagination -->
-                        <div class="pagination">
-                            <div class="col-xs-1 no-padding">
-                                <a href="#"><span class="pagicon arrow_left"></span></a>
-                            </div>
-                            <div class="col-xs-offset-1 col-sm-offset-3 col-xs-7">
-                                <ul class="pagination-number">
-                                    <li>01</li>
-                                    <li class="active">02</li>
-                                    <li>03</li>
-                                    <li>04</li>
-                                    <li>05</li>
-                                    <li>06</li>
-                                </ul>
-                            </div>
-                            <div class="col-xs-1 no-padding text-right">
-                                <a href="#"><span class="pagicon arrow_right"></span></a>
-                            </div>
-                        </div>
-                        <!-- / pagination -->
+                            @endforeach
+
+                        </ul>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="right-content">
+                        <a href="#">
+                            <h3>{{ $danhsach->ten_sp }}</h3>
+                        </a>
+                        <div class="rated">
+                        </div>
+                        <span style="font-size:14px; font-weight:bold; color:rgb(15, 14, 14)"
+                            class="amount">{{ number_format($danhsach->gia_sp) }} VND </span><br>
+
+                        <h3>MÔ TẢ</h3>
+                        <p style="font-size: 14px">{!! $danhsach->mota_sp !!}</p>
+
+                        {{-- <div class="clear-fix"></div> --}}
+
+                        <div class="product-desc">
+                            <span class="item-number"><b>Giá:</b> {{ number_format($danhsach->gia_sp) }} VND
+                            </span><br>
+                            <span class="item-cat"><b>Danh mục: </b>{{ $danhsach->ten_lsp }}</span><br>
+                            <span class="item-cat"><b>Tên người bán: </b><a
+                                    href="{{ route('cuahang.index', ['id' => $danhsach->id_nb]) }}">{{ $danhsach->ten_nd }}</a></span><br>
+                            <span class="item-cat"><b>Ngày đăng bán:
+                                </b>{{ \Carbon\Carbon::parse($danhsach->created_at)->subHours(7)->diffForHumans() }}</span><br>
+                            {{-- <span class="item-tag"><b>Tags:</b>  elegant, men, suits, beige, modern</span> --}}
+                        </div>
+                    </div>
+                    {{-- <div class="infor">
+                    </div> --}}
+                    <div>
+                        <a style="margin-top:10px; margin-left:0px;width:250px;"
+                            href="{{ route('cuahang.index', ['id' => $danhsach->id_nb]) }}"
+                            class="trendify-btn black-bordered">Xem trang người bán</a>
+                    </div>
+                    <div>
+                        <a style="margin-top:10px; margin-left:0px;width:250px;" href=""
+                            class="trendify-btn black-bordered">Chat với người bán</a>
+                    </div>
+                </div>
+            </div>
+            <div class="report-product">
+                <button style="font-size:11px; margin-bottom:15px" type="button" class="btn btn-lg" data-toggle="modal"
+                    data-target="#myModal">Báo cáo sản phẩm vi phạm</button>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <form action="">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="">Báo cáo vi phạm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    {{-- <p>Some text in the modal.</p> --}}
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Nội dung báo cáo</label>
+                                        <textarea name="noidung-_bc" class="form-control noidung-bc" id="exampleFormControlTextarea1"
+                                            rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Số điện thoại:</label>
+                                        <input type="number" name="sodienthoai_bc" class="form-control sodienthoai-bc " id="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email :</label>
+                                        <input type="email" name="email_bc" class="form-control email-bc" id="email">
+                                    </div>
+                                    <input type="hidden" value="{{ $danhsach->id }}" class="id_sp">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success btn-report" data-dismiss="modal">Báo cáo </button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="related-products latest-product margin-bottom-60px">
+                    <div class="col-sm-12">
+                        <h4>Sản phẩm liên quan</h4>
+                    </div>
+                    @foreach ($sp as $item)
+                        <div class="col-md-2 col-sm-6">
+                            <div class="single-latest-product inside">
+                                <span class="price-label"> {{ number_format($danhsach->gia_sp) }} VND</span>
+                                <a href=""><img class="img-responsive" src="{{ asset($item->hinhanh_sp) }}"
+                                        alt="Shoe"></a>
+                                <h4 class="margin-bottom-0"></h4>
+                                <div class="actions">
+                                    <div class="row">
+                                        {{-- <div class="col-md-6">
+									<a href="#"><i class="fa fa-plus"></i>Add Cart</a>
+								</div> --}}
+                                        {{-- <div class="col-md-6">
+									<ul class="pull-right">
+										<li><a class="zoom" href="img/lastest-product-1.png"><i class="fa fa-search"></i></a></li>
+										<li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+										<li><a href="product-details-2.html"><i class="fa fa-expand"></i></a></li>
+									</ul>
+								</div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
                 </div>
             </div>
         </div>
     </div>
+    @push('Add-Cart')
+    <script>
+        $(document).ready(function () {
+            $('.btn-report').click(function (e) {
+                var noidung_bc = $('.noidung-bc').val();
+                var sodienthoai_bc = $('.sodienthoai-bc').val();
+                var email_bc = $('.email-bc').val();
+                var id_sp = $('.id_sp').val();
+
+                $.ajax({
+                    type: "get",
+                    url: "/client/report-product",
+                    data: {
+                        noidung_bc: noidung_bc,
+                        sodienthoai_bc:sodienthoai_bc,
+                        email_bc : email_bc ,
+                        id_sp:id_sp,
+                    },
+                    // dataType: "dataType",
+                    success: function (response) {
+
+                    }
+                });
+                $.alert({
+                    title: 'Thông báo!',
+                    content: 'Báo cáo sản phẩm thành công!',
+                });
+                $('.noidung-bc').val('');
+                $('.sodienthoai-bc').val('');
+                $('.email-bc').val('');
+                // $('.id_sp').val('');
+
+            });
+        });
+    </script>
+    @endpush
 @endsection

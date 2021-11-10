@@ -7,18 +7,19 @@ use DB;
 use Auth;
 use Session;
 use File;
+use Carbon\Carbon;
 class SanPhamController extends Controller
 {
     //
     public function index(){
 
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
+        ->join('trang_thai_san_pham','trang_thai_san_pham.id','san_pham.id_trangthai')
         ->where('id_nb',$id_nd)
-        ->select('san_pham.*','loai_san_pham.*','san_pham.id')
+        ->select('san_pham.*','trang_thai_san_pham.*','loai_san_pham.*','san_pham.id')
         ->get();
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
     }
@@ -27,22 +28,21 @@ class SanPhamController extends Controller
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
         $danhsach_lsp=DB::table('loai_san_pham')
         ->get();
-        $danhsach_dm =DB::table('cuahang_danhmuc')
-        ->join('danh_muc','danh_muc.id','cuahang_danhmuc.id_dm')
-        ->select('cuahang_danhmuc.*','ten_dm')
-        ->where('cuahang_danhmuc.id_nb',$id_nd)
+        $danhsach_dm =DB::table('danh_muc')
         ->get();
-        return view('client.quanly-cuahang.sanpham.add', compact('danhsach_lsp','danhsach_dm'));
+        $tp = DB::table('tbl_tinhthanhpho')
+        ->get();
+        return view('client.quanly-cuahang.sanpham.add', compact('danhsach_lsp','danhsach_dm','tp'));
 
     }
     public function store(Request $request){
         $tenSanPham = $request->tenSanPham;
-        $soLuong =$request->soLuong;
         $giaSanPham = $request->giaSanPham;
-        $danhMuc = $request->danhMuc;
         $loaiSanPham = $request->loaiSanPham;
         $moTa = $request->moTa;
-
+        $thanhPho = $request->thanhPho;
+        $quanHuyen = $request->quanHuyen;
+        $xaPhuong = $request->xaPhuong;
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
 
         if($request->hasFile('hinhAnh')){
@@ -58,9 +58,12 @@ class SanPhamController extends Controller
                     'ten_sp'=>$tenSanPham,
                     'mota_sp'=>$moTa,
                     'gia_sp'=>$giaSanPham,
-                    'soluong_sp'=>$soLuong,
-                    'id_dm'=>$danhMuc,
-                    'hinhanh_sp'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName()
+                    'id_tp'=> $thanhPho,
+                    'id_qh'=>$quanHuyen,
+                    'id_xa'=> $xaPhuong,
+                    'id_trangthai'=>1,
+                    'hinhanh_sp'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName(),
+                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ]
                 );
         }
@@ -136,9 +139,9 @@ class SanPhamController extends Controller
 
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('danh_muc','danh_muc.id','san_pham.id_dm')
+        ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         ->where('san_pham.id',$id)
-        ->select('san_pham.*','loai_san_pham.*','danh_muc.*','san_pham.id')
+        ->select('loai_san_pham.*','danh_muc.*','san_pham.*')
         ->first();
 
         $hinhanh = DB::table('hinh_anh')
@@ -152,22 +155,17 @@ class SanPhamController extends Controller
 
     public function update(Request $request, $id){
         $tenSanPham = $request->tenSanPham;
-        $soLuong =$request->soLuong;
         $giaSanPham = $request->giaSanPham;
-        $danhMuc = $request->danhMuc;
         $loaiSanPham = $request->loaiSanPham;
         $moTa = $request->moTa;
-
+        $id_trangthai = $request->id_trangthai;
         $update = DB::table('san_pham')->where('id',$id)->update(
             [
-                // 'id_ch'=>$id_ch->id,
+                'id_trangthai'=>$id_trangthai,
                 'id_lsp'=>$loaiSanPham,
                 'ten_sp'=>$tenSanPham,
                 'mota_sp'=>$moTa,
                 'gia_sp'=>$giaSanPham,
-                'soluong_sp'=>$soLuong,
-                'id_dm'=>$danhMuc
-
             ]
         );
 
@@ -221,21 +219,141 @@ class SanPhamController extends Controller
         return redirect()->back();
     }
 
-    public function getProductByCat($id){
-        $danhsach = DB::table('san_pham')
-        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->where('san_pham.id_lsp',$id)
-        ->select('san_pham.id','san_pham.*',)
+    public function getProductByCat(Request $request ,$id){
+        $tp = DB::table('tbl_tinhthanhpho')
         ->get();
-        return view('client.sanpham',compact('danhsach'));
-    }
-
-    public function productCat($id){
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
+        ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
         ->where('loai_san_pham.id_dm',$id)
+        ->select('tbl_tinhthanhpho.*','san_pham.*')
+        ->paginate(8)->appends(request()->query());
+
+        $lsp = DB::table('loai_san_pham')
+        ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
+        ->where('id_dm',$id)
+        ->select('danh_muc.*','loai_san_pham.*')
         ->get();
-        return view('client.sanpham',compact('danhsach'));
+        if($request->id_city != null){
+            $id_city = $request->id_city;
+            $danhsach = $danhsach->where('matp',$id_city);
+        }
+        if($request->productType != null){
+            $productType = $request->productType ;
+            $danhsach = $danhsach->where('id_lsp', $productType);
+        }
+        if($request->price != null){
+            $price = $request->price;
+            if($price==1){
+                $danhsach = $danhsach->where('gia_sp','<',500000);
+            }elseif($price==2){
+                $danhsach = $danhsach->whereBetween('gia_sp',[500000,1000000]);
+            }elseif($price==3){
+                $danhsach = $danhsach->whereBetween('gia_sp',[1000000,1500000]);
+            }elseif($price==4){
+                $danhsach = $danhsach->whereBetween('gia_sp',[1500000,2000000]);
+            }elseif($price==5){
+                $danhsach = $danhsach->where('gia_sp','>',2000000);
+            }
+        }
+        if($request->oderBy != null){
+            $oderBy = $request->oderBy;
+            if($oderBy=='asc'){
+                $danhsach = $danhsach->sortBy('id');
+            }else if($oderBy=='desc'){
+                $danhsach = $danhsach->sortByDesc('id');
+            } if($oderBy=='price_max'){
+                $danhsach = $danhsach->sortByDesc('gia_sp');
+            } if($oderBy=='price_min'){
+                $danhsach = $danhsach->sortBy('gia_sp')  ;
+            }
+        }
+
+        return view('client.sanpham_danhmuc',compact('danhsach','lsp','tp'));
+    }
+
+    // public function getProductByProductType(Request $request ,$id_dm,$id_lsp){
+    //     $lsp = DB::table('loai_san_pham')
+    //     ->where('id_dm',$id_dm)
+    //     ->get();
+    //     $tp = DB::table('tbl_tinhthanhpho')
+    //     ->get();
+    //     $danhsach = DB::table('san_pham')
+    //         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+    //         ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+    //         ->where('loai_san_pham.id',$id_lsp)
+    //         ->select('tbl_tinhthanhpho.*','san_pham.*')
+    //         ->paginate(12);
+    //     if($request->id_city != null){
+    //         $id_city = $request->id_city;
+    //         $danhsach = $danhsach->where('matp',$id_city);
+    //     }
+    //     if($request->price  != null){
+    //         $price = $request->price;
+    //         if($price==1){
+    //             $danhsach = $danhsach->where('gia_sp','<',500000);
+    //         }elseif($price==2){
+    //             $danhsach = $danhsach->whereBetween('gia_sp',[500000,1000000]);
+    //         }elseif($price==3){
+    //             $danhsach = $danhsach->whereBetween('gia_sp',[1000000,1500000]);
+    //         }elseif($price==4){
+    //             $danhsach = $danhsach->whereBetween('gia_sp',[1500000,2000000]);
+    //         }elseif($price==5){
+    //             $danhsach = $danhsach->where('gia_sp','>',2000000);
+    //         }
+    //     }
+    //     if($request->oderBy  != null){
+    //         $oderBy = $request->oderBy;
+    //         if($oderBy=='asc'){
+    //             $danhsach = $danhsach->sortBy('id');
+    //         }else if($oderBy=='desc'){
+    //             $danhsach = $danhsach->sortByDesc('id');
+    //         } if($oderBy=='price_max'){
+    //             $danhsach = $danhsach->sortByDesc('gia_sp');
+    //         } if($oderBy=='price_min'){
+    //             $danhsach = $danhsach->sortBy('gia_sp')  ;
+    //         }
+    //     }
+    //     return view('client.sanpham_lsp',compact('danhsach','lsp','tp'));
+    // }
+
+    public function report_product(Request $request){
+        $noidung_bc=$request->noidung_bc;
+        $sodienthoai_bc=$request->  sodienthoai_bc;
+        $email_bc = $request->email_bc;
+        $id_sp=$request->id_sp;
+        $insert= DB::table('bao_cao_san_pham')->insert(
+            [
+                'id_sp'=>$id_sp,
+                'mota_bc'=>$noidung_bc,
+                'sodienthoai_bc'=>$sodienthoai_bc,
+                'email_bc'=>  $email_bc,
+                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+            ]);
+        $report = DB::table('bao_cao_san_pham')
+        ->select('id_sp', DB::raw('count(*) as total'))
+        ->groupBy('id_sp')->get();
+
+        foreach($report as $item=>$key){
+            if($key->total >= 7){
+                $insert = DB::table('san_pham')->where('id',$key->id_sp)->update(
+                    [
+                        'id_trangthai'=>3
+                    ]);
+            }else{
+                dd('ko thành công');
+            }
+        }
     }
 }
+
+
+
+
+// $danhsach = DB::table('san_pham')
+// ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+// ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+// ->where('loai_san_pham.id',$id_lsp)
+// ->select('tbl_tinhthanhpho.*','san_pham.*')
+// ->paginate(1);

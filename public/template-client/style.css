@@ -78,6 +78,7 @@ body {
 }
 img {
     border: 0;
+    padding:12px;
 }
 a {
 	display: inline-block;
@@ -602,7 +603,7 @@ ol {
     border-bottom: 2px solid #1a1a1a;
 }
 .product-single .product-img {
-    height: 230px;
+    height: 150px;
     overflow: hidden;
     position: relative;
     border-radius: 6px;
@@ -610,6 +611,7 @@ ol {
 .product-single {
 	position: relative;
 	top: 0;
+    border:1px solid #f4f4f4;
 }
 .product-single .product-img .actions {
     position: absolute;
@@ -657,11 +659,15 @@ ol {
 }
 .product-single .product-img .actions ul li:last-child i { border-width: 0 }
 .product-single .product-img .actions ul li i:hover { color: #363636 }
-.product-single .product-info { text-align: center }
+.product-single .product-info {
+     /* text-align: center ; */
+     padding: 5px 15px;
+    }
 .product-single .product-info h2 {
     font-family: 'Raleway', sans-serif;
 	font-size: 15px;
-    margin-top: 25px;
+
+    /* margin-top: 25px; */
     color: #292929;
 	letter-spacing: 0.05em;
     text-transform: capitalize;
@@ -684,7 +690,7 @@ ol {
     color: #cbcbcb;
     margin-right: 25px;
 	margin-left: 0;
-	font-weight: 300;
+	font-weight: 300px;
 	font-size: 15px;
 	letter-spacing: 0.05em;
 }
@@ -1341,7 +1347,8 @@ span.post-no {
 	color: #707070;
 }
 .trendify-items .product-single {
-	margin-bottom: 70px;
+	margin-bottom:20px;
+    height: 300px;
 }
 
 /*=======================================================================

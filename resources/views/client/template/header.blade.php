@@ -1,37 +1,55 @@
+<style>
+    .fa{
+        font-size: 15px;
+    }
+    .header-navbar {
+        color: white;
+        margin: auto 5px;
+    }
+    .product-info i{
+      margin: auto 4px;
+  }
+  .fa-circle{
+      font-size: 5px;
+      margin-right: 4px;
+  }
+</style>
+
+{{-- <?php Carbon::setLocale('vi');?> --}}
 <div class="header">
     <div class="header-top">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="left"> Welcome to Trendify <span><i class="fa fa-phone"></i>Call us</span>
-                        +49 1234 5678 9</div>
+                    <div class="left">Chào mừng bạn<span><i class="fa fa-phone"></i></span>
+                       </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <div class="right">
                         <ul>
+                            @if (Auth::guard('nguoi_dung')->check())
+                                <li><a class="header-navbar" href="{{ route('client.index') }}"><i class="fa fa-home"></i>Trang chủ</a></li>
+                                <li><a class="header-navbar" href="{{ route('nguoidung.login') }}"><i class="fa fa-comments"></i>Chat</a></li>
+                                <li><a class="header-navbar" >Xin chào {{ Auth::guard('nguoi_dung')->user()->ten_nd }}</a></li>
+                                {{-- <span style="font-size: 20px"><i class="far fa-user-circle"></i></span> --}}
+
+                            @else
+                                <li><a class="header-navbar" href="{{ route('client.index') }}"><i class="fa fa-home"></i>Trang chủ</a></li>
+                                <li><a class="header-navbar" href="{{ route('nguoidung.login') }}"><i class="fa fa-comments"></i>Chat</a></li>
+                                <li><a class="header-navbar" href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
+                                <li><a class="header-navbar" href="{{ route('nguoidung.login') }}">Đăng ký</a></li>
+                            @endif
+                            @if (Auth::guard('nguoi_dung')->check() )
                             <li class="toggle">
-                                @if (Auth::guard('nguoi_dung')->check())
-                                    <a>Xin chào {{ Auth::guard('nguoi_dung')->user()->ten_nd }}</a>
-                                    <span style="font-size: 20px"><i class="far fa-user-circle"></i></span>
-                                    <span><i class="fa fa-angle-down"></i></span>
-                                @else
-                                    <li><a href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
-                                    <li><a href="{{ route('nguoidung.login') }}">Đăng ký</a></li>
-                                @endif
-                            <ul>
-                                @if (Auth::guard('nguoi_dung')->check() )
+                                <span><i class="fa fa-circle"></i><i class="fa fa-circle"></i><i class="fa fa-circle"></i>Thêm</span>
+                                <ul>
                                     <li><a href="{{ route('quanlycuahang.index') }}">Quản lý bán hàng</a></li>
-                                    <li><a
-                                            href="{{ route('profile.edit', ['id' => Auth::guard('nguoi_dung')->user()->id]) }}">Thông
+                                    <li><a href="{{ route('profile.edit', ['id' => Auth::guard('nguoi_dung')->user()->id]) }}">Thông
                                             tin cá nhân</a></li>
                                     <li><a href="{{ route('nguoidung.logout') }}">Đăng xuất</a></li>
-
-                                @endif
-
-                            </ul>
-
+                                </ul>
                             </li>
-
+                            @endif
                         </ul>
                     </div>
                 </div>
@@ -44,7 +62,6 @@
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12 search">
                     <form action="{{ route('search.index') }}" method="get">
-                        @csrf
                         <input type="text" name="search" placeholder="Tìm kiếm sản phẩm" />
                         <button type="submit"><span class="arrow_right"></span></button>
                     </form>
@@ -101,8 +118,8 @@
 
 
                             </div>
-                            <a href="{{ route('cart.list') }}" class="trendify-btn black-bordered">View Cart</a>
-                            <a href="#" class="trendify-btn black-bordered">Checkout</a>
+                            <a href="{{ route('cart.list') }}" class="trendify-btn black-bordered">Xem giỏ hàng</a>
+                            <a href="" class="trendify-btn black-bordered">Thanh toán</a>
                         </div>
                     </div>
                 </div>
@@ -110,46 +127,6 @@
         </div>
     </div>
 
-    <div class="navbar trendify-nav megamenu">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse"
-                    aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <?php $danhmuc = DB::table('danh_muc')->get(); ?>
-                    @foreach ($danhmuc as $item)
-                        <li class="dropdown">
-
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-haspopup="true" aria-expanded="false">{{ $item->ten_dm }}</a>
-                            <?php $loaisanpham = DB::table('loai_san_pham')
-                                ->where('id_dm', $item->id)
-                                ->get(); ?>
-                            <ul class="dropdown-menu">
-                                @foreach ($loaisanpham as $item)
-                                    <li><a
-                                            href="{{ route('hienthisp.index', ['id' => $item->id]) }}">{{ $item->ten_lsp }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-
-        </div>
-        <!-- /.container-fluid -->
-    </div>
 
 </div>

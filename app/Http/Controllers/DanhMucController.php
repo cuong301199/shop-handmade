@@ -20,14 +20,20 @@ class DanhMucController extends Controller
         $tenDanhMuc = $request->tenDanhMuc;
         $moTa = $request->moTa;
 
+        if($request->hasFile('hinhAnh')){
+            $hinhAnh = $request->file('hinhAnh');
+            $tenFile = $hinhAnh->getClientOriginalName();
 
-        $insert = DB::table('danh_muc')->insert(
-            [
-                'ten_dm'=> $tenDanhMuc,
-                'mota_dm'=>$moTa
-            ]
-        );
+            $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
 
+            $insert = DB::table('danh_muc')->insert(
+                [
+                    'ten_dm'=> $tenDanhMuc,
+                    'mota_dm'=>$moTa,
+                    'hinhanh_dm'=>'hinh-anh-san-pham/'.$hinhAnh->getClientOriginalName()
+                ]
+            );
+        }
         return redirect()->route('danhmuc.index');
 
     }
@@ -52,6 +58,18 @@ class DanhMucController extends Controller
                 'mota_dm'=>$moTa
             ]
             );
+            if($request->hasFile('hinhAnh')){
+                $hinhAnh = $request->file('hinhAnh');
+                $tenFile = $hinhAnh->getClientOriginalName();
+                $hinhAnh->move(public_path('hinh-anh-san-pham/'), $hinhAnh->getClientOriginalName());
+
+                $updateHinhAnh = DB::table('danh_muc')->where('id',$id)->update(
+                    [
+                        'hinhanh_dm'=>'hinh-anh-san-pham/'.$tenFile
+                    ]
+                );
+
+            }
         return redirect()->route('danhmuc.index');
 
     }

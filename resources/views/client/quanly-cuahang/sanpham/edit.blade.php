@@ -44,12 +44,7 @@
                                                 class="form-control" placeholder="Tên sản phẩm" aria-describedby="helpId">
                                             <small id="helpId" class="text-muted">Tên sản phẩm là bắt buộc</small>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">Số lượng</label>
-                                            <input type="text" name="soLuong" value="{{ $danhsach->soluong_sp }}" id=""
-                                                class="form-control" placeholder="" aria-describedby="helpId">
-                                            <small id="helpId" class="text-muted">Số lượng là bắt buộc</small>
-                                        </div>
+
                                         <div class="input-group form-group">
                                             <span class="input-group-text">Giá sản phẩm</span>
                                             <input class="form-control" type="number" value="{{ $danhsach->gia_sp }}"
@@ -70,6 +65,16 @@
                                             <select class="form-control loaiSanPham" name="loaiSanPham" id="">
                                                 <option class="itemLSP" value="{{ $danhsach->id_lsp }}">
                                                     {{ $danhsach->ten_lsp }}</option>
+                                            </select>
+                                        </div>
+                                        <?php $danhsach_tt = DB::table('trang_thai_san_pham')->where('id','<',3)->get() ?>
+                                        <div class="form-group">
+                                            <label for="">Trạng thái</label>
+                                            <select class="form-control loaiSanPham" name="id_trangthai" id="">
+                                                @foreach ($danhsach_tt as $item)
+                                                    <option value="{{ $item->id }}" @if ($danhsach->id_trangthai == $item->id) selected   @endif>
+                                                        {{ $item->trangthai_sp }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -105,7 +110,6 @@
                                                     data-target="#exampleModalLong">
                                                     Thêm hình ảnh chi tiết
                                                 </button>
-
                                                 <div class="modal fade" id="exampleModalLong" tabindex="-1"
                                                     role="dialog" aria-labelledby="exampleModalLongTitle"
                                                     aria-hidden="true">
@@ -132,7 +136,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                         </div>
                                         <div id="insert"></div>
                                     </div>

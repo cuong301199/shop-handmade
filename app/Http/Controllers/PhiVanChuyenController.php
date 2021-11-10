@@ -9,12 +9,12 @@ use Session;
 class PhiVanChuyenController extends Controller
 {
     public function index(){
-        $id_nb = Auth::guard('nguoi_dung')->user()->id;
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
         $danhsach = DB::table('phi_van_chuyen')
         ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','phi_van_chuyen.id_tp')
         ->join('tbl_quanhuyen','tbl_quanhuyen.maqh','phi_van_chuyen.id_qh')
         ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','phi_van_chuyen.id_xa')
-        ->where('id_nb',$id_nb)
+        ->where('id_nd',$id_nd)
         ->get();
         return view("client.quanly-cuahang.phivanchuyen.index",\compact('danhsach'));
     }
@@ -34,7 +34,7 @@ class PhiVanChuyenController extends Controller
         return response()->json($xp, 200);
     }
     public function store(Request $request ){
-        $id_nb = Auth::guard('nguoi_dung')->user()->id;
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
         $thanhPho = $request->thanhPho;
         $quanHuyen = $request->quanHuyen;
         $xaPhuong = $request->xaPhuong;
@@ -45,7 +45,7 @@ class PhiVanChuyenController extends Controller
                     'id_tp'=>$thanhPho,
                     'id_qh'=>$quanHuyen,
                     'id_xa'=>$xaPhuong,
-                    'id_nb'	=>$id_nb ,
+                    'id_nd'	=>$id_nd ,
                     'phi_pvc'=> $phiVanChuyen
                 ]
             );

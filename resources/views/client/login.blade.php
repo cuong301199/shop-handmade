@@ -67,7 +67,7 @@
                         </form>
                         <div class="login-method col-md-12">
                             <div class="col-md-6 col-sm-6 no-padding-right no-padding-left">
-                                <a class="method-facebook" href="#"><i class="fa fa-facebook"></i>Đăng nhập bằng
+                                <a class="method-facebook" href="{{ route('facebook.getInfor')  }}"><i class="fa fa-facebook"></i>Đăng nhập bằng
                                     Facebook</a>
                             </div>
                             <div class="col-md-6 col-sm-6 no-padding-left no-padding-right">
@@ -125,22 +125,26 @@
                             </div>
                             <div class="col-md-6 no-padding-right no-padding-left">
                                 <div class="last-name">
-                                    <label for="your-last-name">Địa chỉ<span class="required">*</span></label><br>
-                                    <input type="text" name="diaChi" value="" class="your-last-name"
-                                        id="your-last-name">
-                                </div>
-                            </div>
-                            <div class="col-md-6 no-padding-right no-padding-left">
-                                <div class="last-name">
                                     <label for="your-last-name">Số điện thoại<span class="required">*</span></label><br>
                                     <input type="number" name="soDienThoai" value="" class="your-last-name"
                                         id="your-last-name">
                                 </div>
                             </div>
+                            <div class="col-md-6 no-padding-right no-padding-left">
+                                <div class="last-name">
+                                    <label for="your-last-name">Chọn danh mục yêu thích<span class="required">*</span></label><br>
+                                    <select name="danhMuc" id="" class="form-control xaPhuong">
+                                        <option value="">Chọn danh mục</option>
+                                        @foreach ($danhmuc as $item )
+                                            <option value="{{ $item->id }}">{{ $item->ten_dm  }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="clear-fix"></div>
 
-                            <div class="col-md-6 no-padding-left">
+                            <div style="margin-top:20px;" class="col-md-6 no-padding-left button-register">
                                 <button type="submit" style="border-radius: 1px; background-color:#1a1a1a"
                                     class="btn btn-primary btn-lg">Đăng kí</button>
                             </div>
@@ -150,5 +154,14 @@
             </div>
         </div>
     </div>
+    @push('input-total-price')
+    <script>
+        $(document).ready(function () {
 
+
+        });
+
+
+    </script>
+@endpush
 @endsection

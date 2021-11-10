@@ -57,5 +57,6 @@
 @include('client.quanly-cuahang.template.js')
 @stack('ajax-add-product')
 @stack('addCity')
+
 </body>
 </html>

@@ -36,12 +36,6 @@
                                                 placeholder="Tên sản phẩm" aria-describedby="helpId">
                                             <small id="helpId" class="text-muted">Tên sản phẩm là bắt buộc</small>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="">Số lượng</label>
-                                            <input type="number" name="soLuong" id="" class="form-control" placeholder=""
-                                                aria-describedby="helpId">
-                                            <small id="helpId" class="text-muted">Số lượng là bắt buộc</small>
-                                        </div>
                                         <div class="input-group form-group">
                                             <span class="input-group-text">Giá sản phẩm</span>
                                             <input class="form-control" type="number" name="giaSanPham"
@@ -53,18 +47,43 @@
                                             <select class="form-control danhMuc" name="danhMuc">
                                                 <option>Chọn danh mục</option>
                                                 @foreach ($danhsach_dm as $item)
-                                                    <option value="{{ $item->id_dm }}">{{ $item->ten_dm }}</option>
+                                                    <option value="{{ $item->id }}">{{ $item->ten_dm }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">Loại sản phẩm</label>
+                                            <select class="form-control loaiSanPham" name="loaiSanPham" id="">
+                                                {{-- @foreach ($danhsach_lsp as $item)
+
+                                                @endforeach --}}
+                                                <option value="">Chọn loại sản phẩm</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="">Tên thành phố</label>
+                                            <select name="thanhPho" id="" class="form-control thanhPho">
+                                                <option value="">Chọn thành phố</option>
+                                                @foreach ($tp as $item )
+                                                    <option value="{{ $item->matp }}">{{ $item->name_tp }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Loại sản phẩm</label>
-                                            <select class="form-control loaiSanPham" name="loaiSanPham" id="">
-                                                @foreach ($danhsach_lsp as $item)
-
-                                                @endforeach
+                                            <label for="">Tên quận huyện</label>
+                                            <select name="quanHuyen" id="" class="form-control quanHuyen">
+                                                <option value="">Chọn quận huyện</option>
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="">Tên xã phường</label>
+                                            <select name="xaPhuong" id="" class="form-control xaPhuong">
+                                                <option value="">Chọn xã phường</option>
+                                            </select>
+                                        </div>
+
                                     </div>
                                     <div class="col-md-4">
                                         <img src="{{ asset('template-client') }}/img/avatar.jpg" width="30%"
@@ -148,6 +167,95 @@
             //         }
             //     });
             // });
+
+                const BASE_URL = window.location.origin //lấy base url
+                $('select.thanhPho').change(function(e) {
+                    e.preventDefault();
+                    var getIDCity = $(this).children("option:selected").val();
+                    console.log(getIDCity);
+                    $('.itemProvince').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL+ "/client/get-province/" + getIDCity,
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.quanHuyen').append('<option value="' + response[i].maqh +
+                                    '" class="itemProvince" >' + response[i].name_qh + '</option>');
+                            }
+                        }
+                    });
+                });
+                $('select.quanHuyen').change(function(e) {
+                    e.preventDefault();
+                    var getIDProvince = $(this).children("option:selected").val();
+                    // console.log(getIDCity);
+                    // console.log('124')
+                    $('.itemWards').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL+"/client/get-wards/" + getIDProvince,
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.xaPhuong').append('<option value="' + response[i].maxa +
+                                    '"class="itemWards" >' + response[i].name_xa + '</option>');
+
+                            }
+
+                        }
+                    });
+                });
+
+
         </script>
     @endpush
+    {{-- @push('addCity')
+    <script>
+        $(document).ready(function() {
+                const BASE_URL = window.location.origin //lấy base url
+                $('select.thanhPho').change(function(e) {
+                    e.preventDefault();
+                    var getIDCity = $(this).children("option:selected").val();
+                    // console.log(getIDCity);
+                    // console.log('124')
+                    $('.itemProvince').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL+ "/client/get-province/" + getIDCity,
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.quanHuyen').append('<option value="' + response[i].maqh +
+                                    '" class="itemProvince" >' + response[i].name_qh + '</option>');
+
+                            }
+
+                        }
+                    });
+                });
+                $('select.quanHuyen').change(function(e) {
+                    e.preventDefault();
+                    var getIDProvince = $(this).children("option:selected").val();
+                    // console.log(getIDCity);
+                    // console.log('124')
+                    $('.itemWards').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL+ "/client/get-wards/" + getIDProvince,
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.xaPhuong').append('<option value="' + response[i].maxa +
+                                    '"class="itemWards" >' + response[i].name_xa + '</option>');
+
+                            }
+
+                        }
+                    });
+                });
+
+            });
+    </script>
+@endpush --}}
 @endsection

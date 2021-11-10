@@ -6,21 +6,38 @@ use Illuminate\Http\Request;
 use DB;
 use Hash;
 use Auth;
+use Socialite;
 use Session;
+use Carbon\Carbon;
 class NguoiDungController extends Controller
 {
-    public function login(){
-        return view('client.login');
+
+    public function getInfor()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+    public function callback()
+    {
+        $infor =Socialite::driver('facebook')->user();
+        dd($infor);
     }
 
-    public function register(Request $request){
+    public function login()
+    {
+        $danhmuc = DB::table('danh_muc')
+        ->get();
+        return view('client.login',\compact('danhmuc'));
+    }
+
+    public function register(Request $request)
+    {
         $tenDangNhap = $request->tenDangNhap;
         $matKhau = $request->matKhau;
         $reMatKhau = $request->reMatKhau;
         $email = $request->email;
         $hoTen= $request->hoTen;
-        $diaChi = $request->diaChi;
         $soDienThoai = $request->soDienThoai;
+
 
         if($tenDangNhap=="" || $tenDangNhap == null ){
             Session::flash("error", "Tên đăng nhập không được để trống");
@@ -57,8 +74,8 @@ class NguoiDungController extends Controller
                     'password'=> $hashPassword,
                     'ten_nd'=>$hoTen,
                     'email_nd'=>$email,
-                    'diachi_nd'=>$diaChi,
-                    'sdt_nd'=>$soDienThoai
+                    'sdt_nd'=>$soDienThoai,
+                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ]
             );
 
@@ -71,7 +88,8 @@ class NguoiDungController extends Controller
         };
     }
 
-    public function postLogin(Request $request){
+    public function postLogin(Request $request)
+    {
         $arr = [
             'username'=> $request->tenDangNhap,
             'password'=>$request->matKhau
@@ -84,7 +102,7 @@ class NguoiDungController extends Controller
             return redirect()->back();
         }
     }
-    
+
 
 
     public function logOut(){

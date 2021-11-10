@@ -17,8 +17,10 @@ use App\Http\Controllers\HienThiSanPhamController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ThanhToanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\PhiVanChuyenController;
+use App\Http\Controllers\ThongTinLienHeController;
 
 
 
@@ -38,9 +40,19 @@ use App\Http\Controllers\PhiVanChuyenController;
 Route::get('',[HomeController::class,'index'])->name('client.index');
 
 Route::prefix('/client')->group(function () {
+    //tai them san pham
+    Route::get('/load-more-product',[HomeController::class,'get_more_product'])->name('getMoreProduct.home');
+    //dang nhap facebook
+    Route::get('/getInfor-facebook',[NguoiDungController::class,'getInfor'])->name('facebook.getInfor');
+    Route::get('/check-infor-facebook',[NguoiDungController::class,'getInfor'])->name('facebook.checkInfor');
+    //Tim kiem
+    Route::get('/tim-kiem',[HomeController::class,'searchProduct'])->name('search.index');
 
-    Route::get('/tim-kiem/hienthi',[HomeController::class,'searchProduct'])->name('search.index');
-
+    //thong tin lien he
+    Route::get('/thong-tin-lien-he',[ThongTinLienHeController::class,'index'])->name('thongtinlienhe.index');
+    Route::post('them/thong-tin-lien-he',[ThongTinLienHeController::class,'store'])->name('thongtinlienhe.store');
+    Route::post('sua/thong-tin-lien-he/{id}',[ThongTinLienHeController::class,'update'])->name('thongtinlienhe.update');
+    //Dang ki dang nhap
     Route::get('/register/nguoidung',[NguoiDungController::class,'login'] )->name('nguoidung.login');
     Route::post('/register/nguoi-dung', [NguoiDungController::class,'register'])->name('nguoi-dung.register');
     Route::post('/login',[NguoiDungController::class,'postLogin'])->name('nguoi-dung.login');
@@ -62,6 +74,23 @@ Route::prefix('/client')->group(function () {
     // Route::get('/add-image-edit/{id}',[SanPhamController::class,'addImage'])->name('image-eidt.add');
     // Route::get('/load-image',[SanPhamController::class,'loadImageData'])->name('image.load');
 
+    //bai viet
+    Route::get('/baiviet',[BaiVietController::class,'index'])->name('baiviet.index');
+    Route::get('/baiviet/them',[BaiVietController::class,'create'])->name('baiviet.create');
+    Route::post('/baiviet/them-post',[BaiVietController::class,'store'])->name('baiviet-post.create');
+    Route::get('/baiviet/{id}/sua', [BaiVietController::class,'edit'])->name('baiviet.edit');
+    Route::post('/baiviet/{id}/sua-sp',[BaiVietController::class, 'update'] )->name('baiviet.update');
+    Route::get('/baiviet/{id}/xoa',[BaiVietController::class,'delete'])->name('baiviet.delete');
+
+    //chi tiet bai viet
+    Route::get('/chitiet-baiviet/{id}',[HomeController::class,'index_post'])->name('baiviet.detail');
+
+    //binh luan
+    Route::get('/load-comment/{id_bv}',[BaiVietController::class,'load_comment'])->name('comment.load');
+    Route::get('/comment/{id_bv}',[BaiVietController::class,'comment'])->name('comment.add');
+
+    //report-san pham
+    Route::get('/report-product',[SanPhamController::class,'report_product'])->name('report.product');
 
     ///// phi van chuyen
     Route::get('/phivanchuyen',[PhiVanChuyenController::class,'index'])->name('phivanchuyen.index');
@@ -69,8 +98,6 @@ Route::prefix('/client')->group(function () {
     Route::get('get-province/{idCity}',[PhiVanChuyenController::class,'getProvinceByCity'])->name('feeship.get-province');
     Route::get('get-wards/{idProvince}',[PhiVanChuyenController::class,'getWardsByProvince'])->name('feeship.get-wards');
     Route::post('/phivanchuyen-store',[PhiVanChuyenController::class,'store'])->name('phivanchuyen.store');
-
-
     Route::get('/quanlydanhmuc',[ChonDanhMucController::class,'index'] )->name('quanlydanhmuc.index');
     Route::get('/quanlydanhmuc/them',[ChonDanhMucController::class,'create'] )->name('quanlydanhmuc.create');
     Route::post('/quanlydanhmuc/them-post',[ChonDanhMucController::class,'choose_category'] )->name('quanlydanhmuc.post');
@@ -83,11 +110,20 @@ Route::prefix('/client')->group(function () {
     Route::post('/thongtincanhan/{id}/update',[ThongTinCaNhanController::class,'update'])->name('profile.update');
     Route::get('/matkhau/{id}/edit',[ThongTinCaNhanController::class,'editpassword'])->name('password.edit');
     Route::post('/matkhau/{id}/update',[ThongTinCaNhanController::class,'updatepassword'])->name('password.update');
-    Route::get('donhang/',[ThongTinCaNhanController::class,'order'])->name('order.index');
-    Route::get('chitietdonhang/{id}',[ThongTinCaNhanController::class,'oder_detail'])->name('oderuser.detail');
 
-    Route::get('/sanpham/hienthi/{id}',[SanPhamController::class,'getProductByCat'])->name('hienthisp.index');
-    Route::get('/cuahang/hienthi/{id}',[CuaHangController::class,'showStore'])->name('hienthich.showStore');
+    //don hang da dat
+    Route::get('donhang/',[QuanLyCuaHangController::class,'order'])->name('order.index');
+    Route::get('chitietdonhang/{id}',[QuanLyCuaHangController::class,'oder_detail'])->name('oder.detail');
+
+    Route::get('/sanpham/hienthi/{id}',[SanPhamController::class,'getProductByCat'])->name('sanpham.danhmuc');
+    // Route::get('/sanpham/hienthi/lsp/{id_dm}/{id_lsp}',[SanPhamController::class,'getProductByProductType'])->name('sanpham.loaisanpham');
+
+
+
+    Route::get('/trang-ca-nhan/{id}',[CuaHangController::class,'index'])->name('cuahang.index');
+
+
+
 
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
@@ -99,10 +135,10 @@ Route::prefix('/client')->group(function () {
     Route::get('client/cart-list-update/{id}/{qty}',[CartController::class,'UpdateCart'])->name('cart.update');
 
     // Route::get('/thanh-toan',[thanhtoanController::class,'thanhToan'])->name('thanhtoan.index');
-    Route::get('/sanpham/hienthi/danhmuc/{id}',[SanPhamController::class,'productCat'])->name('sanpham.danhmuc');
+
     //Quan ly don hang ------------------------------------------------------
     Route::get('quanly-donhang',[QuanLyCuaHangController::class, 'manage_oder'] )->name('manage_oder.index');
-    Route::get('chitiet-donhang/{id}',[QuanLyCuaHangController::class, 'oder_detail'] )->name('oder.detail');
+    Route::get('chitiet-donhang/{id}',[QuanLyCuaHangController::class, 'manage_oder_detail'] )->name('manage_oder.detail');
     Route::get('accep-oder/{id}',[QuanLyCuaHangController::class, 'accepOder'] )->name('accepOder');
 
 
@@ -117,9 +153,9 @@ Route::middleware(['checkNguoiDung'])->group(function () {
     Route::get('/thanhtoan/{id}',[ThanhToanController::class,'thanhToan'])->name('thanhtoan.index');
     Route::post('/checkout/post/{id}',[ThanhToanController::class,'store'])->name('checkout.store');
 
-    Route::post('/check-coupon',[ThanhToanController::class,'check_coupon'])->name('check.coupon');
-    Route::get('/unset-coupon',[ThanhToanController::class,'unset_coupon'])->name('unset.coupon');
-
+    // Route::post('/check-coupon',[ThanhToanController::class,'check_coupon'])->name('check.coupon');
+    // Route::get('/unset-coupon',[ThanhToanController::class,'unset_coupon'])->name('unset.coupon');
+    Route::get('/check-feeship',[ThanhToanController::class,'check_feeship'])->name('feeship.check');
 
 });
 
@@ -136,11 +172,11 @@ Route::middleware(['checkQuanTri'])->group(function () {
     Route::prefix('')->group(function () {
 
 
-        Route::get('/cuahang', [CuaHangController::class,'getStore'])->name('cuahang.index');
-        Route::get('/cuahang{id}', [CuaHangController::class,'accepStore'])->name('cuahang.eccep');
-        Route::get('/cuahang{id}/stop', [CuaHangController::class,'stopStore'])->name('cuahang.stop');
+        // Route::get('/cuahang', [CuaHangController::class,'getStore'])->name('cuahang.index');
+        // Route::get('/cuahang{id}', [CuaHangController::class,'accepStore'])->name('cuahang.eccep');
+        // Route::get('/cuahang{id}/stop', [CuaHangController::class,'stopStore'])->name('cuahang.stop');
 
-
+        Route::get('/nguoidung', [QuanTriController::class, 'user'])->name('user.index');
         Route::get('/admin', [AuthController::class, 'index'])->name('admin.index');
 
         Route::get('/danhmuc', [DanhMucController::class, 'index'])->name('danhmuc.index');
@@ -159,9 +195,9 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
         // mã giảm giá
 
-        Route::get('/coupon', [MaGiamGiaController::class, 'index'])->name('coupon.index');
-        Route::get('/coupon-add', [MaGiamGiaController::class, 'create'])->name('coupon.create');
-        Route::post('/coupon-add-post', [MaGiamGiaController::class, 'store'])->name('coupon.store');
+        // Route::get('/coupon', [MaGiamGiaController::class, 'index'])->name('coupon.index');
+        // Route::get('/coupon-add', [MaGiamGiaController::class, 'create'])->name('coupon.create');
+        // Route::post('/coupon-add-post', [MaGiamGiaController::class, 'store'])->name('coupon.store');
 
 
     });
@@ -184,5 +220,12 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 Route::get('/1', function () {
-    return view('client.loaisanpham');
+    $comment = DB::table('binh_luan')
+    ->join('nguoi_dung','nguoi_dung.id','binh_luan.id_nd')
+    ->join('table_phan_hoi','table_phan_hoi.id_bl','binh_luan.id')
+    // ->where('binh_luan.id_bv',1)
+    // ->orderBy('binh_luan.id','desc')
+    ->select('nguoi_dung.*','table_phan_hoi.*')
+    ->get();
+    dd($comment);
 });

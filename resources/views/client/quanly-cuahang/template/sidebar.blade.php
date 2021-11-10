@@ -19,6 +19,7 @@
             </div>
             <div class="info">
                 <p style="color: rgb(231, 224, 224)">Xin chao {{ Auth::guard('nguoi_dung')->user()->ten_nd }}</p>
+                <a style="margin-top:2px;" href="{{ route('nguoidung.logout') }}">Đăng xuất</a>
             </div>
         </div>
 
@@ -28,6 +29,14 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
+                    <a href="{{route('order.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Đơn hàng đã đặt
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('sanpham.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
@@ -35,7 +44,6 @@
                         </p>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="{{ route('manage_oder.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
@@ -45,10 +53,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('quanlydanhmuc.index') }}" class="nav-link">
+                    <a href="{{ route('baiviet.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
-                            Quản lý danh mục
+                            Quản lý bài viết
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('thongtinlienhe.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Quản lý thông tin liên hệ
                         </p>
                     </a>
                 </li>
@@ -61,14 +77,14 @@
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ route('nguoidung.logout') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Đăng xuất
                         </p>
                     </a>
-                </li>
+                </li> --}}
 
 
 

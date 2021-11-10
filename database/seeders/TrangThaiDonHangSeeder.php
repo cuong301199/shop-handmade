@@ -16,11 +16,11 @@ class TrangThaiDonHangSeeder extends Seeder
         $trangthai=[
             [
 
-                'ten_tt'=>'Đã bị hủy'
+                'ten_tt'=>'Chờ xác nhận'
             ],
             [
 
-                'ten_tt'=>'Chờ xác nhận'
+                'ten_tt'=>'Đã xác nhận'
             ],
             [
 
@@ -29,7 +29,11 @@ class TrangThaiDonHangSeeder extends Seeder
             [
 
                 'ten_tt'=>'Đã nhận hàng'
-            ]
+            ],
+            [
+
+                'ten_tt'=>'Đã bị hủy'
+            ],
         ];
         $insert = DB::table('trang_thai_don_hang')->insert($trangthai);
     }

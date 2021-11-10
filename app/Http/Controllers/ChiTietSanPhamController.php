@@ -11,12 +11,17 @@ class ChiTietSanPhamController extends Controller
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
         ->where('san_pham.id',$id)
+        ->select('loai_san_pham.*','nguoi_dung.*','san_pham.*')
         ->first();
+
+        $sp=DB::table('san_pham')
+        ->where('id_lsp',$danhsach->id_lsp)
+        ->get();
 
         $hinhanh = DB::table('hinh_anh')
         // ->join('san_pham','san_pham.id','hinh_anh.id_sp')
         ->where('id_sp',$id)
         ->get();
-        return view('client.chitietsanpham', compact('danhsach','hinhanh'));
+        return view('client.chitietsanpham', compact('danhsach','hinhanh','sp'));
     }
 }
