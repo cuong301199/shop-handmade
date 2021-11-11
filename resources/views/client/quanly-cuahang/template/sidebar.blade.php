@@ -76,6 +76,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('manage_chars_oder.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Thống kê danh thu
+                        </p>
+                    </a>
+                </li>
+
 
                 {{-- <li class="nav-item">
                     <a href="{{ route('nguoidung.logout') }}" class="nav-link">

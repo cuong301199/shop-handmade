@@ -93,7 +93,7 @@
                                     </td>
                                     <td>
                                         <a href="{{ route('manage_oder.detail', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
-                                        <a href=""><span class="badge bg-danger">Xóa</span></a>
+                                        <a class="twitter badge bg-danger" data-title="Thông báo" href="">hủy</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -116,4 +116,18 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
+@push('addCity')
+    <script>
+        $('a.twitter').confirm({
+            content: "Bạn có hủy đơn hàng này",
+        });
+        $('a.twitter').confirm({
+            buttons: {
+                hey: function(){
+                    location.href = this.$target.attr('href');
+                }
+            }
+        });
+    </script>
+@endpush
 @endsection

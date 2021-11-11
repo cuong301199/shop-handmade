@@ -90,34 +90,36 @@ class ThanhToanController extends Controller
         $total_price=$request->total_price;
         $output='';
         if($fee == null){
-            Session::put('fee',50000);
+            Session::flash('fee',50000);
             $fee_ship = 50000;
         }else{
-            Session::put('fee',$fee->phi_pvc);
+            Session::flash('fee',$fee->phi_pvc);
              $fee_ship=$fee->phi_pvc;
         }
         $total_price+=$fee_ship;
-        $output.= '
-            <div class="row">
+        if(!$id_city==null){
+            $output.= '
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="">Phí giao hàng</label>
+                    </div>
+                    <div class="col-md-6 no padding-left">
+                        <p>'.number_format( Session::get('fee')).' VND</p>
+                    </div>
+                </div>
+                <div class="row">
                 <div class="col-md-3">
-                    <label for="">Phí giao hàng</label>
+                    <label for="">Tổng hóa đơn</label>
                 </div>
                 <div class="col-md-6 no padding-left">
-                    <p>'. Session::get('fee').' VND</p>
+                    <p> '.number_format( $total_price).' VND</p>
                 </div>
-            </div>
-            <div class="row">
-            <div class="col-md-3">
-                <label for="">Tổng hóa đơn</label>
-            </div>
-            <div class="col-md-6 no padding-left">
-                <p> '. $total_price.'</p>
-            </div>
-            </div>
-            <input  name="fee-ship" type="" value="'. Session::get('fee').'"></input>
-            <input  name="total_pice" type="" value="'. $total_price .'"></input>'
+                </div>
+                <input  name="fee_ship" type="" value="'. Session::get('fee').'"></input>
+                <input  name="total_pice" type="" value="'. $total_price .'"></input>'
 
-           ;
+            ;
+        }
         echo $output;
     }
 
@@ -162,7 +164,11 @@ class ThanhToanController extends Controller
         $id_xp= $request->id_xp;
         $diachi_ttvc = $request->diaChi;
         $sdt_ttvc = $request->sdt;
-        $phiVanChuyen = Session::get('fee');
+        $phiVanChuyen = $request->fee_ship;
+        // if($phuongThucThanhToan=="" || $$phuongThucThanhToan == null ){
+        //     Session::flash("error", "Bạn chưa chọn phương thức thanh toán");
+        //     return redirect()->back();
+        // }
         $insert_ttvc = DB::table('thong_tin_van_chuyen')->insertGetId(
             [
                 'id_tp'=>$id_tp,
@@ -182,7 +188,7 @@ class ThanhToanController extends Controller
                 'id_ttvc'=>$insert_ttvc,
                 'tong_tien'=>$tongTien,
                 'phivanchuyen_hd'=> $phiVanChuyen ,
-                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')->toDateString()
             ]
         );
         // if($coupon_code != null){

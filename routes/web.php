@@ -22,7 +22,7 @@ use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\PhiVanChuyenController;
 use App\Http\Controllers\ThongTinLienHeController;
 
-
+use Carbon\Carbon;
 
 
 
@@ -141,7 +141,11 @@ Route::prefix('/client')->group(function () {
     Route::get('chitiet-donhang/{id}',[QuanLyCuaHangController::class, 'manage_oder_detail'] )->name('manage_oder.detail');
     Route::get('accep-oder/{id}',[QuanLyCuaHangController::class, 'accepOder'] )->name('accepOder');
 
+    //thong ke danh thu
 
+    Route::get('/thong-ke-danh-thu',[QuanLyCuaHangController::class, 'manage_chars_oder'] )->name('manage_chars_oder.index');
+    Route::get('/filter-by-date',[QuanLyCuaHangController::class, 'filter_by_date'] )->name('filter-by-date.index');
+    Route::get('/filter-dashboard',[QuanLyCuaHangController::class, 'filter_dashboard'] )->name('filter-dashboard.index');
 
 
 });
@@ -220,12 +224,27 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 Route::get('/1', function () {
-    $comment = DB::table('binh_luan')
-    ->join('nguoi_dung','nguoi_dung.id','binh_luan.id_nd')
-    ->join('table_phan_hoi','table_phan_hoi.id_bl','binh_luan.id')
-    // ->where('binh_luan.id_bv',1)
-    // ->orderBy('binh_luan.id','desc')
-    ->select('nguoi_dung.*','table_phan_hoi.*')
+    $dt = Carbon::create(2021, 11, 10);
+    $dt2 = Carbon::create(2021, 11, 11);
+    $danhsach = DB::table('hoa_don')
+    ->where('id_nb',2)
+    ->whereBetween('created_at',[$dt,$dt2])
+    ->select('created_at', DB::raw('SUM(tong_tien) as total_sales'),DB::raw('count(id) as total'),DB::raw('SUM(tong_sp) as tong_sp'))
+    ->groupBy('created_at')
     ->get();
-    dd($comment);
+
+    foreach($danhsach as $key => $val){
+
+                    $date=\Carbon\Carbon::parse( $val->created_at)->format('d/m/Y');
+                    $data[]=array(
+                        'created_at'=>$date,
+                        'tong_tien'=>$val->total_sales,
+                        'don_hang'=>$val->total,
+                        'tong_sp'=>$val->tong_sp
+                    );
+                }
+
+    // $time=  Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
+    // $time->toDateString();
+    dd($data);
 });

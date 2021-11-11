@@ -75,7 +75,7 @@ class NguoiDungController extends Controller
                     'ten_nd'=>$hoTen,
                     'email_nd'=>$email,
                     'sdt_nd'=>$soDienThoai,
-                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')->toDateString()
                 ]
             );
 

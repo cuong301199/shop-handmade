@@ -48,7 +48,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Cập nhật</button>
-                  </form>
+
 
             </div>
         </div>
@@ -70,8 +70,9 @@
                     <tr>
                         <th style="width: ">#</th>
                         <th style="width:10%">Hình ảnh</th>
-                        <th style="width:40% ">Tên sản phẩm</th>
-                        <th style="width: ">Số lượng</th>
+                        <th style="width:27% ">Tên sản phẩm</th>
+                        <th style="width:12% ">Số lượng kho</th>
+                        <th style="width: 10%">Số lượng</th>
                         <th style="width: ">Đơn giá</th>
                         <th style="width:">Thành tiền</th>
                     </tr>
@@ -83,15 +84,19 @@
                         <td>{{ $stt++ }}</td>
                         <td> <img src="{{ asset($item->hinhanh_sp) }}" alt="" width = 60px heigth=60px></td>
                         <td>{{ $item->ten_sp }} </td>
+                        <td>{{ $item->soluong_sp }} </td>
                         <td>{{ $item->so_luong }}</td>
                         <td>{{ number_format( $item->gia_sp) }} VND</td>
                         <td>{{  number_format($item->gia_sp*$item->so_luong) }} VND</td>
+                        <input type="hidden" name="id_sp[]" value="{{ $item->id_sp }}">
+                        <input type="hidden" name="soluong_sp[]" value="{{ $item->so_luong }}">
                     </tr>
                 @endforeach
+            </form>
                 <tr>
                     <td>Tổng tiền</td>
                     <td></td>
-                    <td></td>
+                    <td></td><td></td>
                     <td></td>
                     <td></td>
                     <td>
@@ -117,7 +122,28 @@
           </div>
     </div>
 </div>
-
+@push('accepOder')
+    @if(Session::has('success-aceepOder-3'))
+        <script>
+            swal({
+                title: "Thông báo",
+                text: "Đã cập nhập trạng thái đơn hàng và số lượng trong kho",
+                icon: "success",
+                button: "Đóng",
+                });
+        </script>
+    @endif
+    @if(Session::has('success-aceepOder'))
+        <script>
+            swal({
+                title: "Thông báo",
+                text: "Đã cập nhập trạng thái đơn hàng",
+                icon: "success",
+                button: "Đóng",
+                });
+        </script>
+    @endif
+@endpush
 @endsection
 
 

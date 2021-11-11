@@ -205,23 +205,23 @@
                                 <label for="">Tổng tiền</label>
                             </div>
                             <div class="col-md-6 no padding-left">
-                                <p>{{ $totalPrice }}</p>
+                                <p>{{number_format( $totalPrice) }} VND</p>
                             </div>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-3">
                                 <label for="">Phí giao hàng</label>
                             </div>
                             <div class="col-md-6 no padding-left">
                                 <p>Miễn phí giao hàng</p>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="row">
                             <div class="col-md-3">
                                 <label for="">Tổng hóa đơn</label>
                             </div>
                             <div class="col-md-6 no padding-left">
-                                <p>{{ $totalPrice }}</p>
+                                <p>{{number_format( $totalPrice) }} VND</p>
                             </div>
                         </div>
                     </div>

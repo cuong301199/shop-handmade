@@ -220,15 +220,14 @@
                                                 <label for="">Tổng tiền</label>
                                             </div>
                                             <div class="col-md-6 no padding-left">
-                                                <p>{{ $totalPrice }} VND</p>
+                                                <p>{{number_format( $totalPrice )}} VND</p>
                                             </div>
                                         </div>
                                         <input id="total" type="hidden" name="tong_tien" value="{{ $totalPrice }}">
-                                        @if(Session::has('fee'))
                                         <div class="fee-ship">
 
                                         </div>
-                                        @endif
+
 
 
                                         {{-- //////////////// --}}
@@ -466,12 +465,6 @@
             });
 
         });
-        // $('button.checkout').click(function (e) {
-        //     e.preventDefault();
-        //     var ghiChu =
-
-        // });
-
     });
 
 

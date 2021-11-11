@@ -52,7 +52,7 @@
                                     <td>{{ $item->created_at }}</td>
                                     <td>
                                         <a href="{{ route('baiviet.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
-                                        <a href="{{ route('baiviet.delete', ['id'=>$item->id]) }}"><span class="badge bg-danger">Xóa</span></a>
+                                        <a class="twitter badge bg-danger" data-title="Thông báo" href="{{ route('baiviet.delete', ['id'=>$item->id]) }}">Xóa</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -76,4 +76,18 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
+    @push('addCity')
+    <script>
+        $('a.twitter').confirm({
+            content: "Bạn có muốn xóa bài viết này",
+        });
+        $('a.twitter').confirm({
+            buttons: {
+                hey: function(){
+                    location.href = this.$target.attr('href');
+                }
+            }
+        });
+    </script>
+@endpush
 @endsection
