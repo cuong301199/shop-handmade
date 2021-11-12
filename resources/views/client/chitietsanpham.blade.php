@@ -1,24 +1,24 @@
 @extends('client.template.master')
 @section('content')
-{{-- {{ dd($danhsach) }} --}}
+    {{-- {{ dd($danhsach) }} --}}
     <style>
         /* .name-user {
-                margin-top: 1px
-            }
+                    margin-top: 1px
+                }
 
-            .comment {
-                margin-top: 50px;
-                padding: 0px;
-            }
-            .star{
-                margin-top: -10px
-            }
-            h5{
-                clear: both;
-                font-weight:550;
-                text-transform: lowercase;
-                font-size: 15px;
-            } */
+                .comment {
+                    margin-top: 50px;
+                    padding: 0px;
+                }
+                .star{
+                    margin-top: -10px
+                }
+                h5{
+                    clear: both;
+                    font-weight:550;
+                    text-transform: lowercase;
+                    font-size: 15px;
+                } */
 
         .infor {
             width: auto;
@@ -86,7 +86,6 @@
                                     </div>
                                 </li>
                             @endforeach
-
                         </ul>
                     </div>
                 </div>
@@ -104,69 +103,80 @@
                         <p style="font-size: 14px">{!! $danhsach->mota_sp !!}</p>
 
                         {{-- <div class="clear-fix"></div> --}}
-
-                        <div class="product-desc">
-                            <span class="item-number"><b>Giá:</b> {{ number_format($danhsach->gia_sp) }} VND
-                            </span><br>
-                            <span class="item-cat"><b>Danh mục: </b>{{ $danhsach->ten_lsp }}</span><br>
-                            <span class="item-cat"><b>Tên người bán: </b><a
-                                    href="{{ route('cuahang.index', ['id' => $danhsach->id_nb]) }}">{{ $danhsach->ten_nd }}</a></span><br>
-                            <span class="item-cat"><b>Ngày đăng bán:
-                                </b>{{ \Carbon\Carbon::parse($danhsach->created_at)->subHours(7)->diffForHumans() }}</span><br>
-                            {{-- <span class="item-tag"><b>Tags:</b>  elegant, men, suits, beige, modern</span> --}}
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="product-desc">
+                                    <span class="item-number"><b>Giá:</b> {{ number_format($danhsach->gia_sp) }} VND
+                                    </span><br>
+                                    <span class="item-cat"><b>Danh mục: </b>{{ $danhsach->ten_lsp }}</span><br>
+                                    <span class="item-cat"><b>Tên người bán: </b><a
+                                            href="{{ route('cuahang.index', ['id' => $danhsach->id_nb]) }}">{{ $danhsach->ten_nd }}</a></span><br>
+                                    <span class="item-cat"><b>Ngày đăng bán:
+                                        </b>{{ \Carbon\Carbon::parse($danhsach->created_at)->subHours(7)->diffForHumans() }}</span><br>
+                                    {{-- <span class="item-tag"><b>Tags:</b>  elegant, men, suits, beige, modern</span> --}}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="product-desc">
+                                    <div>
+                                        <a style="margin-top:px; margin-left:0px;width:220px;"
+                                            href="{{ route('Add.cart', ['id' => $danhsach->id]) }}"
+                                            class="trendify-btn black-bordered"><i class="fa fa-cart-plus"
+                                                style="margin: 0px 5px"></i>thêm vào giỏ hàng</a>
+                                    </div>
+                                    <div>
+                                        <a style="margin-top:10px; margin-left:0px;width:220px;"
+                                            href="{{ route('cuahang.index', ['id' => $danhsach->id_nb]) }}"
+                                            class="trendify-btn black-bordered">Xem trang người bán</a>
+                                    </div>
+                                    <div>
+                                        <a style="margin-top:10px; margin-left:0px;width:220px;" href=""
+                                            class="trendify-btn black-bordered">Chat với người bán</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {{-- <div class="infor">
                     </div> --}}
-                    <div>
-                        <a style="margin-top:10px; margin-left:0px;width:250px;"
-                            href="{{ route('cuahang.index', ['id' => $danhsach->id_nb]) }}"
-                            class="trendify-btn black-bordered">Xem trang người bán</a>
-                    </div>
-                    <div>
-                        <a style="margin-top:10px; margin-left:0px;width:250px;" href=""
-                            class="trendify-btn black-bordered">Chat với người bán</a>
-                    </div>
+
+
                 </div>
             </div>
             <div class="report-product">
+
                 <button style="font-size:11px; margin-bottom:15px" type="button" class="btn btn-lg" data-toggle="modal"
-                    data-target="#myModal">Báo cáo sản phẩm vi phạm</button>
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <form action="">
+                    data-target="#exampleModal">Báo cáo sản phẩm vi phạm</button>
+
+                <!-- Modal -->
+                <form action="{{ route('report.product') }}" method="post">
+                    @csrf
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="">Báo cáo vi phạm</h4>
+                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                                 <div class="modal-body">
-                                    {{-- <p>Some text in the modal.</p> --}}
                                     <div class="form-group">
                                         <label for="exampleFormControlTextarea1">Nội dung báo cáo</label>
-                                        <textarea name="noidung-_bc" class="form-control noidung-bc" id="exampleFormControlTextarea1"
-                                            rows="3"></textarea>
+                                        <textarea name="noidung_bc" class="form-control noidung-bc"
+                                            id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="email">Số điện thoại:</label>
-                                        <input type="number" name="sodienthoai_bc" class="form-control sodienthoai-bc " id="email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email :</label>
-                                        <input type="email" name="email_bc" class="form-control email-bc" id="email">
-                                    </div>
-                                    <input type="hidden" value="{{ $danhsach->id }}" class="id_sp">
+                                    <input type="hidden" value="{{ $danhsach->id }}" name="id_sp" class="id_sp">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success btn-report" data-dismiss="modal">Báo cáo </button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
-                        </form>
-
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="row">
                 <div class="related-products latest-product margin-bottom-60px">
@@ -203,39 +213,34 @@
         </div>
     </div>
     @push('Add-Cart')
-    <script>
-        $(document).ready(function () {
-            $('.btn-report').click(function (e) {
-                var noidung_bc = $('.noidung-bc').val();
-                var sodienthoai_bc = $('.sodienthoai-bc').val();
-                var email_bc = $('.email-bc').val();
-                var id_sp = $('.id_sp').val();
-
-                $.ajax({
-                    type: "get",
-                    url: "/client/report-product",
-                    data: {
-                        noidung_bc: noidung_bc,
-                        sodienthoai_bc:sodienthoai_bc,
-                        email_bc : email_bc ,
-                        id_sp:id_sp,
-                    },
-                    // dataType: "dataType",
-                    success: function (response) {
-
-                    }
-                });
+        @if (Session::has('success-report'))
+            <script>
                 $.alert({
                     title: 'Thông báo!',
                     content: 'Báo cáo sản phẩm thành công!',
                 });
-                $('.noidung-bc').val('');
-                $('.sodienthoai-bc').val('');
-                $('.email-bc').val('');
-                // $('.id_sp').val('');
-
-            });
-        });
-    </script>
+            </script>
+        @elseif(Session::has('error-report'))
+            <script>
+                $.alert({
+                    title: 'Thông báo!',
+                    content: 'Cần đăng nhập để báo cáo sản phẩm',
+                });
+            </script>
+        @endif
+    @endpush
+    @push('Add-Cart')
+        @if (Session::has('success'))
+            <script>
+                alertify.success('Thêm vào giỏ hàng thành công');
+            </script>
+        @endif
+        @if (Session::has('success-deleteItemCart'))
+            <script>
+                alertify.success('Xóa sản phẩm thành công');
+            </script>
+        @endif
+        {{-- <script>
+    </script> --}}
     @endpush
 @endsection

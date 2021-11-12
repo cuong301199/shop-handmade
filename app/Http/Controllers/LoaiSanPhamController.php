@@ -13,7 +13,7 @@ class LoaiSanPhamController extends Controller
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         // ->select('ten_dm','ten_lsp','id_dm',)
         ->select('loai_san_pham.*','ten_dm','ten_lsp','id_dm')
-        ->get();
+        ->paginate(8);
          return view('admin.loaisanpham.index', compact('danhsach_lsp'));
 
 

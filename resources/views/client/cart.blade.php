@@ -1,5 +1,6 @@
 @extends('client.template.master')
 @section('content')
+{{-- {{ dd(Session::get('success-update-cart')) }} --}}
 <style>
     .image-product .img{
         width: 170px;
@@ -55,7 +56,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <div class="page_title">
-                    <h1> CART</h1>
+                    <h1>Giỏ hàng</h1>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -135,18 +136,22 @@
                             <img src="{{ asset($value->options['duongdan_ha'] ) }}" class="img-thumbnail img" alt="Cinque Terre">
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="content-product">
-                            <h4>Black Father Classic T-Shirt New Dad Shirt Dad Shirt Daddy Shirt Father's Day Shirt Best Dad shirt Gift for Dad</h4>
+                            <h4>{{ $value->name}}</h4>
                             <div class="price">
-                                <del>{{$value->price + ($value->price * 10/100)}} VND</del>{{ $value->price }} VND  X  {{ $value->qty }}
+                                <del>{{number_format($value->price + ($value->price * 10/100))}} VND</del>{{number_format( $value->price )}} VND  X  {{ $value->qty }}
                             </div>
+                            <button type="button" class="btn btn-xs btn-update-cart">Cập nhật</button>
+                            <a href="{{ route('Delete.cart', ['rowId'=>$value->rowId]) }}" class="btn btn-xs btn-primary">Xóa </a>
                         </div>
+
                     </div>
                     <div class="col-md-3">
                             <div class="quantity">
-                            <input id="quanty" type="number" step="1" min="0" max="99" name="cart"
+                            <input id="qty" type="number" step="1" min="0" max="99" name="cart"
                                     value="{{ $value->qty }}" title="Qty" class="qty">
+                            <input id="rowId" type="hidden"  value="{{$value->rowId}}">
                         </div>
                     </div>
                     <?php
@@ -254,10 +259,34 @@
 </div>
 @endif
 @endsection
-@push('input-total-price')
+@push('Add-Cart')
+    @if(Session::has('success'))
     <script>
-        var a=[];
-        a = $('#input-total-price input#total').val()
-        console.log(a);
+        $.alert({
+            title: 'Thông báo!',
+            content: 'Cập nhật giỏ hàng thành công!',
+        });
+    </script>
+    @endif
+@endpush
+@push('input-total-price')
+
+    <script>
+        $('.btn-update-cart').click(function (e) {
+            e.preventDefault();
+            var qty = $('#qty').val();
+            var rowId = $('#rowId').val();
+           $.ajax({
+               type: "get",
+               url: "/client/cart-list-update",
+               data: {
+                    qty:qty,
+                    rowId:rowId,
+               },
+               success: function (response) {
+                    location.reload()
+               }
+           });
+        });
     </script>
 @endpush

@@ -5,56 +5,78 @@
 @endsection
 
 @section('title-page')
-Người dùng
+    Người dùng
 @endsection
 @section('content')
-
-
+{{-- {{ dd($danhsach) }} --}}
 <section class="content">
-      <div class="container-fluid">
-        {{-- <div class="row">
-         <a href="{{ route('danhmuc.create')}}" class='btn btn-primary'>Thêm</a>
-        </div> --}}
-
+    <div class="container-fluit">
         <div class="row">
-        <table class="table">
-            <thead>
-                <tr>
-                <th scope="col">STT</th>
-                <th scope="col">Tên người dùng</th>
-                <th scope="col">Số điện thoại</th>
-                <th scope="col">Email</th>
-                <th scope="col">Thao tác</th>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Danh sách người dùng</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th style="width: ">STT</th>
+                            <th scope="col">Tên người dùng</th>
+                            <th scope="col">Tên tài khoản</th>
+                            <th scope="col">Số điện thoại</th>
+                            <th scope="col">Email</th>
+                            <th style="width:10%" scope="col">Thao tác</th>
 
-                </tr>
-            </thead>
-            <tbody>
-               <?php $stt=1 ?>
-            @foreach($danhsach as $item)
-                <tr>
-                    <th scope="row">{{$stt++}}</th>
-                    <td>{{$item->ten_nd}}</td>
-                    <td>{{$item->sdt_nd}}</td>
-                    <td>{{$item->email_nd}}</td>
-                    <td>
+                          </tr>
+                        </thead>
+                        <?php $stt = 1; ?>
 
-                      <a href="{{ route('danhmuc.delete',['id'=>$item->id])}}"><button class='btn btn-danger'>delete</button></a>
-                    </td>
+                        <tbody>
+                            @foreach ($danhsach as $item)
+                            <tr>
+                                <th scope="row">{{$stt++}}</th>
+                                <td>{{$item->ten_nd}}</td>
+                                <td>{{$item->username}}</td>
+                                <td>{{$item->sdt_nd}}</td>
+                                <td>{{$item->email_nd}}</td>
+                                <td>
+                                    <a href="{{ route('loaisanpham.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
 
-
-                </tr>
-             @endforeach
-
-            </tbody>
-            </table>
-
-          <!-- ./col -->
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <div class="col-md-12 pull-right">
+                            <div class="pull-right">{{$danhsach->links()}}</div>
+                        </div>
+                    </div>
+                  </div>
+            </div>
         </div>
 
-
         <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
+    </div><!-- /.container-fluid -->
     </section>
+    @push('addCity')
+    <script>
+    $('a.twitter').confirm({
+        content: "Bạn có muốn xóa sản phẩm này",
+    });
+    $('a.twitter').confirm({
+        buttons: {
+            hey: function(){
+                location.href = this.$target.attr('href');
+            }
+        }
+    });
+    </script>
+    @endpush
 
 
 

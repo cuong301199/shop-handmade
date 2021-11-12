@@ -105,9 +105,9 @@
         <div class="col-xs-1 no-padding text-right">
             <a href="#"><span class="pagicon arrow_right"></span></a>
         </div> --}}
-        {{-- <div class="col-md-12 pull-right">
+        <div class="col-md-12 pull-right">
             <div class="pull-right">{{$danhsach->links()}}</div>
-        </div> --}}
+        </div>
 
     </div>
     <!-- / pagination -->

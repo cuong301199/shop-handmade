@@ -39,9 +39,11 @@ class CartController extends Controller
     //     return view('client.cart-list-ajax');
 
     // }
-    public function UpdateCart(Request $request ,$rowId,$qty){
+    public function UpdateCart(Request $request ){
+        $qty = $request->qty;
+        $rowId = $request->rowId;
         Cart::update($rowId,$qty);
-        return redirect()->back();
+        Session::flash("success","Thêm thành công");
     }
 
 

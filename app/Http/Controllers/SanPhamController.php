@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+// use App\Support\Collection;
+use Illuminate\Support\Collection;
+// use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -228,7 +230,7 @@ class SanPhamController extends Controller
         ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
         ->where('loai_san_pham.id_dm',$id)
         ->select('tbl_tinhthanhpho.*','san_pham.*')
-        ->paginate(8)->appends(request()->query());
+        ->paginate(2)->appends(request()->query());
 
         $lsp = DB::table('loai_san_pham')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
@@ -237,7 +239,8 @@ class SanPhamController extends Controller
         ->get();
         if($request->id_city != null){
             $id_city = $request->id_city;
-            $danhsach = $danhsach->where('matp',$id_city);
+            $items = $danhsach->where('matp',$id_city);
+            $danhsach = (new Collection($items))->paginate(2);
         }
         if($request->productType != null){
             $productType = $request->productType ;
@@ -319,18 +322,25 @@ class SanPhamController extends Controller
     // }
 
     public function report_product(Request $request){
-        $noidung_bc=$request->noidung_bc;
-        $sodienthoai_bc=$request->  sodienthoai_bc;
-        $email_bc = $request->email_bc;
-        $id_sp=$request->id_sp;
-        $insert= DB::table('bao_cao_san_pham')->insert(
-            [
-                'id_sp'=>$id_sp,
-                'mota_bc'=>$noidung_bc,
-                'sodienthoai_bc'=>$sodienthoai_bc,
-                'email_bc'=>  $email_bc,
-                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
-            ]);
+        if(Auth::guard('nguoi_dung')->check()){
+            $noidung_bc=$request->noidung_bc;
+            $id_sp=$request->id_sp;
+            $id_nd = Auth::guard('nguoi_dung')->user()->id;
+            $insert= DB::table('bao_cao_san_pham')->insert(
+                [
+                    'id_sp'=>$id_sp,
+                    'mota_bc'=>$noidung_bc,
+                    'id_nd'=>  $id_nd,
+                    'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+                ]);
+                Session::flash("success-report","Báo cáo sản phẩm thành công");
+                return redirect()->back();
+
+        }else{
+            Session::flash("error-report","Bạn cần đăng nhập để báo cáo sản phẩm");
+                return redirect()->back();
+        }
+
         $report = DB::table('bao_cao_san_pham')
         ->select('id_sp', DB::raw('count(*) as total'))
         ->groupBy('id_sp')->get();

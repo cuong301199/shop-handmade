@@ -14,7 +14,7 @@ class ChiTietSanPhamController extends Controller
         ->select('loai_san_pham.*','nguoi_dung.*','san_pham.*')
         ->first();
 
-        $sp=DB::table('san_pham')
+        $sp = DB::table('san_pham')
         ->where('id_lsp',$danhsach->id_lsp)
         ->get();
 

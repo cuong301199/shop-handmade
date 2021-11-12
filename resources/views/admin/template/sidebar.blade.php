@@ -51,6 +51,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('manage_chars_user.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Thống kê người dùng
+                        </p>
+                    </a>
+                </li>
                 {{-- <li class="nav-item">
                     <a href="{{ route('coupon.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>

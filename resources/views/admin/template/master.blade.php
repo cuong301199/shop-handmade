@@ -17,7 +17,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  
+
   @include('admin\template\sidebar')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -53,6 +53,8 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
+
 @include('admin/template/js')
+@stack('addCity')
 </body>
 </html>

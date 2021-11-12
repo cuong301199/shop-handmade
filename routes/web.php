@@ -89,8 +89,6 @@ Route::prefix('/client')->group(function () {
     Route::get('/load-comment/{id_bv}',[BaiVietController::class,'load_comment'])->name('comment.load');
     Route::get('/comment/{id_bv}',[BaiVietController::class,'comment'])->name('comment.add');
 
-    //report-san pham
-    Route::get('/report-product',[SanPhamController::class,'report_product'])->name('report.product');
 
     ///// phi van chuyen
     Route::get('/phivanchuyen',[PhiVanChuyenController::class,'index'])->name('phivanchuyen.index');
@@ -132,7 +130,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/Delete-cart/{rowId}',[CartController::class,'DeleteItemCart'])->name('Delete.cart');
     Route::get('/cart-list',[CartController::class,'index'])->name('cart.list');
     Route::get('/Delete-list-cart/{id}',[CartController::class,'DeleteListItemCart'])->name('Delete-list.cart');
-    Route::get('client/cart-list-update/{id}/{qty}',[CartController::class,'UpdateCart'])->name('cart.update');
+    Route::get('/cart-list-update',[CartController::class,'UpdateCart'])->name('cart.update');
 
     // Route::get('/thanh-toan',[thanhtoanController::class,'thanhToan'])->name('thanhtoan.index');
 
@@ -144,10 +142,15 @@ Route::prefix('/client')->group(function () {
     //thong ke danh thu
 
     Route::get('/thong-ke-danh-thu',[QuanLyCuaHangController::class, 'manage_chars_oder'] )->name('manage_chars_oder.index');
+    Route::get('/thong-ke-danh-thu/30day',[QuanLyCuaHangController::class, 'manage_chars_oder_30day'] );
     Route::get('/filter-by-date',[QuanLyCuaHangController::class, 'filter_by_date'] )->name('filter-by-date.index');
     Route::get('/filter-dashboard',[QuanLyCuaHangController::class, 'filter_dashboard'] )->name('filter-dashboard.index');
+    // thong ke tong san pham và don hang
 
-
+    Route::get('/thong-ke-don-hang',[QuanLyCuaHangController::class, 'manage_chars_product'] )->name('manage_chars_product.index');
+    Route::get('/thong-ke-don-hang/30day',[QuanLyCuaHangController::class, 'manage_chars_product_30day'] );
+    Route::get('/filter-by-date-product',[QuanLyCuaHangController::class, 'filter_by_date_product'] )->name('filter-by-date-product.index');
+    Route::get('/filter-dashboard-product',[QuanLyCuaHangController::class, 'filter_dashboard_product'] )->name('filter-dashboard-product.index');
 });
 Route::middleware(['checkNguoiDung'])->group(function () {
 
@@ -161,8 +164,12 @@ Route::middleware(['checkNguoiDung'])->group(function () {
     // Route::get('/unset-coupon',[ThanhToanController::class,'unset_coupon'])->name('unset.coupon');
     Route::get('/check-feeship',[ThanhToanController::class,'check_feeship'])->name('feeship.check');
 
-});
+    //report-san pham
 
+
+
+});
+Route::post('/report-product',[SanPhamController::class,'report_product'])->name('report.product');
 
 
 Route::get('/admin/login', [QuanTriController::class,'login'])->name('admin.login');
@@ -203,6 +210,12 @@ Route::middleware(['checkQuanTri'])->group(function () {
         // Route::get('/coupon-add', [MaGiamGiaController::class, 'create'])->name('coupon.create');
         // Route::post('/coupon-add-post', [MaGiamGiaController::class, 'store'])->name('coupon.store');
 
+        //thong ke nguoi dung
+        Route::get('/thong-ke-nguoi-dung',[QuanTriController::class, 'manage_chars_user'] )->name('manage_chars_user.index');
+        Route::get('/thong-ke-nguoi-dung/30day',[QuanTriController::class, 'manage_chars_user_30day'] );
+        Route::get('/filter-by-date-user',[QuanTriController::class, 'filter_by_date_user'] )->name('filter-by-date-user.index');
+        Route::get('/filter-dashboard-user',[QuanTriController::class, 'filter_dashboard_user'] )->name('filter-dashboard-user.index');
+
 
     });
 
@@ -224,27 +237,42 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 Route::get('/1', function () {
-    $dt = Carbon::create(2021, 11, 10);
-    $dt2 = Carbon::create(2021, 11, 11);
-    $danhsach = DB::table('hoa_don')
-    ->where('id_nb',2)
-    ->whereBetween('created_at',[$dt,$dt2])
-    ->select('created_at', DB::raw('SUM(tong_tien) as total_sales'),DB::raw('count(id) as total'),DB::raw('SUM(tong_sp) as tong_sp'))
-    ->groupBy('created_at')
-    ->get();
+    $dt = Carbon::create(2021,10,28);
+    $dt2 = Carbon::create(2021, 11, 12);
+    // $danhsach = DB::table('hoa_don')
+    // ->where('id_nb',2)
+    // ->whereBetween('created_at',[$dt,$dt2])
+    // ->select('created_at', DB::raw('SUM(tong_tien) as total_sales'),DB::raw('count(id) as total'),DB::raw('SUM(tong_sp) as tong_sp'))
+    // ->groupBy('created_at')
+    // ->get();
 
-    foreach($danhsach as $key => $val){
+    // foreach($danhsach as $key => $val){
 
-                    $date=\Carbon\Carbon::parse( $val->created_at)->format('d/m/Y');
-                    $data[]=array(
-                        'created_at'=>$date,
-                        'tong_tien'=>$val->total_sales,
-                        'don_hang'=>$val->total,
-                        'tong_sp'=>$val->tong_sp
-                    );
-                }
+    //                 $date=\Carbon\Carbon::parse( $val->created_at)->format('d/m/Y');
+    //                 $data[]=array(
+    //                     'created_at'=>$date,
+    //                     'tong_tien'=>$val->total_sales,
+    //                     'don_hang'=>$val->total,
+    //                     'tong_sp'=>$val->tong_sp
+    //                 );
+    //             }
 
     // $time=  Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
     // $time->toDateString();
+
+    //theo thành phố khi lọc
+    // $data=DB::table('san_pham')->where('id_lsp',1)->groupBy('id_tp')->get();
+     $danhsach = DB::table('nguoi_dung')
+     ->whereBetween('created_at',[$dt,$dt2])
+     ->select('created_at',DB::raw('count(id) as nguoi_dung'))
+     ->groupBy('created_at')
+    ->get();
+    foreach($danhsach as $key => $val){
+        $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
+            $data[]=array(
+                'created_at'=>\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d'),
+                'nguoi_dung'=>$val->nguoi_dung
+                );
+            }
     dd($data);
 });

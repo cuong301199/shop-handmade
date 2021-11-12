@@ -1,11 +1,11 @@
-@extends('client.quanly-cuahang.template.master')
+@extends('admin.template.master')
 
 @section('title')
-    Thống kê danh thu
+    Thống kê người dùng
 @endsection
 
 @section('title-page')
-    Thống kê danh thu
+    Thống kê người dùng
 @endsection
 @section('content')
 
@@ -19,7 +19,7 @@
                     <div class="card">
                         {{-- card-primary --}}
                         <div class="card-header">
-                            <h3 class="card-title">Area Chart</h3><br>
+                            <h3 class="card-title">Thống kê</h3><br>
 
                                 <form action="" method="get">
                                     @csrf
@@ -50,10 +50,10 @@
                                                 <label for="">Lọc theo</label>
                                                 <select class="form-control filter" name="">
                                                     <option>---Chọn---</option>
-                                                    <option value="thangnay">Danh thu tháng này</option>
-                                                    <option value="7truoc">Danh thu 7 ngày qua</option>
-                                                    <option value="30truoc">Danh thu 30 ngày qua</option>
-                                                    <option value="365truoc">Danh thu 366 ngày qua </option>
+                                                    <option value="thangnay"> tháng này</option>
+                                                    <option value="7truoc"> 7 ngày qua</option>
+                                                    <option value="30truoc">30 ngày qua</option>
+                                                    <option value="365truoc"> 366 ngày qua </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
     @push('addCity')
         <script>
             $(document).ready(function () {
-                chart30day()
+            chart30day()
               var chart = new Morris.Line({
                 // ID of the element in which to draw the chart.
                 element: 'myfirstchart',
@@ -114,21 +114,20 @@
                 xkey: 'created_at',
                 parseTime:false,
                 // A list of names of data record attributes that contain y-values.
-                ykeys: ['tong_tien'],
+                ykeys: ['nguoi_dung'],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
                 // behaveLikeline:true;
-                labels: ['Tổng Tiền']
+                labels: ['Người dùng tham gia hệ thống']
                 });
 
                 function chart30day(){
                     $.ajax({
                         type: "get",
-                        url: "/client/thong-ke-danh-thu/30day",
+                        url: "/thong-ke-nguoi-dung/30day",
                         dataType: "json",
                         success: function (data) {
-                            console.log(data)
-                            chart.setData(data)
+                            chart.setData(data);
                         }
                     });
                 }
@@ -138,7 +137,7 @@
                     var to_date = $('.to_date').val();
                     $.ajax({
                         type: "get",
-                        url: "/client/filter-by-date",
+                        url: "/filter-by-date-user",
                         data: {
                             from_date:from_date,
                             to_date:to_date
@@ -156,7 +155,7 @@
                     console.log(filter)
                     $.ajax({
                         type: "get",
-                        url: "/client/filter-dashboard",
+                        url: "/filter-dashboard-user",
                         data: {
                             filter:filter,
                         },

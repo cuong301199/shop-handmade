@@ -1,11 +1,11 @@
 @extends('client.quanly-cuahang.template.master')
 
 @section('title')
-    Thống kê danh thu
+    Thống kê tổng đơn hàng
 @endsection
 
 @section('title-page')
-    Thống kê danh thu
+    Thống kê tổng đơn hàng
 @endsection
 @section('content')
 
@@ -19,7 +19,7 @@
                     <div class="card">
                         {{-- card-primary --}}
                         <div class="card-header">
-                            <h3 class="card-title">Area Chart</h3><br>
+                            <h3 class="card-title">Thống kê</h3><br>
 
                                 <form action="" method="get">
                                     @csrf
@@ -114,17 +114,17 @@
                 xkey: 'created_at',
                 parseTime:false,
                 // A list of names of data record attributes that contain y-values.
-                ykeys: ['tong_tien'],
+                ykeys: ['tong_sp','don_hang'],
                 // Labels for the ykeys -- will be displayed when you hover over the
                 // chart.
                 // behaveLikeline:true;
-                labels: ['Tổng Tiền']
+                labels: ['Tổng sản phẩm','Tổng đơn hàng']
                 });
 
                 function chart30day(){
                     $.ajax({
                         type: "get",
-                        url: "/client/thong-ke-danh-thu/30day",
+                        url: "/client/thong-ke-don-hang/30day",
                         dataType: "json",
                         success: function (data) {
                             console.log(data)
@@ -138,7 +138,7 @@
                     var to_date = $('.to_date').val();
                     $.ajax({
                         type: "get",
-                        url: "/client/filter-by-date",
+                        url: "/client/filter-by-date-product",
                         data: {
                             from_date:from_date,
                             to_date:to_date
@@ -156,7 +156,7 @@
                     console.log(filter)
                     $.ajax({
                         type: "get",
-                        url: "/client/filter-dashboard",
+                        url: "/client/filter-dashboard-product",
                         data: {
                             filter:filter,
                         },

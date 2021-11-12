@@ -67,7 +67,7 @@
                     </form>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-6 text-center">
-                    <img src="{{ asset('template-client') }}/img/logo.png" alt="Trendify logo" />
+                    <img src="{{asset('template-client')}}/img/logo.png" alt="Trendify logo" />
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-6 cart-icon">
                     <div class="cart">
@@ -119,7 +119,7 @@
 
                             </div>
                             <a href="{{ route('cart.list') }}" class="trendify-btn black-bordered">Xem giỏ hàng</a>
-                            <a href="" class="trendify-btn black-bordered">Thanh toán</a>
+
                         </div>
                     </div>
                 </div>
