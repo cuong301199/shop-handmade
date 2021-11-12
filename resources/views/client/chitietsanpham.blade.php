@@ -3,22 +3,22 @@
     {{-- {{ dd($danhsach) }} --}}
     <style>
         /* .name-user {
-                    margin-top: 1px
-                }
+                            margin-top: 1px
+                        }
 
-                .comment {
-                    margin-top: 50px;
-                    padding: 0px;
-                }
-                .star{
-                    margin-top: -10px
-                }
-                h5{
-                    clear: both;
-                    font-weight:550;
-                    text-transform: lowercase;
-                    font-size: 15px;
-                } */
+                        .comment {
+                            margin-top: 50px;
+                            padding: 0px;
+                        }
+                        .star{
+                            margin-top: -10px
+                        }
+                        h5{
+                            clear: both;
+                            font-weight:550;
+                            text-transform: lowercase;
+                            font-size: 15px;
+                        } */
 
         .infor {
             width: auto;
@@ -30,6 +30,23 @@
             padding: 20px;
 
 
+        }
+
+        .btn-comment {
+            margin-top: 10px;
+
+        }
+
+        .input-comment {
+            border: 1px solid rgb(221, 209, 209)
+        }
+
+        .related_blog_post {
+            margin-left: 0px
+        }
+
+        .media-object {
+            padding: 0px;
         }
 
     </style>
@@ -178,17 +195,84 @@
                     </div>
                 </form>
             </div>
+            {{-- comment --}}
             <div class="row">
-                <div class="related-products latest-product margin-bottom-60px">
+                <div class="post_comments col-md-6">
+                    <h3 class="comment_title"><span>4 comments</span></h3>
+                    <ul class="media-list">
+                        @if (Auth::guard('nguoi_dung')->check())
+                            <?php
+                            $id_nd = Auth::guard('nguoi_dung')->user()->id;
+                            $user = DB::table('nguoi_dung')
+                                ->where('id', $id_nd)
+                                ->first();
+                            ?>
+                            <li class="media">
+                                <a class="pull-left" href="#">
+                                    <img width="100px" height="90px" class="media-object "
+                                        src="{{ asset($user->anhdaidien_nd) }}" alt="" />
+                                    {{-- {{ asset('template-client') }}/img/blog/comment1.png --}}
+                                </a>
+                                <div class="media-body" style="padding-top: 0px">
+                                    <h4 class="media-heading"><a href="#">{{ $user->ten_nd }}</a></h4>
+                                    <input class="input-comment" type="text" placeholder="Viết bình luận của bạn">
+                                    <button type="submit" class="btn btn-comment" id="btn-comment">Bình luận</button>
+                                    <div class="success-comment"></div>
+                                </div> <!-- end of media-body -->
+                            </li> <!-- end of media -->
+                        @endif
+                        <div class="media-comment">
+                        </div>
+                    </ul>
+                </div>
+            </div>
+
+            {{-- sản phẩm liên quan --}}
+            <div class="row" style="margin-top:20px ">
+                <div class="related-products latest-product margin-bottom-60px" style="height: 100px">
                     <div class="col-sm-12">
                         <h4>Sản phẩm liên quan</h4>
                     </div>
                     @foreach ($sp as $item)
+                        <div class="col-md-2 col-sm-6" style="height: 100px">
+                            <div class="single-latest-product inside" style="height: 100px">
+                                <span class="price-label"> {{ number_format($item->gia_sp) }} VND</span>
+                                <a href="{{ route('chitietsanpham.index', ['id' => $item->id]) }}"><img
+                                        class="img-responsive" src="{{ asset($item->hinhanh_sp) }}" alt="Shoe"></a>
+                                <h4 class="margin-bottom-0"></h4>
+                                <div class="actions">
+                                    <div class="row">
+                                        {{-- <div class="col-md-6">
+									<a href="#"><i class="fa fa-plus"></i>Add Cart</a>
+								</div> --}}
+                                        {{-- <div class="col-md-6">
+									<ul class="pull-right">
+										<li><a class="zoom" href="img/lastest-product-1.png"><i class="fa fa-search"></i></a></li>
+										<li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+										<li><a href="product-details-2.html"><i class="fa fa-expand"></i></a></li>
+									</ul>
+								</div> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+
+            {{-- sản phẩm cùng cửa hàng --}}
+            <div class="row">
+                <div class="related-products latest-product margin-bottom-60px">
+                    <div class="col-sm-12">
+                        <h4>Sản phẩm Cùng người bán</h4>
+                    </div>
+                    @foreach ($sp_cungcuahang as $item)
                         <div class="col-md-2 col-sm-6">
                             <div class="single-latest-product inside">
-                                <span class="price-label"> {{ number_format($danhsach->gia_sp) }} VND</span>
-                                <a href=""><img class="img-responsive" src="{{ asset($item->hinhanh_sp) }}"
-                                        alt="Shoe"></a>
+                                <span class="price-label"> {{ number_format($item->gia_sp) }} VND</span>
+                                <a href="{{ route('chitietsanpham.index', ['id' => $item->id]) }}"><img
+                                        class="img-responsive" src="{{ asset($item->hinhanh_sp) }}" alt="Shoe"></a>
                                 <h4 class="margin-bottom-0"></h4>
                                 <div class="actions">
                                     <div class="row">

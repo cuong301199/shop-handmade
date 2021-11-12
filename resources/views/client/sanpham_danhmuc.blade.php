@@ -1,6 +1,6 @@
 @extends('client.template.master')
 @section('content')
-{{-- {{ dd($danhsach) }} --}}
+{{-- {{ dd($tp) }} --}}
 <div class="page_title_area">
     <div class="container">
         <div class="row">
@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach ($danhsach as $item)
+            @foreach ($danhsach2 as $item)
 
             <div class="col-md-3 col-sm-6">
                 <div class="product-single fadeInUp wow" data-wow-delay="0.5s">
@@ -106,7 +106,7 @@
             <a href="#"><span class="pagicon arrow_right"></span></a>
         </div> --}}
         <div class="col-md-12 pull-right">
-            <div class="pull-right">{{$danhsach->links()}}</div>
+            <div class="pull-right">{{$danhsach2->links()}}</div>
         </div>
 
     </div>

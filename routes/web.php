@@ -239,12 +239,7 @@ Route::middleware(['checkQuanTri'])->group(function () {
 Route::get('/1', function () {
     $dt = Carbon::create(2021,10,28);
     $dt2 = Carbon::create(2021, 11, 12);
-    // $danhsach = DB::table('hoa_don')
-    // ->where('id_nb',2)
-    // ->whereBetween('created_at',[$dt,$dt2])
-    // ->select('created_at', DB::raw('SUM(tong_tien) as total_sales'),DB::raw('count(id) as total'),DB::raw('SUM(tong_sp) as tong_sp'))
-    // ->groupBy('created_at')
-    // ->get();
+
 
     // foreach($danhsach as $key => $val){
 
@@ -262,17 +257,24 @@ Route::get('/1', function () {
 
     //theo thành phố khi lọc
     // $data=DB::table('san_pham')->where('id_lsp',1)->groupBy('id_tp')->get();
-     $danhsach = DB::table('nguoi_dung')
-     ->whereBetween('created_at',[$dt,$dt2])
-     ->select('created_at',DB::raw('count(id) as nguoi_dung'))
-     ->groupBy('created_at')
+
+    // $danhsachsanpham = DB::table('san_pham')
+    // ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+    // ->where('san_pham.id_nb','<>',2)
+    // ->orderBy('san_pham.id','desc')
+    // ->select('tbl_tinhthanhpho.*','san_pham.*')
+    // ->take(6)
+    // ->get();
+    $sp = DB::table('san_pham')
+    ->where('id',16)
+    ->first();
+
+    $danhsach = DB::table('hoa_don')
+    ->join('chi_tiet_hoa_don','chi_tiet_hoa_don.id_hd','hoa_don.id')
+    ->where('hoa_don.id_nm',1)
+    ->where('id_sp',15)
+    ->select( DB::raw('count(id_sp) as id_sp'))
+    ->groupBy('chi_tiet_hoa_don.id_sp')
     ->get();
-    foreach($danhsach as $key => $val){
-        $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
-            $data[]=array(
-                'created_at'=>\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d'),
-                'nguoi_dung'=>$val->nguoi_dung
-                );
-            }
-    dd($data);
+    dd($danhsach);
 });

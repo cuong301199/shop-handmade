@@ -222,15 +222,24 @@ class SanPhamController extends Controller
     }
 
     public function getProductByCat(Request $request ,$id){
-        $tp = DB::table('tbl_tinhthanhpho')
-        ->get();
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+        $tp = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->join('loai_san_pham','loai_san_pham.id_dm','san_pham.id_lsp')
+            ->where('san_pham.id_nb','<>',$id_nd)
+            ->where('id_dm',$id)
+            ->groupBy('id_tp')->get();
+
+
         $danhsach = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
         ->where('loai_san_pham.id_dm',$id)
-        ->select('tbl_tinhthanhpho.*','san_pham.*')
-        ->paginate(2)->appends(request()->query());
+        ->where('san_pham.id_nb','<>',$id_nd)
+        ->select('tbl_tinhthanhpho.*','san_pham.*');
+        $danhsach2 = $danhsach->paginate(16)->appends(request()->query());
+        //
 
         $lsp = DB::table('loai_san_pham')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
@@ -239,41 +248,49 @@ class SanPhamController extends Controller
         ->get();
         if($request->id_city != null){
             $id_city = $request->id_city;
-            $items = $danhsach->where('matp',$id_city);
-            $danhsach = (new Collection($items))->paginate(2);
+            $danhsach2 =  $danhsach->where('matp',$id_city)->paginate(16)->appends(request()->query());
+            // $danhsach =collect($danhsach)->paginate(10);
+
+
         }
         if($request->productType != null){
             $productType = $request->productType ;
-            $danhsach = $danhsach->where('id_lsp', $productType);
+            $danhsach2 = $danhsach->where('id_lsp', $productType)->paginate(16)->appends(request()->query());
+            $tp = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('id_lsp', $productType )
+            ->where('san_pham.id_nb','<>',$id_nd)
+            ->groupBy('id_tp')->get();
+
         }
         if($request->price != null){
             $price = $request->price;
             if($price==1){
-                $danhsach = $danhsach->where('gia_sp','<',500000);
+                $danhsach2 = $danhsach->where('gia_sp','<',500000)->paginate(16)->appends(request()->query());
             }elseif($price==2){
-                $danhsach = $danhsach->whereBetween('gia_sp',[500000,1000000]);
+                $danhsach2 = $danhsach->whereBetween('gia_sp',[500000,1000000])->paginate(16)->appends(request()->query());
             }elseif($price==3){
-                $danhsach = $danhsach->whereBetween('gia_sp',[1000000,1500000]);
+                $danhsach2 = $danhsach->whereBetween('gia_sp',[1000000,1500000])->paginate(16)->appends(request()->query());
             }elseif($price==4){
-                $danhsach = $danhsach->whereBetween('gia_sp',[1500000,2000000]);
+                $danhsach2 = $danhsach->whereBetween('gia_sp',[1500000,2000000])->paginate(16)->appends(request()->query());
             }elseif($price==5){
-                $danhsach = $danhsach->where('gia_sp','>',2000000);
+                $danhsach2 = $danhsach->where('gia_sp','>',2000000)->paginate(16)->appends(request()->query());
             }
         }
         if($request->oderBy != null){
             $oderBy = $request->oderBy;
             if($oderBy=='asc'){
-                $danhsach = $danhsach->sortBy('id');
+                $danhsach2 = $danhsach->sortBy('id')->paginate(16)->appends(request()->query());
             }else if($oderBy=='desc'){
-                $danhsach = $danhsach->sortByDesc('id');
+                $danhsach2 = $danhsach->sortByDesc('id')->paginate(16)->appends(request()->query());
             } if($oderBy=='price_max'){
-                $danhsach = $danhsach->sortByDesc('gia_sp');
+                $danhsach2 = $danhsach->sortByDesc('gia_sp')->paginate(16)->appends(request()->query());
             } if($oderBy=='price_min'){
-                $danhsach = $danhsach->sortBy('gia_sp')  ;
+                $danhsach2 = $danhsach->sortBy('gia_sp')->paginate(16)->appends(request()->query()) ;
             }
         }
 
-        return view('client.sanpham_danhmuc',compact('danhsach','lsp','tp'));
+        return view('client.sanpham_danhmuc',compact('danhsach2','lsp','tp'));
     }
 
     // public function getProductByProductType(Request $request ,$id_dm,$id_lsp){

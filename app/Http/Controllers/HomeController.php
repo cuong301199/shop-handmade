@@ -5,17 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Str;
+use Auth;
 use Carbon\Carbon;
 use number_format;
 class HomeController extends Controller
 {
 
     public function get_more_product(Request $request){
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
         $data = $request->id;
         if($data>0){
             $danhsachsanpham = DB::table('san_pham')
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
             ->where('san_pham.id','<',$data)
+            ->where('san_pham.id_nb','<>',$id_nd)
             ->orderBy('san_pham.id','desc')
             ->select('tbl_tinhthanhpho.*','san_pham.*')
             ->take(6)
@@ -24,6 +27,7 @@ class HomeController extends Controller
             $danhsachsanpham = DB::table('san_pham')
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
             ->orderBy('san_pham.id','desc')
+            ->where('san_pham.id_nb','<>',$id_nd)
             ->select('tbl_tinhthanhpho.*','san_pham.*')
             ->take(6)
             ->get();
