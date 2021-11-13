@@ -21,8 +21,9 @@ class SanPhamController extends Controller
         ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
         ->join('trang_thai_san_pham','trang_thai_san_pham.id','san_pham.id_trangthai')
         ->where('id_nb',$id_nd)
+        ->where('id_trangthai','<>',3)
         ->select('san_pham.*','trang_thai_san_pham.*','loai_san_pham.*','san_pham.id')
-        ->get();
+        ->paginate(6);
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
     }
 
@@ -222,8 +223,9 @@ class SanPhamController extends Controller
     }
 
     public function getProductByCat(Request $request ,$id){
-        $id_nd = Auth::guard('nguoi_dung')->user()->id;
-        $tp = DB::table('san_pham')
+        if(Auth::guard('nguoi_dung')->check()){
+            $id_nd = Auth::guard('nguoi_dung')->user()->id;
+            $tp = DB::table('san_pham')
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
             ->join('loai_san_pham','loai_san_pham.id_dm','san_pham.id_lsp')
             ->where('san_pham.id_nb','<>',$id_nd)
@@ -231,21 +233,37 @@ class SanPhamController extends Controller
             ->groupBy('id_tp')->get();
 
 
-        $danhsach = DB::table('san_pham')
-        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-        ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
-        ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-        ->where('loai_san_pham.id_dm',$id)
-        ->where('san_pham.id_nb','<>',$id_nd)
-        ->select('tbl_tinhthanhpho.*','san_pham.*');
-        $danhsach2 = $danhsach->paginate(16)->appends(request()->query());
-        //
+            $danhsach = DB::table('san_pham')
+            ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+            ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('loai_san_pham.id_dm',$id)
+            ->where('san_pham.id_nb','<>',$id_nd)
+            ->select('tbl_tinhthanhpho.*','san_pham.*');
+            $danhsach2 = $danhsach->paginate(16)->appends(request()->query());
+        }else{
+            $tp = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->join('loai_san_pham','loai_san_pham.id_dm','san_pham.id_lsp')
+            ->where('id_dm',$id)
+            ->groupBy('id_tp')->get();
+
+
+            $danhsach = DB::table('san_pham')
+            ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+            ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('loai_san_pham.id_dm',$id)
+            ->select('tbl_tinhthanhpho.*','san_pham.*');
+            $danhsach2 = $danhsach->paginate(16)->appends(request()->query());
+        }
 
         $lsp = DB::table('loai_san_pham')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         ->where('id_dm',$id)
         ->select('danh_muc.*','loai_san_pham.*')
         ->get();
+
         if($request->id_city != null){
             $id_city = $request->id_city;
             $danhsach2 =  $danhsach->where('matp',$id_city)->paginate(16)->appends(request()->query());
@@ -291,6 +309,28 @@ class SanPhamController extends Controller
         }
 
         return view('client.sanpham_danhmuc',compact('danhsach2','lsp','tp'));
+
+
+    }
+
+    public function product_report_index(){
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+        $danhsach =DB::table('san_pham')
+        ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        ->join('trang_thai_san_pham','trang_thai_san_pham.id','san_pham.id_trangthai')
+        ->where('id_nb',$id_nd)
+        ->where('id_trangthai',3)
+        ->select('loai_san_pham.*','trang_thai_san_pham.*','san_pham.*')
+        -paginate(6);
+        return view('client.quanly-cuahang.sanpham.product-report',\compact('danhsach'));
+    }
+
+    public function product_report_detail($id){
+        $danhsach =DB::table('bao_cao_san_pham')
+        ->join('noi_dung_bao_cao','noi_dung_bao_cao.id','bao_cao_san_pham.id_noidungbaocao')
+        ->join('nguoi_dung','nguoi_dung.id','bao_cao_san_pham.id_nd')->where('id_sp',$id)
+        ->paginate(6);
+       return view('client.quanly-cuahang.sanpham.report-detail',compact('danhsach'));
     }
 
     // public function getProductByProductType(Request $request ,$id_dm,$id_lsp){
@@ -339,38 +379,36 @@ class SanPhamController extends Controller
     // }
 
     public function report_product(Request $request){
+        $mota_bc=$request->mota_bc;
+        $id_sp=$request->id_sp;
+        $noidung_bc =$request->noidung_bc;
         if(Auth::guard('nguoi_dung')->check()){
-            $noidung_bc=$request->noidung_bc;
-            $id_sp=$request->id_sp;
             $id_nd = Auth::guard('nguoi_dung')->user()->id;
             $insert= DB::table('bao_cao_san_pham')->insert(
                 [
                     'id_sp'=>$id_sp,
-                    'mota_bc'=>$noidung_bc,
+                    'mota_bc'=>$mota_bc,
                     'id_nd'=>  $id_nd,
+                    'id_noidungbaocao'=>$noidung_bc,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
                 ]);
-                Session::flash("success-report","Báo cáo sản phẩm thành công");
-                return redirect()->back();
+                $report = DB::table('bao_cao_san_pham')
+                ->join('noi_dung_bao_cao','noi_dung_bao_cao.id','bao_cao_san_pham.id_noidungbaocao')
+                ->select( DB::raw('SUM(thangdiem_bc) as total'))
+                ->where('id_sp',$id_sp)
+                ->groupBy('id_sp')->first();
+                    if($report->total >= 11){
+                        $insert = DB::table('san_pham')->where('id',$id_sp)->update(
+                            [
+                                'id_trangthai'=>3
+                            ]);
+                    }
+                    Session::flash("success-report","Báo cáo sản phẩm thành công");
+                    return redirect()->back();
 
         }else{
             Session::flash("error-report","Bạn cần đăng nhập để báo cáo sản phẩm");
                 return redirect()->back();
-        }
-
-        $report = DB::table('bao_cao_san_pham')
-        ->select('id_sp', DB::raw('count(*) as total'))
-        ->groupBy('id_sp')->get();
-
-        foreach($report as $item=>$key){
-            if($key->total >= 7){
-                $insert = DB::table('san_pham')->where('id',$key->id_sp)->update(
-                    [
-                        'id_trangthai'=>3
-                    ]);
-            }else{
-                dd('ko thành công');
-            }
         }
     }
 }

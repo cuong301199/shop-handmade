@@ -1,41 +1,39 @@
 @extends('client.quanly-cuahang.template.master')
 
 @section('title')
-    Sản phẩm
+    Chi tiết vi phạm
 @endsection
 
 @section('title-page')
-    Sản phẩm
+    Chi tiết vi phạm
 @endsection
 @section('content')
-
+{{-- {{ dd($danhsach) }} --}}
     @if (Session::has('success'))
         <p style="color: rgb(20, 163, 16)">{{ Session::get('success') }}</p>
     @endif
     <section class="content">
         <div class="container-fluit">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('baiviet.create') }}" class='btn btn-primary' style="margin-bottom: 10px" >Thêm bài viết</a>
+                    <a href="{{ route('sanpham.create') }}" class='btn btn-primary' style="margin-bottom: 10px" >Thêm</a>
                 </div>
-            </div>
+            </div> --}}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                          <h3 class="card-title">Bordered Table</h3>
+                          <h3 class="card-title">Nội dung</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                           <table class="table table-bordered">
                             <thead>
                               <tr>
-                                <th style="width:5%px">STT</th>
-                                <th style="width:30%" scope="col">Tiêu đề bài viết</th>
-                                <th style="width:10%">Hình ảnh</th>
-                                <th style="width:33%" scope="col">Tóm tắt</th>
-                                <th style="width:10%" scope="col">Ngày viết</th>
-                                <th style="width:">Thao tác</th>
+                                <th style="width: ">STT</th>
+                                <th style="width:30% ">Nội dung báo cáo</th>
+                                <th style="width: ">Mô tả báo cáo</th>
+                                <th style="width: ">Tên người báo cáo</th>
                               </tr>
                             </thead>
                             <?php $stt = 1; ?>
@@ -44,16 +42,13 @@
                                 @foreach ($danhsach as $item)
                                 <tr>
                                     <td>{{ $stt++ }}</td>
-                                    <td>{{$item->tieude_bv}}</td>
-                                    <td>
-                                        <img src="{{ asset($item->hinhanh_bv) }}" alt="" width = 60px heigth=60px>
-                                    </td>
-                                    <td>{!! Str::limit($item->tomtat_bv, 100); !!}</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>
-                                        <a href="{{ route('baiviet.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
-                                        <a class="twitter badge bg-danger" data-title="Thông báo" href="{{ route('baiviet.delete', ['id'=>$item->id]) }}">Xóa</a>
-                                    </td>
+                                    <td>{{$item->noidung_bc}}</td>
+                                    @if($item->mota_bc==null)
+                                    <td>Không có mô tả</td>
+                                    @else
+                                    <td>{{ $item->mota_bc }}</td>
+                                    @endif
+                                    <td>{{$item->ten_nd}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -74,10 +69,10 @@
             <!-- /.row (main row) -->
         </div><!-- /.container-fluid -->
     </section>
-    @push('addCity')
+@push('addCity')
     <script>
         $('a.twitter').confirm({
-            content: "Bạn có muốn xóa bài viết này",
+            content: "Bạn có muốn xóa sản phẩm này",
         });
         $('a.twitter').confirm({
             buttons: {

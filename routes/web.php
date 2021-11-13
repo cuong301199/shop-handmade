@@ -71,6 +71,8 @@ Route::prefix('/client')->group(function () {
     Route::post('/sanpham/{id}/sua-sp',[SanPhamController::class, 'update'] )->name('sanpham.update');
     Route::get('/get-product-type/{idCat}',[SanPhamController::class,'getProductTypeByCat'])->name('sanpham.get-product-type');
     Route::get('/delete-image/{id}',[SanPhamController::class,'deleteImage'])->name('image-edit.delete');
+    Route::get('/sanpham-report-manager',[SanPhamController::class,'product_report_index'])->name('product_report.index');
+    Route::get('/product-report-detail/{id}',[SanPhamController::class,'product_report_detail'])->name('product_report.detail');
     // Route::get('/add-image-edit/{id}',[SanPhamController::class,'addImage'])->name('image-eidt.add');
     // Route::get('/load-image',[SanPhamController::class,'loadImageData'])->name('image.load');
 
@@ -103,7 +105,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/quanlydanhmuc/sua',[ChonDanhMucController::class,'edit'])->name('quanlydanhmuc.edit');
     Route::post('/quanlydanhmuc/sua-post',[ChonDanhMucController::class,'update'])->name('quanlydanhmuc.update');
 
-
+    //doi mạt khau
     Route::get('/thongtincanhan/{id}/',[ThongTinCaNhanController::class,'edit'])->name('profile.edit');
     Route::post('/thongtincanhan/{id}/update',[ThongTinCaNhanController::class,'update'])->name('profile.update');
     Route::get('/matkhau/{id}/edit',[ThongTinCaNhanController::class,'editpassword'])->name('password.edit');
@@ -117,12 +119,12 @@ Route::prefix('/client')->group(function () {
     // Route::get('/sanpham/hienthi/lsp/{id_dm}/{id_lsp}',[SanPhamController::class,'getProductByProductType'])->name('sanpham.loaisanpham');
 
 
-
+    //trang ca nhan
     Route::get('/trang-ca-nhan/{id}',[CuaHangController::class,'index'])->name('cuahang.index');
 
 
 
-
+    //chi tiet san pham
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
     //CART
@@ -151,6 +153,11 @@ Route::prefix('/client')->group(function () {
     Route::get('/thong-ke-don-hang/30day',[QuanLyCuaHangController::class, 'manage_chars_product_30day'] );
     Route::get('/filter-by-date-product',[QuanLyCuaHangController::class, 'filter_by_date_product'] )->name('filter-by-date-product.index');
     Route::get('/filter-dashboard-product',[QuanLyCuaHangController::class, 'filter_dashboard_product'] )->name('filter-dashboard-product.index');
+
+    //binh luan san pham
+    Route::get('/load-more-comment',[ChiTietSanPhamController::class,'get_more_comment'])->name('getMoreComment.home');
+    Route::get('/comment-product',[ChiTietSanPhamController::class,'comment_product'])->name('comment.product');
+
 });
 Route::middleware(['checkNguoiDung'])->group(function () {
 
@@ -237,44 +244,18 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 Route::get('/1', function () {
-    $dt = Carbon::create(2021,10,28);
-    $dt2 = Carbon::create(2021, 11, 12);
+//    $content = DB::table('bao_cao_san_pham')
+//    ->join('noi_dung_bao_cao','noi_dung_bao_cao.id','bao_cao_san_pham.id_noidungbaocao')
+//    ->select( DB::raw('SUM(thangdiem_bc) as total'))
+//    ->where('id_sp',14)
+//     ->groupBy('id_sp')->first();
 
+//         dd($content);
 
-    // foreach($danhsach as $key => $val){
+ $number_report = DB::table('bao_cao_san_pham')
+        ->select( DB::raw('count(*) as total'))
+        ->where('id_sp',16)
+        ->first();
+        dd($number_report->total);
 
-    //                 $date=\Carbon\Carbon::parse( $val->created_at)->format('d/m/Y');
-    //                 $data[]=array(
-    //                     'created_at'=>$date,
-    //                     'tong_tien'=>$val->total_sales,
-    //                     'don_hang'=>$val->total,
-    //                     'tong_sp'=>$val->tong_sp
-    //                 );
-    //             }
-
-    // $time=  Carbon::now('Asia/Ho_Chi_Minh')->toDateString();
-    // $time->toDateString();
-
-    //theo thành phố khi lọc
-    // $data=DB::table('san_pham')->where('id_lsp',1)->groupBy('id_tp')->get();
-
-    // $danhsachsanpham = DB::table('san_pham')
-    // ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-    // ->where('san_pham.id_nb','<>',2)
-    // ->orderBy('san_pham.id','desc')
-    // ->select('tbl_tinhthanhpho.*','san_pham.*')
-    // ->take(6)
-    // ->get();
-    $sp = DB::table('san_pham')
-    ->where('id',16)
-    ->first();
-
-    $danhsach = DB::table('hoa_don')
-    ->join('chi_tiet_hoa_don','chi_tiet_hoa_don.id_hd','hoa_don.id')
-    ->where('hoa_don.id_nm',1)
-    ->where('id_sp',15)
-    ->select( DB::raw('count(id_sp) as id_sp'))
-    ->groupBy('chi_tiet_hoa_don.id_sp')
-    ->get();
-    dd($danhsach);
 });

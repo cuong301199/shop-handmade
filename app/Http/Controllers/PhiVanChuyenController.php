@@ -15,7 +15,7 @@ class PhiVanChuyenController extends Controller
         ->join('tbl_quanhuyen','tbl_quanhuyen.maqh','phi_van_chuyen.id_qh')
         ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','phi_van_chuyen.id_xa')
         ->where('id_nd',$id_nd)
-        ->get();
+        ->paginate(6);
         return view("client.quanly-cuahang.phivanchuyen.index",\compact('danhsach'));
     }
 

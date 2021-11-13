@@ -12,25 +12,55 @@ class HomeController extends Controller
 {
 
     public function get_more_product(Request $request){
-        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+
         $data = $request->id;
         if($data>0){
-            $danhsachsanpham = DB::table('san_pham')
-            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-            ->where('san_pham.id','<',$data)
-            ->where('san_pham.id_nb','<>',$id_nd)
-            ->orderBy('san_pham.id','desc')
-            ->select('tbl_tinhthanhpho.*','san_pham.*')
-            ->take(6)
-            ->get();
-        }else
-            $danhsachsanpham = DB::table('san_pham')
-            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-            ->orderBy('san_pham.id','desc')
-            ->where('san_pham.id_nb','<>',$id_nd)
-            ->select('tbl_tinhthanhpho.*','san_pham.*')
-            ->take(6)
-            ->get();
+            if( Auth::guard('nguoi_dung')->check()){
+                $id_nd = Auth::guard('nguoi_dung')->user()->id;
+                $danhsachsanpham = DB::table('san_pham')
+                ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+                ->where('san_pham.id','<',$data)
+                ->where('san_pham.id_nb','<>',$id_nd)
+                ->orderBy('san_pham.id','desc')
+                ->select('tbl_tinhthanhpho.*','san_pham.*')
+                ->take(6)
+                ->get();
+            }else{
+                $danhsachsanpham = DB::table('san_pham')
+                ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+                ->where('san_pham.id','<',$data)
+                ->orderBy('san_pham.id','desc')
+                ->select('tbl_tinhthanhpho.*','san_pham.*')
+                ->take(6)
+                ->get();
+            }
+        }else{
+            if(Auth::guard('nguoi_dung')->check()){
+                $id_nd = Auth::guard('nguoi_dung')->user()->id;
+                $danhsachsanpham = DB::table('san_pham')
+                    ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+                    ->orderBy('san_pham.id','desc')
+                    ->where('san_pham.id_nb','<>',$id_nd)
+                    ->select('tbl_tinhthanhpho.*','san_pham.*')
+                    ->take(6)
+                    ->get();
+            }else{
+                $danhsachsanpham = DB::table('san_pham')
+                    ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+                    ->orderBy('san_pham.id','desc')
+                    ->select('tbl_tinhthanhpho.*','san_pham.*')
+                    ->take(6)
+                    ->get();
+            }
+        }
+        // }else
+        //     $danhsachsanpham = DB::table('san_pham')
+        //     ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+        //     ->orderBy('san_pham.id','desc')
+        //     ->where('san_pham.id_nb','<>',$id_nd)
+        //     ->select('tbl_tinhthanhpho.*','san_pham.*')
+        //     ->take(6)
+        //     ->get();
         $output = '';
         foreach($danhsachsanpham as $key => $pro){
             $last_id = $pro->id;
@@ -50,8 +80,6 @@ class HomeController extends Controller
                         </div>
                     </div>
                 </div>';
-
-
         }
         $output .= '
             <div class="col-md-12 center-block text-center" >
@@ -79,45 +107,68 @@ class HomeController extends Controller
         return view('client.index',compact('danhsachsanpham','danhmuc','report'));
     }
     public function searchProduct(Request $request){
-        $tp = DB::table('tbl_tinhthanhpho')
-        ->get();
         $key = $request->search;
-        $search_product = DB::table('san_pham')
-        ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-        ->where('ten_sp','like','%'.$key.'%')
-        ->paginate(16)->appends(request()->query());
+        if(Auth::guard('nguoi_dung')->check()){
+            $id_nd = Auth::guard('nguoi_dung')->user()->id;
+            $search_product = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('ten_sp','like','%'.$key.'%')
+            ->where('san_pham.id_nb','<>',$id_nd)
+            ->select('tbl_tinhthanhpho.*','san_pham.*');
+
+            $tp = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('ten_sp','like','%'.$key.'%')
+            ->where('san_pham.id_nb','<>',$id_nd)
+            ->groupBy('id_tp')->get();
+
+             $search_product2 = $search_product->paginate(16)->appends(request()->query());
+        }else{
+            $search_product = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('ten_sp','like','%'.$key.'%')
+            ->select('tbl_tinhthanhpho.*','san_pham.*');
+
+            $tp = DB::table('san_pham')
+            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+            ->where('ten_sp','like','%'.$key.'%')
+            ->groupBy('id_tp')->get();
+
+             $search_product2 = $search_product->paginate(16)->appends(request()->query());
+        }
+
 
         if($request->id_city){
             $id_city = $request->id_city;
-            $search_product =  $search_product->where('matp',$id_city);
+            $search_product2 =  $search_product->where('matp',$id_city)->paginate(16)->appends(request()->query());
         }
         if($request->price){
             $price = $request->price;
             if($price==1){
-                $search_product =  $search_product->where('gia_sp','<',500000);
+                $search_product2 =  $search_product->where('gia_sp','<',500000)->paginate(16)->appends(request()->query());
             }elseif($price==2){
-                $search_product =  $search_product->whereBetween('gia_sp',[500000,1000000]);
+                $search_product2 =  $search_product->whereBetween('gia_sp',[500000,1000000])->paginate(16)->appends(request()->query());
             }elseif($price==3){
-                $search_product =  $search_product->whereBetween('gia_sp',[1000000,1500000]);
+                $search_product2 =  $search_product->whereBetween('gia_sp',[1000000,1500000])->paginate(16)->appends(request()->query());
             }elseif($price==4){
-                $search_product =  $search_product->whereBetween('gia_sp',[1500000,2000000]);
+                $search_product2 =  $search_product->whereBetween('gia_sp',[1500000,2000000])->paginate(16)->appends(request()->query());
             }elseif($price==5){
-                $search_product = $search_product->where('gia_sp','>',2000000);
+                $search_product2 = $search_product->where('gia_sp','>',2000000)->paginate(16)->appends(request()->query());
             }
         }
         if($request->oderBy){
             $oderBy = $request->oderBy;
             if($oderBy=='asc'){
-                $search_product =  $search_product->sortBy('id');
+                $search_product2 =  $search_product->sortBy('id')->paginate(16)->appends(request()->query());
             }else if($oderBy=='desc'){
-                $search_product =  $search_product->sortByDesc('id');
+                $search_product2 =  $search_product->sortByDesc('id')->paginate(16)->appends(request()->query());
             } if($oderBy=='price_max'){
-                $search_product =  $search_product->sortByDesc('gia_sp');
+                $search_product2 =  $search_product->sortByDesc('gia_sp')->paginate(16)->appends(request()->query());
             } if($oderBy=='price_min'){
-                $search_product = $search_product->sortBy('gia_sp')  ;
+                $search_product2 = $search_product->sortBy('gia_sp')->paginate(16)->appends(request()->query());
             }
         }
-        return view('client.timkiem.timkiem',compact('search_product','tp'));
+        return view('client.timkiem.timkiem',compact('search_product2','tp'));
     }
 
     public function index_post($id){

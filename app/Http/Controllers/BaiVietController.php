@@ -14,7 +14,7 @@ class BaiVietController extends Controller
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
         $danhsach =  DB::table('bai_viet')
         ->where('id_nd', $id_nd)
-        ->get();
+        ->paginate(6);
         return view('client.quanly-cuahang.baiviet.index',\compact('danhsach'));
     }
     public function create(){

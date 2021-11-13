@@ -3,22 +3,22 @@
     {{-- {{ dd($danhsach) }} --}}
     <style>
         /* .name-user {
-                            margin-top: 1px
-                        }
+                                margin-top: 1px
+                            }
 
-                        .comment {
-                            margin-top: 50px;
-                            padding: 0px;
-                        }
-                        .star{
-                            margin-top: -10px
-                        }
-                        h5{
-                            clear: both;
-                            font-weight:550;
-                            text-transform: lowercase;
-                            font-size: 15px;
-                        } */
+                            .comment {
+                                margin-top: 50px;
+                                padding: 0px;
+                            }
+                            .star{
+                                margin-top: -10px
+                            }
+                            h5{
+                                clear: both;
+                                font-weight:550;
+                                text-transform: lowercase;
+                                font-size: 15px;
+                            } */
 
         .infor {
             width: auto;
@@ -47,6 +47,10 @@
 
         .media-object {
             padding: 0px;
+        }
+
+        input[type=radio] {
+            margin:9px 0px;
         }
 
     </style>
@@ -154,12 +158,10 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="infor">
-                    </div> --}}
-
 
                 </div>
             </div>
+            {{-- bao cao san pham? --}}
             <div class="report-product">
 
                 <button style="font-size:11px; margin-bottom:15px" type="button" class="btn btn-lg" data-toggle="modal"
@@ -173,22 +175,29 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Báo cáo sản phẩm</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Nội dung báo cáo</label>
-                                        <textarea name="noidung_bc" class="form-control noidung-bc"
+                                        @foreach ($noidung_bc as $item)
+                                            <div class="radio">
+                                                <label><input type="radio" name="noidung_bc" value="{{ $item->id }}">{{ $item->noidung_bc }}</label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Mô tả báo cáo</label>
+                                        <textarea name="mota_bc" class="form-control noidung-bc"
                                             id="exampleFormControlTextarea1" rows="3"></textarea>
                                     </div>
                                     <input type="hidden" value="{{ $danhsach->id }}" name="id_sp" class="id_sp">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Gửi</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                 </div>
                             </div>
                         </div>
@@ -200,28 +209,43 @@
                 <div class="post_comments col-md-6">
                     <h3 class="comment_title"><span>4 comments</span></h3>
                     <ul class="media-list">
+
                         @if (Auth::guard('nguoi_dung')->check())
+                            {{-- ///php/// --}}
                             <?php
                             $id_nd = Auth::guard('nguoi_dung')->user()->id;
                             $user = DB::table('nguoi_dung')
                                 ->where('id', $id_nd)
                                 ->first();
+                            $danhsach1 = DB::table('hoa_don')
+                                ->join('chi_tiet_hoa_don', 'chi_tiet_hoa_don.id_hd', 'hoa_don.id')
+                                ->where('hoa_don.id_nm', $id_nd)
+                                ->where('id_sp', $danhsach->id)
+                                ->select(DB::raw('count(id_sp) as total'))
+                                ->groupBy('chi_tiet_hoa_don.id_sp')
+                                ->first();
                             ?>
-                            <li class="media">
-                                <a class="pull-left" href="#">
-                                    <img width="100px" height="90px" class="media-object "
-                                        src="{{ asset($user->anhdaidien_nd) }}" alt="" />
-                                    {{-- {{ asset('template-client') }}/img/blog/comment1.png --}}
-                                </a>
-                                <div class="media-body" style="padding-top: 0px">
-                                    <h4 class="media-heading"><a href="#">{{ $user->ten_nd }}</a></h4>
-                                    <input class="input-comment" type="text" placeholder="Viết bình luận của bạn">
-                                    <button type="submit" class="btn btn-comment" id="btn-comment">Bình luận</button>
-                                    <div class="success-comment"></div>
-                                </div> <!-- end of media-body -->
-                            </li> <!-- end of media -->
+                            @if ($danhsach1 != null)
+                                {{-- ///php/// --}}
+                                {{-- ////////comment-input//////// --}}
+                                <li class="media">
+                                    <a class="pull-left" href="#">
+                                        <img width="100px" height="90px" class="media-object "
+                                            src="{{ asset($user->anhdaidien_nd) }}" alt="" />
+                                        {{-- {{ asset('template-client') }}/img/blog/comment1.png --}}
+                                    </a>
+                                    <div class="media-body" style="padding-top: 0px">
+                                        <h4 class="media-heading"><a href="#">{{ $user->ten_nd }}</a></h4>
+                                        <input class="input-comment" type="text" placeholder="Viết bình luận của bạn">
+                                        <button type="submit" class="btn btn-comment" id="btn-comment">Bình luận</button>
+                                        <div class="success-comment"></div>
+                                    </div> <!-- end of media-body -->
+                                </li> <!-- end of media -->
+                                {{-- ////////comment-input//////// --}}
+                            @endif
                         @endif
                         <div class="media-comment">
+
                         </div>
                     </ul>
                 </div>
@@ -229,13 +253,13 @@
 
             {{-- sản phẩm liên quan --}}
             <div class="row" style="margin-top:20px ">
-                <div class="related-products latest-product margin-bottom-60px" style="height: 100px">
+                <div class="related-products latest-product">
                     <div class="col-sm-12">
                         <h4>Sản phẩm liên quan</h4>
                     </div>
                     @foreach ($sp as $item)
-                        <div class="col-md-2 col-sm-6" style="height: 100px">
-                            <div class="single-latest-product inside" style="height: 100px">
+                        <div class="col-md-2 col-sm-6">
+                            <div class="single-latest-product inside" style=" height:150px;">
                                 <span class="price-label"> {{ number_format($item->gia_sp) }} VND</span>
                                 <a href="{{ route('chitietsanpham.index', ['id' => $item->id]) }}"><img
                                         class="img-responsive" src="{{ asset($item->hinhanh_sp) }}" alt="Shoe"></a>
@@ -269,7 +293,7 @@
                     </div>
                     @foreach ($sp_cungcuahang as $item)
                         <div class="col-md-2 col-sm-6">
-                            <div class="single-latest-product inside">
+                            <div class="single-latest-product inside" style=" height: 150px;">
                                 <span class="price-label"> {{ number_format($item->gia_sp) }} VND</span>
                                 <a href="{{ route('chitietsanpham.index', ['id' => $item->id]) }}"><img
                                         class="img-responsive" src="{{ asset($item->hinhanh_sp) }}" alt="Shoe"></a>
@@ -296,6 +320,60 @@
             </div>
         </div>
     </div>
+    <input type="text" class="id_sp" value="{{ $danhsach->id }}">
+    @push('Add-Cart')
+        <script>
+           $(document).ready(function () {
+               var id_sp = $('.id_sp').val();
+                load_more_comment();
+
+                function load_more_comment(id = '') {
+                    $.ajax({
+                        type: "get",
+                        url: "/client/load-more-comment/",
+                        data: {
+                            id: id,
+                            id_sp:id_sp,
+                        },
+                        success: function(data) {
+                            $('#load-more-button').remove();
+                            $('.media-comment').append(data);
+                        }
+                    });
+                }
+
+                $(document).on('click', '#load-more-button', function() {
+                    var id = $(this).data('id')
+                    load_more_comment(id);
+                });
+
+                $('.btn-comment').click(function (e) {
+                    e.preventDefault();
+                    var comment = $('.input-comment').val()
+                    $('.media-comment').empty()
+                      $('.success-comment').removeAttr("style")
+                   $.ajax({
+                       type: "get",
+                       url: "/client/comment-product/",
+                    //    url:"client/chitietsanpham/client/comment-product"
+                       data: {
+                            id_sp:id_sp,
+                            comment:comment,
+                        },
+                       dataType: "dataType",
+                       success: function (data) {
+                        //
+                       }
+                   });
+                   load_more_comment();
+                   $('.success-comment').html('<span style="color:#45e312;">Thêm bình luận thành công</span>')
+                    $('.input-comment').val('')
+                    $('.success-comment').fadeOut(5000)
+                });
+
+           });
+        </script>
+    @endpush
     @push('Add-Cart')
         @if (Session::has('success-report'))
             <script>

@@ -25,7 +25,7 @@ class QuanLyCuaHangController extends Controller
                 ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','thong_tin_van_chuyen.id_xp')
                 ->where('id_nb',$id_nd)
                 ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*')
-                ->get();
+                ->paginate(6);
             // $danhsach = DB::table('chi_tiet_hoa_don')
             // ->join('hoa_don','hoa_don.id','chi_tiet_hoa_don.id_hd')
             // ->join('san_pham','san_pham.id','chi_tiet_hoa_don.id_sp')
@@ -120,7 +120,7 @@ class QuanLyCuaHangController extends Controller
         ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','thong_tin_van_chuyen.id_xp')
         ->where('hoa_don.id_nm',$id)
         ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*')
-        ->get();
+        ->paginate(6);
         $ttvc = DB::table('hoa_don')
         // ->join('nguoi_dung','nguoi_dung.id','hoa_don.id_nm')
         // ->join('thong_tin_van_chuyen','thong_tin_van_chuyen.id','hoa_don.id_ttvc')

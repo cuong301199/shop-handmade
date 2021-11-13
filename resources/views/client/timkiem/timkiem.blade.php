@@ -66,7 +66,7 @@
             </div>
         </div>
         <div class="row">
-            @foreach ( $search_product as $item )
+            @foreach ( $search_product2 as $item )
                 <div id="new" class="tab-pane fade in active">
                     <div class="col-md-3 col-sm-6">
                         <div class="product-single fadeInUp wow" data-wow-delay="0.5s">
