@@ -180,6 +180,7 @@ class ThanhToanController extends Controller
         );
         $insert_hd = DB::table('hoa_don')->insertGetId(
             [
+                'ma_hd'=> 'HN'.rand(0,999).'HM'.rand(),
                 'id_nm'=>$id_nd,
                 'id_nb'=>$id,
                 'ghi_chu'=>$ghiChu,
@@ -264,7 +265,7 @@ class ThanhToanController extends Controller
         }
         Session::forget('fee');
         Session::forget('coupon');
-        Session::flash("success", "Đặt hàng thành công");
+        Session::flash("success-checkout", "Đặt hàng thành công");
         return redirect()->route('cart.list');
 
         return dd('thanh cong');

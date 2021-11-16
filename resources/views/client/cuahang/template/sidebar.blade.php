@@ -1,7 +1,7 @@
 {{-- {{ dd($lsp) }} --}}
 
 <style>
-    *{
+    /* *{
         margin: 0px;
         padding: 0px;
     }
@@ -11,7 +11,7 @@
     .info{
         width: auto;
         height: 200px;
-        /* border: 1px solid; */
+
         margin-bottom: 20px;
         border: 1px hidden #706b6b;
          padding: 20px;
@@ -26,8 +26,12 @@
         padding: 0px 15px;
         border-radius: 20px;
         box-shadow: inset 0px 0px 5px rgb(117, 115, 115);
-    }
+    } */
 </style>
+<?php
+$danhmuc = DB::table('danh_muc')->get();
+$lsp = DB::table('loai_san_pham')->get();
+?>
             <div class="col-md-3 col-md-pull-9 col-sm-12 ">
                 <div class="side-bar">
                     <div class="sidebar-list widget">

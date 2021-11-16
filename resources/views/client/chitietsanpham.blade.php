@@ -38,7 +38,9 @@
         }
 
         .input-comment {
-            border: 1px solid rgb(221, 209, 209)
+            border: 1px solid rgb(221, 209, 209);
+            border-radius: 5px;
+            padding-left: 10px
         }
 
         .related_blog_post {

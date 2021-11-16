@@ -12,9 +12,24 @@ class QuanTriController extends Controller
         return view('admin.login');
     }
 
-    public function user(){
-        $danhsach= DB::table('nguoi_dung')
-        ->paginate(8);
+    public function user(Request $request){
+        $key = $request->key;
+        $orderBy = $request->orderBy;
+        $danhsach1= DB::table('nguoi_dung');
+        $danhsach =   $danhsach1->paginate(8);
+        if($key && $orderBy=='null'){
+            $danhsach = $danhsach1->where('ten_nd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+        }else if($key && $orderBy){
+            if($orderBy=='email'){
+                $danhsach = $danhsach1->where('email_nd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }else if($orderBy=='ten_nd'){
+                $danhsach = $danhsach1->where('ten_nd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }else if($orderBy=='ten_tk'){
+                $danhsach = $danhsach1->where('username','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }else{
+                $danhsach = $danhsach1->where('sdt_nd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }
+        }
         return view('admin.nguoidung.index',compact('danhsach'));
     }
     public function postLogin(Request $request){
@@ -35,6 +50,22 @@ class QuanTriController extends Controller
         Auth::guard('quan_tri')->logout();
         return redirect()->route('admin.login');
 
+    }
+
+    public function product_report(){
+        $danhsach = DB::table('san_pham')
+        ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
+        ->where('id_trangthai',3)
+        ->select('nguoi_dung.*','san_pham.*')
+        ->paginate(6);
+        return view('admin.sanpham-vipham.index',compact('danhsach'));
+    }
+    public function product_report_detail($id){
+        $danhsach =DB::table('bao_cao_san_pham')
+        ->join('noi_dung_bao_cao','noi_dung_bao_cao.id','bao_cao_san_pham.id_noidungbaocao')
+        ->join('nguoi_dung','nguoi_dung.id','bao_cao_san_pham.id_nd')->where('id_sp',$id)
+        ->paginate(6);
+        return view('admin.sanpham-vipham.product-report-detail',\compact('danhsach'));
     }
 
     public function manage_chars_user(){

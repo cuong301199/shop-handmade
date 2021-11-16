@@ -8,12 +8,19 @@ use App\Http\Controllers\Resquest;
 
 class LoaiSanPhamController extends Controller
 {
-    public function index(){
-        $danhsach_lsp = DB::table('loai_san_pham')
+    public function index(Request $request){
+        $key = $request->key;
+        $orderBy = $request->orderBy;
+        $danhsach_lsp1 = DB::table('loai_san_pham')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         // ->select('ten_dm','ten_lsp','id_dm',)
-        ->select('loai_san_pham.*','ten_dm','ten_lsp','id_dm')
-        ->paginate(8);
+        ->select('loai_san_pham.*','ten_dm','ten_lsp','id_dm');
+        $danhsach_lsp= $danhsach_lsp1->paginate(8);
+        if($key && $orderBy=='null'){
+            $danhsach_lsp = $danhsach_lsp1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+        }else if($key && $orderBy){
+            $danhsach_lsp = $danhsach_lsp1->where('ten_dm','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+        }
          return view('admin.loaisanpham.index', compact('danhsach_lsp'));
 
 

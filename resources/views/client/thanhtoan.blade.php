@@ -79,9 +79,9 @@
                 <div class="col-sm-8">
                     <div class="bredcrumb">
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Shop</a></li>
-                            <li><a href="#">Cart</a></li>
+                            <li><a href="#">Trang chủ</a></li>
+                            <li><a href="#">Thanh toán</a></li>
+                            {{-- <li><a href="#">Cart</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -157,8 +157,11 @@
                                     <div class="col-md-6">
                                         <button type="submit"
                                             style="border-radius: 1px; background-color:#1a1a1a; margin-top:20px;"
-                                            class="btn btn-primary btn-lg checkout">Thanh Toán</button>
+                                            class="btn btn-primary btn-lg checkout">Đặt hàng</button>
                                     </div>
+                                    {{-- <div class="col-md-6">
+                                        <a style="margin:20px 0px 0px 0px" href="{{ route('thanhtoan.index',['id'=> $item ]) }}" class="trendify-btn black-bordered checkout">Thanh toán</a>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="col-md-5">
@@ -465,6 +468,13 @@
             });
 
         });
+
+        // $('.checkout').click(function (e) {
+        //     e.preventDefault();
+        //     alert(123)
+
+        // });
+
     });
 
 

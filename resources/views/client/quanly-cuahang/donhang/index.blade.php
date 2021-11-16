@@ -52,19 +52,37 @@
                     <div class="card">
                         <div class="card-header">
                           <h3 class="card-title">Bordered Table</h3>
+                          <div class="card-tools">
+                            <form action="" class="form-inline">
+                                <div class="input-group input-group-sm" style="width: 500px;">
+                                    <input type="text" name="key" class="form-control float-right key"
+                                        placeholder="Tìm kiếm">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i
+                                                class="fas fa-search timKiem"></i></button>
+                                    </div>
+                                    <select name="orderBy"  id="by" class="form-control xaPhuong" style="width: 250px;">
+                                        <option value=null>Tìm kiếm theo</option>
+                                        <option value="code">Mã đơn hàng</option>
+                                        <option value="ten" >Tên khách hàng</option>
+                                    </select>
+                                </div>
+                            </form>
                         </div>
-                        <!-- /.card-header -->
+                        </div>
+
                         <div class="card-body">
                           <table class="table table-bordered">
                             <thead>
-                              <tr>
+                              <tr class="text-center">
                                 <th style="width: ">#</th>
-                                <th style="width:15%">Tên khách hàng</th>
-                                <th style="width:30% ">Địa chỉ</th>
+                                <th style="width:13%">Tên khách hàng</th>
+                                <th style="width:12%">Mã đơn hàng</th>
+                                <th style="width:26% ">Địa chỉ</th>
                                 <th style="width: ">Tổng tiền</th>
                                 <th style="width: ">Ngày đặt hàng</th>
                                 <th style="width:">Trạng thái</th>
-                                <th style="width:">Thao tác</th>
+                                <th style="width:11%" >Thao tác</th>
 
                               </tr>
                             </thead>
@@ -74,11 +92,12 @@
                                 <tr>
                                     <td>{{ $stt++ }}</td>
                                     <td>{{ $item->ten_nd}}</td>
+                                    <td>{{ $item->ma_hd}}</td>
                                     <td>{{ $item->diachi_ttvc }},{{ $item->name_tp }},{{ $item->name_qh }},{{ $item->name_xa }}
                                     </td>
-                                    <td>{{ number_format( $item->tong_tien) }} VND</td>
-                                    <td>{{ $item->created_at }}</td>
-                                    <td>
+                                    <td class="text-center">{{ number_format( $item->tong_tien) }} VND</td>
+                                    <td class="text-center">{{  \Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</td>
+                                    <td class="text-center">
                                         @if ( $item->id_tt == 1)
                                             <a href=""><span class="badge bg-warning">{{ $item->ten_tt }}</span></a>
                                         @elseif( $item->id_tt == 2)
@@ -91,7 +110,7 @@
                                             <a href=""><span class="badge bg-danger">{{ $item->ten_tt }}</span></a>
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route('manage_oder.detail', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
                                         <a class="twitter badge bg-danger" data-title="Thông báo" href="">hủy</a>
                                     </td>

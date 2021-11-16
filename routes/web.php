@@ -21,6 +21,7 @@ use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\PhiVanChuyenController;
 use App\Http\Controllers\ThongTinLienHeController;
+use App\Http\Controllers\ChatController;
 
 use Carbon\Carbon;
 
@@ -92,6 +93,7 @@ Route::prefix('/client')->group(function () {
     Route::get('/comment/{id_bv}',[BaiVietController::class,'comment'])->name('comment.add');
 
 
+
     ///// phi van chuyen
     Route::get('/phivanchuyen',[PhiVanChuyenController::class,'index'])->name('phivanchuyen.index');
     Route::get('/phivanchuyen-add',[PhiVanChuyenController::class,'create'])->name('phivanchuyen.create');
@@ -121,7 +123,12 @@ Route::prefix('/client')->group(function () {
 
     //trang ca nhan
     Route::get('/trang-ca-nhan/{id}',[CuaHangController::class,'index'])->name('cuahang.index');
+     //danh gia nguoi dung
+     Route::get('/load-moreo-rate',[CuaHangController::class,'load_rate'])->name('rate.load');
+     Route::get('/rate-user',[CuaHangController::class,'rate_user'])->name('rate.user');
 
+    //chat
+    Route::get('/chat',[ChatController::class,'index'])->name('chat.index');
 
 
     //chi tiet san pham
@@ -195,6 +202,7 @@ Route::middleware(['checkQuanTri'])->group(function () {
         // Route::get('/cuahang{id}/stop', [CuaHangController::class,'stopStore'])->name('cuahang.stop');
 
         Route::get('/nguoidung', [QuanTriController::class, 'user'])->name('user.index');
+
         Route::get('/admin', [AuthController::class, 'index'])->name('admin.index');
 
         Route::get('/danhmuc', [DanhMucController::class, 'index'])->name('danhmuc.index');
@@ -223,6 +231,9 @@ Route::middleware(['checkQuanTri'])->group(function () {
         Route::get('/filter-by-date-user',[QuanTriController::class, 'filter_by_date_user'] )->name('filter-by-date-user.index');
         Route::get('/filter-dashboard-user',[QuanTriController::class, 'filter_dashboard_user'] )->name('filter-dashboard-user.index');
 
+        Route::get('/san-pham-vi-pham',[QuanTriController::class, 'product_report'] )->name('product-report.index');
+        Route::get('/san-pham-vi-pham-chi-tiet/{id}',[QuanTriController::class, 'product_report_detail'] )->name('product-report-detail.index');
+
 
     });
 
@@ -244,18 +255,14 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 
 Route::get('/1', function () {
-//    $content = DB::table('bao_cao_san_pham')
-//    ->join('noi_dung_bao_cao','noi_dung_bao_cao.id','bao_cao_san_pham.id_noidungbaocao')
-//    ->select( DB::raw('SUM(thangdiem_bc) as total'))
-//    ->where('id_sp',14)
-//     ->groupBy('id_sp')->first();
 
-//         dd($content);
-
- $number_report = DB::table('bao_cao_san_pham')
-        ->select( DB::raw('count(*) as total'))
-        ->where('id_sp',16)
-        ->first();
-        dd($number_report->total);
-
+    // $comments = DB::table('danh_gia_nguoi_dung')
+    // ->join('nguoi_dung','nguoi_dung.id','danh_gia_nguoi_dung.id_nm')
+    // ->where('danh_gia_nguoi_dung.id_nb',2)
+    // ->orderBy('danh_gia_nguoi_dung.id','desc')
+    // ->select('nguoi_dung.*','danh_gia_nguoi_dung.*')
+    // ->take(2)
+    // ->get();
+$comments = 'HN'.rand(0,999).'HM'.rand();
+    dd($comments);
 });

@@ -1,11 +1,11 @@
 @extends('admin.template.master')
 
 @section('title')
-    Người dùng
+   Sản phẩm vi phạm
 @endsection
 
 @section('title-page')
-    Người dùng
+Sản phẩm vi phạm
 @endsection
 @section('content')
 {{-- {{ dd($danhsach) }} --}}
@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Danh sách người dùng</h3>
+                      <h3 class="card-title"> Sản phẩm vi phạm</h3>
                       <div class="card-tools">
                         <form action="" class="form-inline">
                             <div class="input-group input-group-sm" style="width: 500px;">
@@ -41,13 +41,12 @@
                       <table class="table table-bordered">
                         <thead>
                           <tr class="text-center">
-                            <th style="width: ">STT</th>
-                            <th scope="col">Tên người dùng</th>
-                            <th scope="col">Tên tài khoản</th>
-                            <th scope="col">Số điện thoại</th>
-                            <th scope="col">Email</th>
-                            <th style="width:10%" scope="col">Thao tác</th>
-
+                            <th style="width:5%">STT</th>
+                            <th style="width:20%" scope="col">Tên sản phẩm</th>
+                            <th style="width:10%"scope="col">Hình ảnh </th>
+                            <th style="width:10%" scope="col">Tên người bán</th>
+                            <th style="width:10%" scope="col">Ngày đăng</th>
+                            <th style="width:14%" scope="col">Thao tác</th>
                           </tr>
                         </thead>
                         <?php $stt = 1; ?>
@@ -56,13 +55,16 @@
                             @foreach ($danhsach as $item)
                             <tr>
                                 <th scope="row">{{$stt++}}</th>
+                                <td>{{$item->ten_sp}}</td>
+                                <td>
+                                    <img src="{{asset($item->hinhanh_sp)}}" alt="" width="90px" height="90px">
+                                </td>
                                 <td>{{$item->ten_nd}}</td>
-                                <td>{{$item->username}}</td>
-                                <td>{{$item->sdt_nd}}</td>
-                                <td>{{$item->email_nd}}</td>
+                                <td class="text-center">{{  \Carbon\Carbon::parse($item->created_at)->format('d/m/Y')}}</td>
                                 <td class="text-right">
-                                    <a href="{{ route('loaisanpham.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
-
+                                    <a href="{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><span class="badge bg-warning">Xem sản phẩm</span></a>
+                                    <a href="{{ route('product-report-detail.index', ['id'=>$item->id]) }}"><span class="badge bg-info">Chi tiết</span></a>
+                                    <a href="{{ route('loaisanpham.edit', ['id'=>$item->id]) }}"><span class="badge bg-danger">Xóa</span></a>
                                 </td>
                             </tr>
                         @endforeach

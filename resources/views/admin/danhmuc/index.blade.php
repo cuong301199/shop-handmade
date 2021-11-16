@@ -24,16 +24,28 @@
             <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Danh sách danh mục</h3>
+                  <div class="card-tools">
+                    <form action="" class="form-inline">
+                        <div class="input-group input-group-sm" style="width: 250px;">
+                            <input type="text" name="key" class="form-control float-right key"
+                                placeholder="Tìm kiếm">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i
+                                        class="fas fa-search timKiem"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table class="table table-bordered">
                     <thead>
-                      <tr>
+                      <tr class="text-center">
                         <th style="width: ">STT</th>
                         <th scope="col">Tên danh mục</th>
                         <th scope="col">Hình ảnh danh mục</th>
-                        <th scope="col">Thao tác</th>
+                        <th style="width:15% " scope="col">Thao tác</th>
 
                       </tr>
                     </thead>
@@ -43,12 +55,12 @@
                         @foreach ($danhsachdanhmuc as $item)
                         <tr>
                             <td>{{ $stt++ }}</td>
-                            <td>{{$item->ten_dm}}</td>
-                            <td>
+                            <td >{{$item->ten_dm}}</td>
+                            <td class="text-center" >
                                 <img src="{{ asset($item->hinhanh_dm) }}" alt="" width = 60px heigth=60px>
                             </td>
-                            <td>
-                                <a href="{{ route('danhmuc.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
+                            <td class="text-right">
+                                <a href="{{ route('danhmuc.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chỉnh sửa</span></a>
                                 <a class="twitter badge bg-danger" data-title="Thông báo" href="{{ route('danhmuc.delete',['id'=>$item->id])}}">Xóa</a>
                             </td>
                         </tr>
@@ -57,14 +69,10 @@
                   </table>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer clearfix">
-                  <ul class="pagination pagination-sm m-0 float-right">
-                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                  </ul>
+                <div class="card-footer clearfix float-right">
+                    <div class="col-md-12 float-right">
+                        <div class="float-right">{{$danhsachdanhmuc->links()}}</div>
+                    </div>
                 </div>
               </div>
         </div>

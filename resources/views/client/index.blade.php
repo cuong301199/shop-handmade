@@ -34,7 +34,13 @@
   .product-info i{
       margin: auto 4px;
   }
-
+  .product-info i{
+      margin:0px 5px 0px 0px;
+      /* margin-right: 5px; */
+  }
+  /* .addcart i{
+    color:#707070;
+  } */
 </style>
 {{-- <div class="tp-banner-container rev-slider-content">
     <div class="slider_one" >

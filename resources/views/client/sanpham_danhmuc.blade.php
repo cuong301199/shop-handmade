@@ -79,6 +79,7 @@
                         <span style="font-size:14px; font-weight:bold; color:rgb(92, 17, 17)"> {{ number_format($item->gia_sp) }} VDN</span>
                         <p><i class="fa fa-clock"></i>{{ \Carbon\Carbon::parse($item->created_at)->subHours(7)->diffForHumans() }}</p>
                         <p><i class="fa fa-map-marker-alt"></i>{{ $item->name_tp }}</p>
+                        <a id="{{ $item->id }}" class="addcart" href="{{  route('Add.cart', ['id'=>$item->id])}}"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
                     </div>
                 </div>
             </div>
@@ -89,31 +90,24 @@
 
     <!-- pagination -->
     <div class="pagination">
-        {{-- <div class="col-xs-1 no-padding">
-            <a href="#"><span class="pagicon arrow_left"></span></a>
-        </div>
-        <div class="col-xs-offset-1 col-sm-offset-3 col-xs-7">
-            <ul class="pagination-number">
-                <li>01</li>
-                <li class="active">02</li>
-                <li>03</li>
-                <li>04</li>
-                <li>05</li>
-                <li>06</li>
-            </ul>
-        </div>
-        <div class="col-xs-1 no-padding text-right">
-            <a href="#"><span class="pagicon arrow_right"></span></a>
-        </div> --}}
         <div class="col-md-12 pull-right">
             <div class="pull-right">{{$danhsach2->links()}}</div>
         </div>
-
     </div>
     <!-- / pagination -->
 
 </div>
 @push('input-total-price')
+@if (Session::has('success'))
+    <script>
+        alertify.success('Thêm vào giỏ hàng thành công');
+    </script>
+@endif
+@if (Session::has('success-deleteItemCart'))
+    <script>
+        alertify.success('Xóa sản phẩm khỏi giỏ hàng thành công');
+    </script>
+@endif
     <script>
         $(document).ready(function () {
             $('#city').change(function (e) {

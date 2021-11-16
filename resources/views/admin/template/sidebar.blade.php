@@ -52,6 +52,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('product-report.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Sản phẩm vi phạm
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('manage_chars_user.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
@@ -59,6 +67,7 @@
                         </p>
                     </a>
                 </li>
+
                 {{-- <li class="nav-item">
                     <a href="{{ route('coupon.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>

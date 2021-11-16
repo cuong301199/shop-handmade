@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBinhLuanTable extends Migration
+class CreateBaiVietTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,14 @@ class CreateBinhLuanTable extends Migration
      */
     public function up()
     {
-        Schema::create('binh_luan', function (Blueprint $table) {
+        Schema::create('bai_viet', function (Blueprint $table) {
             $table->id('id');
-
+            $table->string('tieude_bv')->nullable();
             $table->bigInteger('id_nd')->unsigned();
             $table->foreign('id_nd')->references('id')->on('nguoi_dung')->onDelete('cascade');
-
-            $table->bigInteger('id_bv')->unsigned();
-            $table->foreign('id_bv')->references('id')->on('bai_viet')->onDelete('cascade');
-
-            $table->string('noidung_bl');
+            $table->longText('noidung_bv')->nullable();
+            $table->longText('tomtat_bv')->nullable();
+            $table->string('hinhanh_bv')->nullable();
 
             $table->timestamps();
         });
@@ -35,6 +33,6 @@ class CreateBinhLuanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('binh_luan');
+        Schema::dropIfExists('bai_viet');
     }
 }

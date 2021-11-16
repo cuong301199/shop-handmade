@@ -13,17 +13,30 @@ use Carbon\Carbon;
 class SanPhamController extends Controller
 {
     //
-    public function index(){
-
+    public function index(Request $request){
+        $key = $request->key;
+        $orderBy = $request->orderBy;
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-        $danhsach = DB::table('san_pham')
+        $danhsach1 = DB::table('san_pham')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
+        ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         ->join('nguoi_dung','nguoi_dung.id','san_pham.id_nb')
         ->join('trang_thai_san_pham','trang_thai_san_pham.id','san_pham.id_trangthai')
         ->where('id_nb',$id_nd)
         ->where('id_trangthai','<>',3)
-        ->select('san_pham.*','trang_thai_san_pham.*','loai_san_pham.*','san_pham.id')
-        ->paginate(6);
+        ->orderBy('san_pham.created_at','DESC')
+        ->select('san_pham.*','trang_thai_san_pham.*','danh_muc.*','loai_san_pham.*','san_pham.id');
+        $danhsach = $danhsach1->paginate(8)->appends(request()->query());
+        if($key  && $orderBy  == 'null'){
+            $danhsach = $danhsach1->where('ten_sp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+        }
+        if($key  &&  $orderBy != 'null'){
+            if($orderBy == 'ten_lsp'){
+                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }else{
+                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }
+        }
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
     }
 
@@ -277,7 +290,7 @@ class SanPhamController extends Controller
             $tp = DB::table('san_pham')
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
             ->where('id_lsp', $productType )
-            ->where('san_pham.id_nb','<>',$id_nd)
+            // ->where('san_pham.id_nb','<>',$id_nd)
             ->groupBy('id_tp')->get();
 
         }
@@ -298,13 +311,13 @@ class SanPhamController extends Controller
         if($request->oderBy != null){
             $oderBy = $request->oderBy;
             if($oderBy=='asc'){
-                $danhsach2 = $danhsach->sortBy('id')->paginate(16)->appends(request()->query());
+                $danhsach2 = $danhsach->orderBy('id','asc')->paginate(16)->appends(request()->query());
             }else if($oderBy=='desc'){
-                $danhsach2 = $danhsach->sortByDesc('id')->paginate(16)->appends(request()->query());
+                $danhsach2 = $danhsach->orderBy('id','desc')->paginate(16)->appends(request()->query());
             } if($oderBy=='price_max'){
-                $danhsach2 = $danhsach->sortByDesc('gia_sp')->paginate(16)->appends(request()->query());
+                $danhsach2 = $danhsach->orderBy('gia_sp','desc')->paginate(16)->appends(request()->query());
             } if($oderBy=='price_min'){
-                $danhsach2 = $danhsach->sortBy('gia_sp')->paginate(16)->appends(request()->query()) ;
+                $danhsach2 = $danhsach->orderBy('gia_sp','asc')->paginate(16)->appends(request()->query()) ;
             }
         }
 
@@ -333,50 +346,6 @@ class SanPhamController extends Controller
        return view('client.quanly-cuahang.sanpham.report-detail',compact('danhsach'));
     }
 
-    // public function getProductByProductType(Request $request ,$id_dm,$id_lsp){
-    //     $lsp = DB::table('loai_san_pham')
-    //     ->where('id_dm',$id_dm)
-    //     ->get();
-    //     $tp = DB::table('tbl_tinhthanhpho')
-    //     ->get();
-    //     $danhsach = DB::table('san_pham')
-    //         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
-    //         ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-    //         ->where('loai_san_pham.id',$id_lsp)
-    //         ->select('tbl_tinhthanhpho.*','san_pham.*')
-    //         ->paginate(12);
-    //     if($request->id_city != null){
-    //         $id_city = $request->id_city;
-    //         $danhsach = $danhsach->where('matp',$id_city);
-    //     }
-    //     if($request->price  != null){
-    //         $price = $request->price;
-    //         if($price==1){
-    //             $danhsach = $danhsach->where('gia_sp','<',500000);
-    //         }elseif($price==2){
-    //             $danhsach = $danhsach->whereBetween('gia_sp',[500000,1000000]);
-    //         }elseif($price==3){
-    //             $danhsach = $danhsach->whereBetween('gia_sp',[1000000,1500000]);
-    //         }elseif($price==4){
-    //             $danhsach = $danhsach->whereBetween('gia_sp',[1500000,2000000]);
-    //         }elseif($price==5){
-    //             $danhsach = $danhsach->where('gia_sp','>',2000000);
-    //         }
-    //     }
-    //     if($request->oderBy  != null){
-    //         $oderBy = $request->oderBy;
-    //         if($oderBy=='asc'){
-    //             $danhsach = $danhsach->sortBy('id');
-    //         }else if($oderBy=='desc'){
-    //             $danhsach = $danhsach->sortByDesc('id');
-    //         } if($oderBy=='price_max'){
-    //             $danhsach = $danhsach->sortByDesc('gia_sp');
-    //         } if($oderBy=='price_min'){
-    //             $danhsach = $danhsach->sortBy('gia_sp')  ;
-    //         }
-    //     }
-    //     return view('client.sanpham_lsp',compact('danhsach','lsp','tp'));
-    // }
 
     public function report_product(Request $request){
         $mota_bc=$request->mota_bc;

@@ -23,16 +23,33 @@
                     <div class="card">
                         <div class="card-header">
                           <h3 class="card-title">Danh sách danh mục</h3>
+                          <div class="card-tools">
+                            <form action="" class="form-inline">
+                                <div class="input-group input-group-sm" style="width: 500px;">
+                                    <input type="text" name="key" class="form-control float-right key"
+                                        placeholder="Tìm kiếm">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i
+                                                class="fas fa-search timKiem"></i></button>
+                                    </div>
+                                    <select name="orderBy"  id="by" class="form-control xaPhuong" style="width: 250px;">
+                                        <option value=null>Tìm kiếm theo</option>
+                                        <option value="code">Danh mục</option>
+                                        <option value="ten" >Loại Sản phẩm</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                           <table class="table table-bordered">
                             <thead>
-                              <tr>
+                              <tr class="text-center">
                                 <th style="width: ">STT</th>
                                 <th scope="col">Tên loại sản phẩm</th>
                                 <th scope="col">Danh mục</th>
-                                <th scope="col">Thao tác</th>
+                                <th style="width: 15%" scope="col">Thao tác</th>
 
                               </tr>
                             </thead>
@@ -40,11 +57,11 @@
 
                             <tbody>
                                 @foreach ($danhsach_lsp as $item)
-                                <tr>
+                                <tr >
                                     <td>{{ $stt++ }}</td>
                                     <td>{{  $item->ten_lsp  }}</td>
                                     <td>{{$item->ten_dm}}</td>
-                                    <td>
+                                    <td class="text-right">
                                         <a href="{{ route('loaisanpham.edit', ['id'=>$item->id]) }}"><span class="badge bg-warning">Chi tiết</span></a>
                                         <a class="twitter badge bg-danger" data-title="Thông báo" href="{{ route('loaisanpham.delete', ['id' => $item->id]) }}">Xóa</a>
                                     </td>
@@ -54,9 +71,9 @@
                           </table>
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <div class="col-md-12 pull-right">
-                                <div class="pull-right">{{$danhsach_lsp->links()}}</div>
+                        <div class="card-footer clearfix float-right">
+                            <div class="col-md-12 float-right">
+                                <div class="float-right">{{$danhsach_lsp->links()}}</div>
                             </div>
                         </div>
                       </div>

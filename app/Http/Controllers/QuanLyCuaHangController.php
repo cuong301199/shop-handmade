@@ -14,9 +14,11 @@ class QuanLyCuaHangController extends Controller
         return view('client.quanly-cuahang.index');
     }
 
-    public function manage_oder(){
+    public function manage_oder(Request $request){
+        $key = $request->key;
+        $orderBy = $request->orderBy;
         $id_nd= Auth::guard('nguoi_dung')->user()->id;
-        $oder = DB::table('hoa_don')
+        $oder1 = DB::table('hoa_don')
                 ->join('nguoi_dung','nguoi_dung.id','hoa_don.id_nm')
                 ->join('thong_tin_van_chuyen','thong_tin_van_chuyen.id','hoa_don.id_ttvc')
                 ->join('trang_thai_don_hang','trang_thai_don_hang.id','hoa_don.id_tt')
@@ -24,14 +26,19 @@ class QuanLyCuaHangController extends Controller
                 ->join('tbl_quanhuyen','tbl_quanhuyen.maqh','thong_tin_van_chuyen.id_qh')
                 ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','thong_tin_van_chuyen.id_xp')
                 ->where('id_nb',$id_nd)
-                ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*')
-                ->paginate(6);
-            // $danhsach = DB::table('chi_tiet_hoa_don')
-            // ->join('hoa_don','hoa_don.id','chi_tiet_hoa_don.id_hd')
-            // ->join('san_pham','san_pham.id','chi_tiet_hoa_don.id_sp')
-            // ->where('id_hd',$id)
-            // ->get();
-
+                ->orderBy('hoa_don.id','desc')
+                ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*');
+        $oder =$oder1->paginate(6)->appends(request()->query());
+        if($key  && $orderBy  == 'null'){
+            $oder = $oder1->where('ten_nd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+        }
+        if($key  &&  $orderBy != 'null'){
+            if($orderBy == 'code'){
+                $oder = $oder1->where('ma_hd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }else{
+                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }
+        }
         return view('client.quanly-cuahang.donhang.index',compact('oder'));
     }
 
@@ -109,9 +116,11 @@ class QuanLyCuaHangController extends Controller
 
     }
 
-    public function order(){
+    public function order(Request $request){
+        $key = $request->key;
+        $orderBy = $request->orderBy;
         $id= Auth::guard('nguoi_dung')->user()->id;
-        $oder = DB::table('hoa_don')
+        $oder1 = DB::table('hoa_don')
         ->join('nguoi_dung','nguoi_dung.id','hoa_don.id_nm')
         ->join('thong_tin_van_chuyen','thong_tin_van_chuyen.id','hoa_don.id_ttvc')
         ->join('trang_thai_don_hang','trang_thai_don_hang.id','hoa_don.id_tt')
@@ -119,23 +128,24 @@ class QuanLyCuaHangController extends Controller
         ->join('tbl_quanhuyen','tbl_quanhuyen.maqh','thong_tin_van_chuyen.id_qh')
         ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','thong_tin_van_chuyen.id_xp')
         ->where('hoa_don.id_nm',$id)
-        ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*')
-        ->paginate(6);
-        $ttvc = DB::table('hoa_don')
-        // ->join('nguoi_dung','nguoi_dung.id','hoa_don.id_nm')
-        // ->join('thong_tin_van_chuyen','thong_tin_van_chuyen.id','hoa_don.id_ttvc')
-        // ->join('trang_thai_don_hang','trang_thai_don_hang.id','hoa_don.id_tt')
-        ->join('chi_tiet_hoa_don','chi_tiet_hoa_don.id_hd','hoa_don.id')
-        ->where('hoa_don.id_nm',$id)
-        ->select('chi_tiet_hoa_don.*','hoa_don.*')
-        ->groupby('chi_tiet_hoa_don.id_hd')
-        ->get();
-        $nguoiban = DB::table('hoa_don')
-        ->join('nguoi_dung','nguoi_dung.id','hoa_don.id_nb')
-        ->first();
+        ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*');
+        $oder = $oder1->paginate(6)->appends(request()->query());
+
+        if($key  && $orderBy  == 'null'){
+            $oder = $oder1->where('ma_hd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+        }
+        if($key  &&  $orderBy != 'null'){
+            if($orderBy == 'code'){
+                $oder = $oder1->where('ma_hd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }else{
+                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+            }
+        }
 
 
-        return view('client.quanly-cuahang.donhangdadat.index',compact('oder','ttvc'));
+
+
+        return view('client.quanly-cuahang.donhangdadat.index',compact('oder'));
     }
 
     public function oder_detail(Request $request,$id){

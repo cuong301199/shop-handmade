@@ -62,9 +62,9 @@
             <div class="col-sm-8">
                 <div class="bredcrumb">
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="#">Cart</a></li>
+                        <li><a href="#">Trang chủ</a></li>
+                        <li><a href="#">Giỏ hàng</a></li>
+                        {{-- <li><a href="#">Cart</a></li> --}}
                     </ul>
                 </div>
             </div>
@@ -265,6 +265,14 @@
         $.alert({
             title: 'Thông báo!',
             content: 'Cập nhật giỏ hàng thành công!',
+        });
+    </script>
+    @endif
+    @if(Session::has('success-checkout'))
+    <script>
+        $.alert({
+            title: 'Thông báo!',
+            content: 'Bạn đã đặt hàng thành công!',
         });
     </script>
     @endif

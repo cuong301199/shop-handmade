@@ -7,8 +7,13 @@ use DB;
 class DanhMucController extends Controller
 {
 
-    public function index(){
-        $danhsachdanhmuc = DB::table('danh_muc')->get();
+    public function index(Request $request){
+        $key = $request-> key;
+        $danhsachdanhmuc1 = DB::table('danh_muc');
+        $danhsachdanhmuc = $danhsachdanhmuc1->paginate(8);
+        if($key){
+            $danhsachdanhmuc = $danhsachdanhmuc1->where('ten_dm','like','%'.$key.'%')->paginate(8);
+        }
         return view('admin.danhmuc.index', compact('danhsachdanhmuc'));
     }
 

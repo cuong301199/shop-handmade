@@ -29,7 +29,7 @@
         <div class="container">
             <div class="row">
                @yield('content')
-                {{-- @include('client.cuahang.template.sidebar') --}}
+                @include('client.cuahang.template.sidebar')
             </div>
         </div>
     </div>

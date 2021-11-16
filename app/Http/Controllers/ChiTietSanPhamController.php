@@ -114,7 +114,7 @@ class ChiTietSanPhamController extends Controller
         $comment = $request ->comment;
         $id_sp = $request->id_sp;
 
-        $insert = DB::table('danh_gia_san_pham')->where('id_sp',$id_sp)->insert(
+        $insert = DB::table('danh_gia_san_pham')->insert(
             [
                 'id_sp'=>$id_sp,
                 'id_nd'=>$id_nd,

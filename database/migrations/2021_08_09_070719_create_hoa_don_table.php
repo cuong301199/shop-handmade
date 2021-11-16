@@ -15,7 +15,7 @@ class CreateHoaDonTable extends Migration
     {
         Schema::create('hoa_don', function (Blueprint $table) {
             $table->id('id');
-
+            $table->string('ma_hd');
             $table->bigInteger('id_nm')->unsigned();
             $table->foreign('id_nm')->references('id')->on('nguoi_dung')->onDelete('cascade');
 
@@ -33,7 +33,6 @@ class CreateHoaDonTable extends Migration
 
             $table->string('ghi_chu')->nullable();
 
-            $table->string('phuong_thuc_thanh_toan')->nullable();
 
             $table->string('tong_sp')->nullable();
 

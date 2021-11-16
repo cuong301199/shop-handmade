@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 
+use Carbon\Carbon;
 class CuaHangController extends Controller
 {
 
@@ -26,7 +27,7 @@ class CuaHangController extends Controller
         ->join('nguoi_dung','nguoi_dung.id','thong_tin_lien_he.id_nd')
         ->where('thong_tin_lien_he.id_nd',$id)
         ->first();
-        
+
         $post = DB::table('bai_viet')
         ->where('id_nd',$id)
         ->get();
@@ -49,6 +50,66 @@ class CuaHangController extends Controller
         return view('client.cuahang.index' ,compact('thongtin','sanpham','post','danhmuc','infor'));
     }
 
+    public function load_rate(Request $request){
+        $data = $request->id;
+        $id_nb = $request->id_nb;
+
+        if($data>0){
+            $comments = DB::table('danh_gia_nguoi_dung')
+            ->join('nguoi_dung','nguoi_dung.id','danh_gia_nguoi_dung.id_nm')
+            ->where('danh_gia_nguoi_dung.id_nb',$id_nb)
+            ->where('danh_gia_nguoi_dung.id','<',$data)
+            ->orderBy('danh_gia_nguoi_dung.id','desc')
+            ->select('nguoi_dung.*','danh_gia_nguoi_dung.*')
+            ->take(1)
+            ->get();
+        }else{
+            $comments = DB::table('danh_gia_nguoi_dung')
+            ->join('nguoi_dung','nguoi_dung.id','danh_gia_nguoi_dung.id_nm')
+            ->where('danh_gia_nguoi_dung.id_nb',$id_nb)
+            ->orderBy('danh_gia_nguoi_dung.id','desc')
+            ->select('nguoi_dung.*','danh_gia_nguoi_dung.*')
+            ->take(1)
+            ->get();
+        }
+
+        $output = '';
+        foreach($comments as $key => $comment){
+            $last_id = $comment->id;
+            $output.='<li class="media">
+            <a class="pull-left" href="#">
+                <img width="100px" height="90px" class="media-object"
+                    src="'. asset($comment->anhdaidien_nd).'" alt="" />
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading"><a href="#">'.$comment->ten_nd.'</a> <span>'.\Carbon\Carbon::parse($comment->created_at)->subHours(7)->diffForHumans().'</span></h4>
+                <p>'.$comment->noidung_dg.'</p>
+            </div>
+        </li>';
+        }
+        $output .= '
+        <div class="col-md-12 center-block text-center" >
+            <button id="load-more-button" data-id ="'.$last_id.'" style="color:#333; background-color:#9b9999;border:#fff;font-size:12px;" type="button" class="btn btn-success from-control">Xem thêm</button>
+        </div>';
+
+        echo $output;
+    }
+
+
+    public function rate_user(Request $request){
+        $id_nd=Auth::guard('nguoi_dung')->user()->id;
+        $comment = $request ->comment;
+        $id_nb = $request->id_nb;
+
+        $insert = DB::table('danh_gia_nguoi_dung')->insert(
+            [
+                'id_nb'=>$id_nb,
+                'id_nm'=>$id_nd,
+                'noidung_dg'=>$comment,
+                'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
+            ]
+        );
+    }
     // public function index(){
     //     return view('admin.cuahang.index');
     // }

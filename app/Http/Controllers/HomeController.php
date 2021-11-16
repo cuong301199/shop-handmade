@@ -75,7 +75,7 @@ class HomeController extends Controller
                                 <span style="font-size:14px; font-weight:bold; color:rgb(92, 17, 17)">'.number_format($pro->gia_sp).' VDN</span>
                                 <p><i class="fa fa-clock"></i>'. \Carbon\Carbon::parse($pro->created_at)->subHours(7)->diffForHumans().'</p>
                                 <p><i class="fa fa-map-marker-alt"></i>'.Str::limit($pro->name_tp, 15).'</p>
-                                <a id="{{ $item->id }}" class="addcart" href="'. route('Add.cart', ['id'=>$pro->id]) .'"><i class="fa fa-cart-plus"></i></a>
+                                <a id="{{ $item->id }}" class="addcart" href="'. route('Add.cart', ['id'=>$pro->id]) .'"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
                             </div>
                         </div>
                     </div>
