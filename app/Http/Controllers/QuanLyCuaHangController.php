@@ -119,55 +119,109 @@ class QuanLyCuaHangController extends Controller
     }
 
     public function accepOder(Request $request){
-
-
         $id_tt = $request->id_tt;
         $order_product_id = $request->order_product_id;
         $soluong_sp = $request->soluong_sp;
         $id_hd = $request->id_hd;
+        $id_tt_present = $request->id_tt_present;
 
         $update1 = DB::table('hoa_don')->where('id',$id_hd)->update(
             [
                 'id_tt'=>$id_tt,
             ]
         );
-        if($id_tt==3){
-            foreach($order_product_id as $key => $product_id){
-                $product = DB::table('san_pham')->where('id',$product_id)->first();
-                $product_quanty =$product->soluong_sp;
-                $product_sold = $product->soluong_daban;
-                foreach($soluong_sp as $key2 => $quantity){
-                    if($key==$key2){
-                        $sp_conlai = $product_quanty - $quantity;
-                        $sp_daban = $product_sold + $quantity;
-                        $update = DB::table('san_pham')->where('id',$product_id)->update(
-                            [
-                                'soluong_sp'=> $sp_conlai,
-                                'soluong_daban'=>$sp_daban
-                            ]
-                        );
-                    }
-                }
-            }
-        }else if($id_tt == 5 ){
-            foreach($order_product_id as $key => $product_id){
-                $product = DB::table('san_pham')->where('id',$product_id)->first();
-                $product_quanty =$product->soluong_sp;
-                $product_sold = $product->soluong_daban;
-                foreach($soluong_sp as $key2 => $quantity){
-                    if($key==$key2){
-                        $sp_conlai = $product_quanty + $quantity;
-                        $sp_daban = $product_sold - $quantity;
-                        $update = DB::table('san_pham')->where('id',$product_id)->update(
-                            [
-                                'soluong_sp'=> $sp_conlai,
-                                'soluong_daban'=>$sp_daban
-                            ]
-                        );
+
+        if( $id_tt_present == 1){
+            if($id_tt == 3){
+                foreach($order_product_id as $key => $product_id){
+                    $product = DB::table('san_pham')->where('id',$product_id)->first();
+                    $product_quanty =$product->soluong_sp;
+                    $product_sold = $product->soluong_daban;
+                    foreach($soluong_sp as $key2 => $quantity){
+                        if($key==$key2){
+                            $sp_conlai = $product_quanty - $quantity;
+                            $sp_daban = $product_sold + $quantity;
+                            $update = DB::table('san_pham')->where('id',$product_id)->update(
+                                [
+                                    'soluong_sp'=> $sp_conlai,
+                                    'soluong_daban'=>$sp_daban
+                                ]
+                            );
+                        }
                     }
                 }
             }
         }
+
+        if( $id_tt_present== 3){
+            if($id_tt == 5){
+                foreach($order_product_id as $key => $product_id){
+                    $product = DB::table('san_pham')->where('id',$product_id)->first();
+                    $product_quanty =$product->soluong_sp;
+                    $product_sold = $product->soluong_daban;
+                    foreach($soluong_sp as $key2 => $quantity){
+                        if($key==$key2){
+                            $sp_conlai = $product_quanty + $quantity;
+                            $sp_daban = $product_sold - $quantity;
+                            $update = DB::table('san_pham')->where('id',$product_id)->update(
+                                [
+                                    'soluong_sp'=> $sp_conlai,
+                                    'soluong_daban'=>$sp_daban
+                                ]
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // if($id_tt==3){
+        //     foreach($order_product_id as $key => $product_id){
+        //         $product = DB::table('san_pham')->where('id',$product_id)->first();
+        //         $product_quanty =$product->soluong_sp;
+        //         $product_sold = $product->soluong_daban;
+        //         foreach($soluong_sp as $key2 => $quantity){
+        //             if($key==$key2){
+        //                 $sp_conlai = $product_quanty - $quantity;
+        //                 $sp_daban = $product_sold + $quantity;
+        //                 $update = DB::table('san_pham')->where('id',$product_id)->update(
+        //                     [
+        //                         'soluong_sp'=> $sp_conlai,
+        //                         'soluong_daban'=>$sp_daban
+        //                     ]
+        //                 );
+        //             }
+        //         }
+        //     }
+        // }else if($id_tt == 5 ){
+        //     foreach($order_product_id as $key => $product_id){
+        //         $product = DB::table('san_pham')->where('id',$product_id)->first();
+        //         $product_quanty =$product->soluong_sp;
+        //         $product_sold = $product->soluong_daban;
+        //         foreach($soluong_sp as $key2 => $quantity){
+        //             if($key==$key2){
+        //                 $sp_conlai = $product_quanty + $quantity;
+        //                 $sp_daban = $product_sold - $quantity;
+        //                 $update = DB::table('san_pham')->where('id',$product_id)->update(
+        //                     [
+        //                         'soluong_sp'=> $sp_conlai,
+        //                         'soluong_daban'=>$sp_daban
+        //                     ]
+        //                 );
+        //             }
+        //         }
+        //     }
+        // }
 
 
 

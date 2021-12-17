@@ -41,15 +41,15 @@ Chi tiết đơn hàng
                     <div class="form-group  mb-2 ">
                         <select name="id_tt" id="" class="form-control order_detail">
                             <option value="">chọn trạng thái</option>
-                            <option value="2" @if ($khachhang->id_tt==2) selected @endif>Xác nhận đơn hàng</option>
+                            <option value="1" @if ($khachhang->id_tt==1) selected @endif>Chờ xác nhận</option>
                             <option value="3" @if ($khachhang->id_tt==3) selected @endif>Đang giao hàng</option>
                             <option value="4" @if ($khachhang->id_tt==4) selected @endif>Đã nhận hàng</option>
+                            @if ($khachhang->id_tt != 4)
                             <option value="5" @if ($khachhang->id_tt==5) selected @endif>Hủy đơn hàng</option>
+                            @endif
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary mb-2">Cập nhật</button>
-
-
             </div>
         </div>
     </div>
@@ -106,7 +106,7 @@ Chi tiết đơn hàng
                                     <input class="form-control cthd_hd_{{  $item->id_sp }}" type="hidden" name="" value="{{ $item->id }}">
                                     <input class="form-control id_hd" type="hidden" name="" value="{{ $item->id_hd }}">
 
-                                    <input class="form-control id_tt_present" type="hidden" name="" value="{{ $item-> }}">
+                                    <input class="form-control id_tt_present" type="hidden" name="" value="{{ $khachhang->id_tt }}">
                                 </div>
                                 @if ($khachhang->id_tt != 3 && $khachhang->id_tt != 5 )
                                 <div class="col-md-8">
@@ -186,9 +186,9 @@ Chi tiết đơn hàng
                 var cthd_hd = $('.cthd_hd_'+id_sp).val();
                 var id_hd = $('.id_hd').val();
 
-                console.log(id_sp)
-                console.log(qty)
-                console.log(cthd_hd)
+                // console.log(id_sp)
+                // console.log(qty)
+                // console.log(cthd_hd)
 
                 $.ajax({
                     type: "get",
@@ -217,8 +217,10 @@ Chi tiết đơn hàng
             });
             $('.order_detail').change(function (e) {
                 e.preventDefault();
+                var id_tt_present = $('.id_tt_present').val();
                 var id_tt = $('.order_detail').find(":selected").val();
                 var id_hd = $('.id_hd').val();
+                // alert(id_tt_present)
                 order_product_id = [];
                 $(".order_product_id").each(function(){
                     order_product_id.push($(this).val());
@@ -229,37 +231,45 @@ Chi tiết đơn hàng
                 })
 
                 j=0;
-                for(i=0 ; i< order_product_id.length; i++){
-                    var order_qty = $('.soluong_order_'+order_product_id[i]).val();
-                    var order_qty_storage = $('.soluong_kho_'+order_product_id[i]).val();
-                    if(parseInt(order_qty) > parseInt(order_qty_storage)){
-                        j++;
-                        alert('số lượng không đủ');
-                        $('.color_'+order_product_id[i]).css('background','#e80d2b78');
+                if(id_tt_present == 1 && id_tt == 3){
+                    for(i=0 ; i< order_product_id.length; i++){
+                        var order_qty = $('.soluong_order_'+order_product_id[i]).val();
+                        var order_qty_storage = $('.soluong_kho_'+order_product_id[i]).val();
+                        if(parseInt(order_qty) > parseInt(order_qty_storage)){
+                            j++;
+                            alert('số lượng không đủ');
+                            $('.color_'+order_product_id[i]).css('background','#e80d2b78');
+                        }
+                    }
+                }else{
+                    for(i=0 ; i< order_product_id.length; i++){
+                        var order_qty = $('.soluong_order_'+order_product_id[i]).val();
+                        var order_qty_storage = $('.soluong_kho_'+order_product_id[i]).val();
                     }
                 }
                 if(j==0){
-                   $.ajax({
-                       type:"get",
-                       url: "/client/accep-oder/",
-                       data: {
-                            id_tt:id_tt,
-                            id_hd:id_hd,
-                            order_product_id:order_product_id,
-                            soluong_sp:soluong_sp,
-                       },
-                       success: function (data) {
-                            swal({
-                                title: "Thông báo",
-                                text: "Cập nhật trạng thái đơn hàng  thành công",
-                                icon: "success",
-                                button: "Đóng",
-                                });
-                                // location.reload();
-                                setInterval('location.reload()', 2000);
+                    $.ajax({
+                        type:"get",
+                        url: "/client/accep-oder/",
+                        data: {
+                                id_tt:id_tt,
+                                id_hd:id_hd,
+                                order_product_id:order_product_id,
+                                soluong_sp:soluong_sp,
+                                id_tt_present:id_tt_present,
+                        },
+                        success: function (data) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Cập nhật trạng thái đơn hàng  thành công",
+                                    icon: "success",
+                                    button: "Đóng",
+                                    });
+                                    // location.reload();
+                                    setInterval('location.reload()', 2000);
+                        }
+                    });
 
-                       }
-                   });
 
                 }
             });
