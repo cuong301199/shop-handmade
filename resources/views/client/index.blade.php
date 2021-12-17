@@ -41,6 +41,7 @@
   /* .addcart i{
     color:#707070;
   } */
+
 </style>
 {{-- <div class="tp-banner-container rev-slider-content">
     <div class="slider_one" >
@@ -124,19 +125,7 @@
 </div> --}}
 <div class="content">
     <div class="container">
-        {{-- <div class="row">
-            <div class="col-sm-12 margin-bottom-50px">
-                <h2 class="trendify-heading middle-align"><span class="lg">shopping</span><span class="sm">popular products -</span></h2>
-            </div>
-        </div> --}}
-        <!-- trendify items -->
-
         <div class="new-member-offer banner1 margin-bottom-30px text-center">
-            <div class="row">
-                {{-- <h2>WE OFFER BRAND NEW STYLES</h2>
-                <h3>SIGN UP NOW AND GET 50% OFF</h3>
-                <a class="trendify-btn default-bordered margin-top-30px" href="#">SIGN UP NOW</a> --}}
-            </div>
         </div>
 
         <div class="category">
@@ -154,18 +143,10 @@
             <div class="trendify-tab-title">
                 <ul>
                     <li class="active"><a data-toggle="tab" href="#new">Sản phẩm mới</a></li>
-                    {{-- <li><a data-toggle="tab" href="#latest">Latest Trends</a></li>
-                    <li><a data-toggle="tab" href="#men">Men's Fashion</a></li>
-                    <li><a data-toggle="tab" href="#women">Women's Fashion</a></li> --}}
                 </ul>
             </div>
             <div class="tab-content">
                 <div id="all_product"></div>
-
-
-
-
-
 
                 {{-- @foreach ($danhsachsanpham as $item)
                 <div id="new" class="tab-pane fade in active">
@@ -186,717 +167,23 @@
                 </div>
                 @endforeach --}}
                 <!-- / new -->
-
-                {{-- <div id="latest" class="tab-pane">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/1.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/1.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Look Blue Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/2.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/2.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Yorker Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/3.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/3.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Cusual White Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/4.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/4.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Business Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/5.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/5.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Look Blue Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/6.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/6.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Yorker Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/7.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/7.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Cusual White Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/8.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/8.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Business Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <!-- / latest -->
-
-                {{-- <div id="men" class="tab-pane">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/1.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/1.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Look Blue Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/2.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/2.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Yorker Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/3.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/3.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Cusual White Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/4.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/4.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Business Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/5.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/5.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Look Blue Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/6.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/6.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Yorker Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/7.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/7.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Cusual White Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/8.jpg">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/8.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Business Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <!-- / men -->
-
-                {{-- <div id="women" class="tab-pane">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w3.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w3.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Look Blue Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w1.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w1.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Yorker Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w2.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w2.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Cusual White Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w3.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w3.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Business Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w1.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w1.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Look Blue Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w2.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w2.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>New Yorker Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w3.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w3.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Cusual White Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="product-single fadeInUp animated" data-wow-duration="1s">
-                            <div class="product-img">
-                                <img class="img-responsive" alt="Single product" src="img/products/w1.png">
-                                <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/w1.png"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h2>Business Suit</h2>
-                                <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div>
-                                <div class="price">
-                                    <del> $399 </del> $259
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <!-- / men -->
             </div>
         </div>
-        <!-- Latest items -->
+        @if (Auth::guard('nguoi_dung')->check())
+        <div class="trendify-items">
+            <div class="trendify-tab-title">
+                <ul>
+                    <li class="active"><a data-toggle="tab" href="#new">Sản phẩm dành cho bạn</a></li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div id="all_product_like"></div>
+            </div>
+        </div>
+        @endif
+
+
+
         <div class="clear-fix" ></div>
 
         <!-- trendify supports -->
@@ -940,7 +227,14 @@
 </div>
 @push('Add-Cart')
 <script>
+    $(document).on('click','#out-of', function () {
+        $.alert({
+            title: 'Thông báo!',
+            content: 'Sản phẩm đã hết, nên bạn không thể thêm vào giỏ hàng!',
+        });
+    });
     load_more_product();
+    load_more_product_like();
     function load_more_product(id=''){
        $.ajax({
            type: "get",
@@ -953,12 +247,31 @@
                 $('#all_product').append(data);
            }
        });
-   }
+    }
+    function load_more_product_like(id=''){
+        $.ajax({
+           type: "get",
+           url: "/client/load-more-product-like/",
+           data: {
+               id:id,
+           },
+           success: function (data) {
+                $('#load-more-button-like').remove();
+                $('#all_product_like').append(data);
+           }
+       });
+    }
 
    $(document).on('click','#load-more-button', function () {
        var id = $(this).data('id')
        load_more_product(id);
    });
+   $(document).on('click','#load-more-button-like', function () {
+       var id = $(this).data('id')
+       load_more_product_like(id);
+   });
+
+
 
 </script>
 @endpush

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Session;
 class MaGiamGiaController extends Controller
 {
     //
     public function index(){
         $danhsach = DB::table('ma_giam_gia')->get();
-        return view('admin.magiamgia.index',\compact('danhsach'));
+        return view('admin.magiamgia.index',compact('danhsach'));
     }
 
     public function create(){
@@ -30,6 +31,18 @@ class MaGiamGiaController extends Controller
                 'giatri_mgg'=> $giaTriGiam,
             ]
         );
-        return \redirect()->route('coupon.index');
+        if($insert){
+            Session::flash('success',"Thêm mã giảm giá thành công");
+            return \redirect()->route('coupon.index');
+        }
+
+    }
+
+    public function delete($id){
+        $delete = DB::table('ma_giam_gia')->where('id', $id)->delete();
+        if($delete){
+            Session::flash('delete-success',"xóa thành công");
+            return \redirect()->back();
+        }
     }
 }

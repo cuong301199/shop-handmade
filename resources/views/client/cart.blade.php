@@ -136,22 +136,30 @@
                             <img src="{{ asset($value->options['duongdan_ha'] ) }}" class="img-thumbnail img" alt="Cinque Terre">
                         </div>
                     </div>
+                    <?php
+                    $qty_product = DB::table('san_pham')
+                    ->where('id',$value->id)
+                    ->first();
+                    ?>
                     <div class="col-md-5">
                         <div class="content-product">
                             <h4>{{ $value->name}}</h4>
                             <div class="price">
                                 <del>{{number_format($value->price + ($value->price * 10/100))}} VND</del>{{number_format( $value->price )}} VND  X  {{ $value->qty }}
                             </div>
-                            <button type="button" class="btn btn-xs btn-update-cart">Cập nhật</button>
+                            <button type="button" data-id_product="{{ $value->id }}" class="btn btn-xs btn-update-cart">Cập nhật</button>
                             <a href="{{ route('Delete.cart', ['rowId'=>$value->rowId]) }}" class="btn btn-xs btn-primary">Xóa </a>
+                            <p>Số lượng kho : {{ $qty_product->soluong_sp }}</p>
                         </div>
-
                     </div>
+
                     <div class="col-md-3">
                             <div class="quantity">
-                            <input id="qty" type="number" step="1" min="0" max="99" name="cart"
+                            <input id="qty_{{ $value->id }}" type="number" step="1" min="0" max="99" name="cart"
                                     value="{{ $value->qty }}" title="Qty" class="qty">
-                            <input id="rowId" type="hidden"  value="{{$value->rowId}}">
+                            <input id="rowId_{{ $value->id }}" type="hidden"  value="{{$value->rowId}}">
+                            <input id="qty_product_{{$value->id}}" type="hidden"  value="{{ $qty_product->soluong_sp}}">
+
                         </div>
                     </div>
                     <?php
@@ -282,9 +290,19 @@
     <script>
         $('.btn-update-cart').click(function (e) {
             e.preventDefault();
-            var qty = $('#qty').val();
-            var rowId = $('#rowId').val();
-           $.ajax({
+            var id_product = $(this).data('id_product')
+            var qty = $('#qty_'+id_product).val();
+            var rowId = $('#rowId_'+id_product).val();
+            var qty_product = $('#qty_product_'+id_product).val();
+
+            if(parseInt(qty) > parseInt(qty_product)){
+                $.alert({
+                    title: 'Thông báo!',
+                    content: 'Số lượng đã vượt quá số lượng trong kho!',
+                });
+
+            }else{
+                $.ajax({
                type: "get",
                url: "/client/cart-list-update",
                data: {
@@ -294,7 +312,9 @@
                success: function (response) {
                     location.reload()
                }
-           });
+                });
+            }
+
         });
     </script>
 @endpush

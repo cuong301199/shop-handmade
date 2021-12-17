@@ -35,7 +35,7 @@
 
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Sửa</button>
                 </form>
             </div>
         </div>

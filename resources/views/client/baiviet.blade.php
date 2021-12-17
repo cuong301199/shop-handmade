@@ -162,7 +162,7 @@
                                 <li class="media">
                                     <a class="pull-left" href="#">
                                         <img width="100px" height="90px" class="media-object "
-                                            src="{{asset( $user->anhdaidien_nd) }}" alt="" />
+                                            src="{{ asset('template-client') }}/img/avatar1.png" alt="" />
                                             {{-- {{ asset('template-client') }}/img/blog/comment1.png --}}
                                     </a>
                                     <div class="media-body">
@@ -182,27 +182,27 @@
                 <div class="col-md-3 col-sm-12 col-xs-12">
 					<div class="sidebar">
 						<div class="sidebar_widget">
-							<h3 class="widget_title">RECENT POSTS</h3>
+							<h3 class="widget_title">Bài viết mới</h3>
 							<div class="recent_post">
 								<div class="media single_recent_post">
 									<a class="pull-left" href="#"><img class="media-object img-responsive" src="{{ asset('template-client') }}/img/recent_post1.jpg" alt="" /></a>
 									<div class="media-body">
-										<a href="#"><h3 class="media-heading">We have some new looks</h3></a>
-										<h4>posted by <span><a href="#">Jonathan Doe</a></span></h4>
+										<a href="#"><h3 class="media-heading">Cách làm thiệp mừng sinh nhật</h3></a>
+										<h4>Đăng bởi <span><a href="#"> Tiến Cường</a></span></h4>
 									</div>
 								</div>
 								<div class="media single_recent_post">
 									<a class="pull-left" href="#"><img class="media-object img-responsive" src="{{ asset('template-client') }}/img/recent_post2.jpg" alt="" /></a>
 									<div class="media-body">
-										<a href="#"><h3 class="media-heading">Creative ideas for design</h3></a>
-										<h4>posted by <span><a href="#">Jonathan Doe</a></span></h4>
+										<a href="#"><h3 class="media-heading">Bảo quản đồ da</h3></a>
+										<h4>Đăng bởi <span><a href="#"> Tiến Cường</a></span></h4>
 									</div>
 								</div>
 								<div class="media single_recent_post">
 									<a class="pull-left" href="#"><img class="media-object img-responsive" src="{{ asset('template-client') }}/img/recent_post3.jpg" alt="" /></a>
 									<div class="media-body">
-										<a href="#"><h3 class="media-heading">Choose your fashion</h3></a>
-										<h4>posted by <span><a href="#">Jonathan Doe</a></span></h4>
+										<a href="#"><h3 class="media-heading">Làm gấu nhồi bông</h3></a>
+										<h4>Đăng bởi <span><a href="#"> Tiến Cường</a></span></h4>
 									</div>
 								</div>
 							</div>
@@ -242,7 +242,7 @@
                             '@if (Auth::guard('nguoi_dung')->check())'+
                                 '<div class="media">'+
                                 '<a class="pull-left" href="#">'+
-                                '<img width="100px" height="90px" class="media-object" src="{{ asset($user->anhdaidien_nd) }}" alt="" />'+
+                                '<img width="100px" height="90px" class="media-object" src="{{ asset('template-client') }}/img/avatar1.png" alt="" />'+
                                 '</a>'+
                                 '<div class="media-body">'+
                                 '<h4 class="media-heading"><a href="#">{{ $user->ten_nd }}</a> <span>April 20,2015  at 03:23</span></h4>'+

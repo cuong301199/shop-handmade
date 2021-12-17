@@ -1,5 +1,13 @@
 @extends('client.template.master')
 @section('content')
+<style>
+   #country-name1{cursor: pointer;
+    padding: 10px 0 10px 20px;
+    border: 1px solid #E3E3E3;
+    width:100%;
+    height: 46px;
+    }
+</style>
     <!-- page title -->
     {{-- <?php $segment = Request::segment(1) ?>
     {{ dd( $segment) }} --}}
@@ -130,15 +138,15 @@
                                         id="your-last-name">
                                 </div>
                             </div>
-                            <div class="col-md-6 no-padding-right no-padding-left">
+                            <div class="col-md-12 no-padding-right no-padding-left">
                                 <div class="last-name">
-                                    <label for="your-last-name">Chọn danh mục yêu thích<span class="required">*</span></label><br>
-                                    <select name="danhMuc" id="" class="form-control xaPhuong">
-                                        <option value="">Chọn danh mục</option>
-                                        @foreach ($danhmuc as $item )
-                                            <option value="{{ $item->id }}">{{ $item->ten_dm  }}</option>
+                                    <label for="your-last-name">Chọn loại sản phẩm mà bạn quan tâm<span class="required">*</span></label><br>
+                                    <select name="id_lsp" id="country-name1">
+										<option value="">---Chọn loại sản phẩm---</option>
+                                        @foreach ( $lsp as $item )
+                                        <option value="{{ $item->id }}">{{ $item->ten_lsp }}</option>
                                         @endforeach
-                                    </select>
+									</select>
                                 </div>
                             </div>
 

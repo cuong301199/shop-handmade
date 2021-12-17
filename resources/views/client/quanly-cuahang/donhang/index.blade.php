@@ -1,11 +1,11 @@
 @extends('client.quanly-cuahang.template.master')
 
 @section('title')
-    Sản phẩm
+    Đơn hàng
 @endsection
 {{-- {{ dd($oder) }} --}}
 @section('title-page')
-    Sản phẩm
+Đơn hàng
 @endsection
 @section('content')
     @if (Session::has('success'))
@@ -51,7 +51,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                          <h3 class="card-title">Bordered Table</h3>
+                          <h3 class="card-title">Đơn hàng</h3>
                           <div class="card-tools">
                             <form action="" class="form-inline">
                                 <div class="input-group input-group-sm" style="width: 500px;">

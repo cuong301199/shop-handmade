@@ -21,17 +21,14 @@
                         <div class="card-header">
                             <h3 class="card-title">Thống kê</h3><br>
 
-                                <form action="" method="get">
-                                    @csrf
-                                    <div class="row">
+                            <form action="" method="get">
+                                @csrf
+                                <div class="row">
                                     <div class="col-md-3">
                                         <div class="form-group ">
                                             <label for="">Từ ngày</label>
                                             <input type="date" name="from_date" id="" class="form-control from_date"
                                                 placeholder="Tên sản phẩm" aria-describedby="helpId">
-                                        </div>
-                                        <div class="form-group ">
-                                            <button class="btn btn-primary btn-filter">Lọc</button>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -40,10 +37,7 @@
                                             <input type="date" name="to_date" id="" class="form-control to_date"
                                                 placeholder="Tên sản phẩm" aria-describedby="helpId">
                                         </div>
-
                                     </div>
-
-
                                     <div class="col-md-3">
                                         <div class="row">
                                             <div class="form-group">
@@ -57,6 +51,25 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-inline mb-3 col-md-12">
+                                        <div class="form-check mr-3 ">
+                                            <input class="form-check-input orderBy" type="radio" name="orderBy" id="exampleRadios1" value="day" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                            Thống kê theo ngày
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input orderBy" type="radio" name="orderBy" id="exampleRadios1" value="month" >
+                                            <label class="form-check-label" for="exampleRadios1">
+                                            Thống kê theo tháng
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button class="btn btn-primary btn-filter">Lọc</button>
                                     </div>
                                 </div>
                             </form>
@@ -102,54 +115,57 @@
 
     @push('addCity')
         <script>
-            $(document).ready(function () {
-            chart30day()
-              var chart = new Morris.Line({
-                // ID of the element in which to draw the chart.
-                element: 'myfirstchart',
-                lineColors :['#2fa528','#03fc4e','#03dbfc','#1403fc'],
-                // Chart data records -- each entry in this array corresponds to a point on
-                // the chart.
-                // The name of the data record attribute that contains x-values.
-                xkey: 'created_at',
-                parseTime:false,
-                // A list of names of data record attributes that contain y-values.
-                ykeys: ['nguoi_dung'],
-                // Labels for the ykeys -- will be displayed when you hover over the
-                // chart.
-                // behaveLikeline:true;
-                labels: ['Người dùng tham gia hệ thống']
+            $(document).ready(function() {
+                chart30day()
+                var chart = new Morris.Line({
+                    // ID of the element in which to draw the chart.
+                    element: 'myfirstchart',
+                    lineColors: ['#2fa528', '#03fc4e', '#03dbfc', '#1403fc'],
+                    // Chart data records -- each entry in this array corresponds to a point on
+                    // the chart.
+                    // The name of the data record attribute that contains x-values.
+                    xkey: 'created_at',
+                    parseTime: false,
+                    // A list of names of data record attributes that contain y-values.
+                    ykeys: ['nguoi_dung'],
+                    // Labels for the ykeys -- will be displayed when you hover over the
+                    // chart.
+                    // behaveLikeline:true;
+                    labels: ['Người dùng tham gia hệ thống']
                 });
 
-                function chart30day(){
+                function chart30day() {
                     $.ajax({
                         type: "get",
                         url: "/thong-ke-nguoi-dung/30day",
                         dataType: "json",
-                        success: function (data) {
+                        success: function(data) {
                             chart.setData(data);
                         }
                     });
                 }
-                $('.btn-filter').click(function (e) {
+                $('.btn-filter').click(function(e) {
                     e.preventDefault();
                     var from_date = $('.from_date').val();
                     var to_date = $('.to_date').val();
+                    var orderBy = $('.orderBy:checked').val();
+
                     $.ajax({
                         type: "get",
                         url: "/filter-by-date-user",
                         data: {
-                            from_date:from_date,
-                            to_date:to_date
+                            from_date: from_date,
+                            to_date: to_date,
+                            orderBy:orderBy
                         },
                         dataType: "json",
-                        success: function (data) {
-                           chart.setData(data)
+                        success: function(data) {
+                            chart.setData(data)
                         }
                     });
 
                 });
-                $('.filter').change(function (e) {
+                $('.filter').change(function(e) {
                     e.preventDefault();
                     var filter = $(this).children("option:selected").val();
                     console.log(filter)
@@ -157,12 +173,12 @@
                         type: "get",
                         url: "/filter-dashboard-user",
                         data: {
-                            filter:filter,
+                            filter: filter,
                         },
                         dataType: "json",
-                        success: function (data) {
+                        success: function(data) {
                             console.log(data)
-                           chart.setData(data)
+                            chart.setData(data)
                         }
                     });
                 });

@@ -1,11 +1,11 @@
 @extends('client.quanly-cuahang.template.master')
 
 @section('title')
-    Thêm danh mục
+    Thêm phí vận chuyển
 @endsection
 
 @section('title-page')
-    Them danh mục
+    Thêm phí vận chuyển
 @endsection
 @section('content')
 
@@ -40,7 +40,7 @@
                                 placeholder="Nhập phí vận chuyển">
                             <br>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
                     </form>
                 </div>
             </div>

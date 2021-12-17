@@ -1,11 +1,11 @@
 @extends('admin.template.master')
 
 @section('title')
-    Thêm danh mục
+    Thêm loại sản phẩm
 @endsection
 
 @section('title-page')
-    Them danh mục
+    Thêm loại sản phẩm
 @endsection
 @section('content')
 
@@ -32,7 +32,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Thêm</button>
                     </form>
                 </div>
             </div>

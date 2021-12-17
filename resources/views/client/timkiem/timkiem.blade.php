@@ -47,7 +47,7 @@
                     <select name="id_city" id="city">
                         <option value="-1">sắp xếp theo nơi bán</option>
                         @foreach ($tp as $item)
-                          <option value= {{request()->fullUrlWithQuery(['id_city'=>$item->matp])}}>{{ $item->name_tp }}</option>
+                          <option  {{Request::get('id_city')==$item->matp?"selected='selected'":""}} value= {{request()->fullUrlWithQuery(['id_city'=>$item->matp])}}>{{ $item->name_tp }}</option>
                         @endforeach
                     </select>
                     </form>
@@ -56,10 +56,10 @@
                     <form action="" id="form-desc" method="get">
                     <select name="sort_by" id="sort_by">
                         <option value="-1">Sắp xếp mặc định</option>
-                        <option value= {{request()->fullUrlWithQuery(['oderBy'=>'asc'])}}>Sản phẩm cũ</option>
-                        <option value= {{request()->fullUrlWithQuery(['oderBy'=>'desc'])}}>Sản phẩm mới</option>
-                        <option value= {{request()->fullUrlWithQuery(['oderBy'=>'price_max'])}}>Giá giảm dần</option>
-                        <option value= {{request()->fullUrlWithQuery(['oderBy'=>'price_min'])}}>Giá tăng dần</option>
+                        <option {{Request::get('oderBy')=="asc"?"selected='selected'":""}}value= {{request()->fullUrlWithQuery(['oderBy'=>'asc'])}}>Sản phẩm cũ</option>
+                        <option {{Request::get('oderBy')=="desc"?"selected='selected'":""}}value= {{request()->fullUrlWithQuery(['oderBy'=>'desc'])}}>Sản phẩm mới</option>
+                        <option {{Request::get('oderBy')=="price_max"?"selected='selected'":""}}value= {{request()->fullUrlWithQuery(['oderBy'=>'price_max'])}}>Giá giảm dần</option>
+                        <option {{Request::get('oderBy')=="price_min"?"selected='selected'":""}}value= {{request()->fullUrlWithQuery(['oderBy'=>'price_min'])}}>Giá tăng dần</option>
                     </select>
                     </form>
                 </div>
@@ -72,13 +72,6 @@
                         <div class="product-single fadeInUp wow" data-wow-delay="0.5s">
                             <div class="product-img">
                                 <a href = "{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><img class="img-responsive" alt="Single product" src="{{asset($item->hinhanh_sp)  }}"></a>
-                                {{-- <div class="actions">
-                                    <ul>
-                                        <li><a class="zoom" href="img/products/1.jpg"><i class="fa fa-search"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-heart-o"></i></a></li>
-                                        <li><a href="product-details-1.html"><i class="fa fa-expand"></i></a></li>
-                                    </ul>
-                                </div> --}}
                             </div>
                             <div class="product-info">
                                 {{-- <h2>{{ Str::limit($item->ten_sp, 3); }}</h2> --}}
@@ -86,19 +79,11 @@
                                 <span style="font-size:14px; font-weight:bold; color:rgb(92, 17, 17)"> {{ number_format($item->gia_sp) }} VDN</span>
                                 <p><i class="fa fa-clock"></i>{{ \Carbon\Carbon::parse($item->created_at)->subHours(7)->diffForHumans() }}</p>
                                 <p><i class="fa fa-map-marker-alt"></i>{{ $item->name_tp }}</p>
-                                {{-- <div class="star-rating">
-                                    <ul>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star"></i></li>
-                                        <li><i class="fa fa-star-half-full"></i></li>
-                                    </ul>
-                                </div> --}}
-                                {{-- <div class="price">
-
-                                 <span style="font-size:14px; font-weight:bold; color:rgb(92, 17, 17)"> {{ number_format($item->gia_sp) }} VDN</span>
-                                </div> --}}
+                                @if ($item->soluong_sp > 0 )
+                                <a id="{{ $item->id }}" class="addcart" href="{{  route('Add.cart', ['id'=>$item->id])}}"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                                @else
+                                <a id="out-of" style="color:#939098;cursor:pointer;"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -117,6 +102,16 @@
 
 </div>
 @push('input-total-price')
+@if (Session::has('success'))
+    <script>
+        alertify.success('Thêm vào giỏ hàng thành công');
+    </script>
+@endif
+@if (Session::has('success-deleteItemCart'))
+    <script>
+        alertify.success('Xóa sản phẩm khỏi giỏ hàng thành công');
+    </script>
+@endif
     <script>
         $(document).ready(function () {
             $('#city').change(function (e) {
@@ -125,6 +120,12 @@
                    window.location = url;
                }
             // $('#form-oder').submit();
+            });
+            $(document).on('click','#out-of', function () {
+                $.alert({
+                    title: 'Thông báo!',
+                    content: 'Sản phẩm đã hết, nên bạn không thể thêm vào giỏ hàng!',
+                });
             });
             $('#sort_by').change(function (e) {
                 var url = $(this).children("option:selected").val();

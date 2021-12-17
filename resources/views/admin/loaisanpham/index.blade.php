@@ -15,7 +15,7 @@
         <div class="container-fluit">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('loaisanpham.create') }}" class='btn btn-primary' style="margin-bottom: 10px" >Thêm danh mục</a>
+                    <a href="{{ route('loaisanpham.create') }}" class='btn btn-primary' style="margin-bottom: 10px" >Thêm loại sản phẩm</a>
                 </div>
             </div>
             <div class="row">

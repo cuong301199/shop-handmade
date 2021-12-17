@@ -19,7 +19,7 @@
                         @csrf
                         <div class="card">
                             <div class="card-header">
-                                Thêm thông tin cho sản phẩm
+                                Thêm thông tin bài viết
                                 @if (Session::has('success'))
                                     <p style="color: rgb(20, 163, 16)">{{ Session::get('success') }}</p>
                                 @endif

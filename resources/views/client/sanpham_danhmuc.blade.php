@@ -46,9 +46,15 @@
                     <form action="" id="form-oder" method="get">
                     <select name="id_city" id="city">
                         <option value={{request()->fullUrlWithQuery(['id_city'=>null])}}>sắp xếp theo nơi bán</option>
+                        {{-- @if ( Request::get('productType') == null ) --}}
                         @foreach ($tp as $item)
-                          <option {{Request::get('id_city')==$item->matp?"selected='selected'":""}} value= {{request()->fullUrlWithQuery(['id_city'=>$item->matp])}}>{{ $item->name_tp }}</option>
+                          <option {{Request::get('id_city')==$item->id_tp?"selected='selected'":""}} value= {{request()->fullUrlWithQuery(['id_city'=>$item->id_tp])}}>{{ $item->name_tp }}</option>
                         @endforeach
+                        {{-- @else
+                        @foreach ($tp2 as $item)
+                          <option {{Request::get('id_city')==$item->id_tp?"selected='selected'":""}} value= {{request()->fullUrlWithQuery(['id_city'=>$item->id_tp])}}>{{ $item->name_tp }}</option>
+                        @endforeach --}}
+                        {{-- @endif --}}
                     </select>
                     </form>
                 </div>
@@ -65,10 +71,10 @@
                 </div>
             </div>
         </div>
+        {{-- {{ dd($tp) }} --}}
         <div class="row">
             @foreach ($danhsach2 as $item)
-
-            <div class="col-md-3 col-sm-6">
+            <div class="col-md-3 col-sm-6 " style="margin-bottom: 10px">
                 <div class="product-single fadeInUp wow" data-wow-delay="0.5s">
                     <div class="product-img">
                         <a href = "{{ route('chitietsanpham.index', ['id'=>$item->id]) }}"><img class="img-responsive" alt="Single product" src="{{asset($item->hinhanh_sp)  }}"></a>
@@ -79,11 +85,14 @@
                         <span style="font-size:14px; font-weight:bold; color:rgb(92, 17, 17)"> {{ number_format($item->gia_sp) }} VDN</span>
                         <p><i class="fa fa-clock"></i>{{ \Carbon\Carbon::parse($item->created_at)->subHours(7)->diffForHumans() }}</p>
                         <p><i class="fa fa-map-marker-alt"></i>{{ $item->name_tp }}</p>
+                        @if($item->soluong_sp > 0)
                         <a id="{{ $item->id }}" class="addcart" href="{{  route('Add.cart', ['id'=>$item->id])}}"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                        @else
+                        <a id="out-of" style="color:#939098;cursor:pointer;"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                        @endif
                     </div>
                 </div>
             </div>
-
             @endforeach
         </div>
     </div>
@@ -117,7 +126,12 @@
                }
             // $('#form-oder').submit();
             });
-
+            $(document).on('click','#out-of', function () {
+                $.alert({
+                    title: 'Thông báo!',
+                    content: 'Sản phẩm đã hết, nên bạn không thể thêm vào giỏ hàng!',
+                });
+            });
             $('#sort_by').change(function (e) {
                 var url = $(this).children("option:selected").val();
                if(url){

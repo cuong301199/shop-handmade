@@ -8,7 +8,6 @@
     Thống kê tổng đơn hàng
 @endsection
 @section('content')
-
     <!-- Content Header (Page header) -->
     <!-- Main content -->
     <section class="content">
@@ -30,9 +29,6 @@
                                             <input type="date" name="from_date" id="" class="form-control from_date"
                                                 placeholder="Tên sản phẩm" aria-describedby="helpId">
                                         </div>
-                                        <div class="form-group ">
-                                            <button class="btn btn-primary btn-filter">Lọc</button>
-                                        </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group ">
@@ -42,8 +38,6 @@
                                         </div>
 
                                     </div>
-
-
                                     <div class="col-md-3">
                                         <div class="row">
                                             <div class="form-group">
@@ -57,6 +51,25 @@
                                                 </select>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-inline mb-3 col-md-12">
+                                        <div class="form-check mr-3 ">
+                                            <input class="form-check-input orderBy" type="radio" name="orderBy" id="exampleRadios1" value="day" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                            Thống kê theo ngày
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input orderBy" type="radio" name="orderBy" id="exampleRadios1" value="month" >
+                                            <label class="form-check-label" for="exampleRadios1">
+                                            Thống kê theo tháng
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <button class="btn btn-primary btn-filter">Lọc</button>
                                     </div>
                                 </div>
                             </form>
@@ -136,12 +149,15 @@
                     e.preventDefault();
                     var from_date = $('.from_date').val();
                     var to_date = $('.to_date').val();
+                    var orderBy = $('.orderBy:checked').val();
+
                     $.ajax({
                         type: "get",
                         url: "/client/filter-by-date-product",
                         data: {
                             from_date:from_date,
-                            to_date:to_date
+                            to_date:to_date,
+                            orderBy:orderBy
                         },
                         dataType: "json",
                         success: function (data) {

@@ -1,7 +1,7 @@
 @extends('client.template.master')
 @section('content')
 
-    {{-- {{ dd(Session::get('fee')) }} --}}
+    {{-- {{ dd(Session::get('total_price')) }} --}}
     {{-- @foreach (Session::get('coupon') as $item => $coup)
         {{ dd($coup['coupon_condition']) }}
     @endforeach --}}
@@ -30,7 +30,7 @@
         }
 
         .textarea {
-            width: 90%;
+            width: 100%;
             height: 70px;
             font-size: 14px;
             line-height: 18px;
@@ -88,6 +88,7 @@
             </div>
         </div>
     </div>
+
     @if (Cart::content() != null)
         <div class="container">
             @foreach (Cart::content()->groupBy('options.id_nb') as $item => $key)
@@ -146,10 +147,36 @@
                                 <input id="quanty" type="hidden" name="tong_sp" value="{{ $quanty }}">
                                 <input id="id_nb" type="hidden" name="id_nb" value="{{ $item }}">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-11">
                                         <div class="textarea-note">
                                             <textarea class="textarea ghiChu" placeholder="Ghi chú" name="ghiChu"
                                                 value=""></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                        <div class="payment-method">
+                                            <h3>Mã giảm giá</h3>
+                                            <div class="form-group">
+                                                <label for="email">Nhập mã giảm giá:</label>
+                                                    {{-- @if (Session::has('error'))
+                                                        <p style="color: rgb(231, 22, 22)">{{ Session::get('error') }}</p>
+                                                    @endif
+                                                    @if (Session::has('success'))
+                                                        <p style="color: rgb(29, 209, 12)">{{ Session::get('success') }}</p>
+                                                    @endif --}}
+                                                <input type="text" name="coupon" class="form-control coupon" id="email">
+
+                                            </div>
+                                            <div class="col-md_12">
+                                                <div class="row" style="margin-left:5px">
+                                                    <button type="submit" class="btn btn-default check-coupon">Sử dụng</button>
+                                                    <button type="submit" class="btn btn-default unset-coupon">Hủy mã giảm giá</button>
+                                                </div>
+                                            </div>
+
+                                                {{-- <a href="{{ route('unset.coupon') }}">Xóa tất cả mã khuyến mãi</a> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -219,7 +246,7 @@
                                         </table>
 
                                         <div class="row">
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <label for="">Tổng tiền</label>
                                             </div>
                                             <div class="col-md-6 no padding-left">
@@ -379,27 +406,7 @@
                                 </div>
                             </div>
                         </div> --}}
-                        {{-- <form action="{{ route('check.coupon') }}" method="post">
-                            @csrf
-                            <div class="col-md-5">
-                                <div class="payment">
-                                    <h3>Mã giảm giá</h3>
-                                    <div class="form-group">
-                                        <label for="email">Nhập mã giảm giá:</label>
-                                        @if (Session::has('error'))
-                                            <p style="color: rgb(231, 22, 22)">{{ Session::get('error') }}</p>
-                                        @endif
-                                        @if (Session::has('success'))
-                                            <p style="color: rgb(29, 209, 12)">{{ Session::get('success') }}</p>
-                                        @endif
-                                        <input type="text" name="coupon" class="form-control" id="email">
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Sử dụng</button>
-                                    <a href="{{ route('unset.coupon') }}">Xóa tất cả mã khuyến mãi</a>
 
-                                </div>
-                            </div>
-                        </form> --}}
                     </div>
         </div>
     @endif
@@ -423,6 +430,7 @@
                     for (let i = 0; i < response.length; i++) {
                         $('.quanHuyen').append('<option value="' + response[i].maqh +
                             '" class="itemProvince" >' + response[i].name_qh + '</option>');
+
                     }
                 }
             });
@@ -459,21 +467,64 @@
                 url: "/check-feeship",
                 data:{
                     id_city: id_city,
+                    id_qh:id_qh,
+                    id_xp:id_xp,
                     total_price:total_price,
                 },
                 // dataType: "dataType",
                 success: function (data) {
                     $('.fee-ship').html(data);
+
+
                 }
             });
 
         });
 
-        // $('.checkout').click(function (e) {
-        //     e.preventDefault();
-        //     alert(123)
+        $('.check-coupon').click(function (e) {
+            e.preventDefault();
+            var coupon = $('.coupon').val();
+            $.ajax({
+                type: "get",
+                url: "/check-coupon/",
+                data: {
+                    coupon:coupon,
+                },
+                // dataType: "dataType",
+                success: function (data) {
+                    if(data!="false"){
+                        $.alert({
+                            title: 'Thông báo!',
+                            content: 'Sử dụng mã giảm giá thành công!',
+                        });
+                        $('.fee-ship').html(data);
+                    }else{
+                        $.alert({
+                            title: 'Thông báo!',
+                            content: 'Mã giảm giá không tồn tại!',
+                        });
+                    }
 
-        // });
+                }
+            });
+        });
+
+        $('.unset-coupon').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "get",
+                url: "/unset-coupon",
+                // data: "data",
+                // dataType: "dataType",
+                success: function (data) {
+                    $.alert({
+                            title: 'Thông báo!',
+                            content: 'Hủy mã giảm giá thành công!',
+                        });
+                    $('.fee-ship').html(data);
+                }
+            });
+        });
 
     });
 

@@ -3,7 +3,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../../index2.html"><b>Admin</b></a>
+            <a href="../../index2.html"><b>Quản trị</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -33,7 +33,7 @@
                             <div class="icheck-primary">
                                 <input type="checkbox" id="remember">
                                 <label for="remember">
-                                    Remember Me
+                                    Ghi nhớ
                                 </label>
                             </div>
                         </div>
@@ -46,12 +46,12 @@
                 </form>
 
                 <div class="social-auth-links text-center mb-3">
-                    <p>- OR -</p>
+                    <p>- Hoặc -</p>
                     <a href="#" class="btn btn-block btn-primary">
-                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                        <i class="fab fa-facebook mr-2"></i> Đăng nhập băng facebook
                     </a>
                     <a href="#" class="btn btn-block btn-danger">
-                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                        <i class="fab fa-google-plus mr-2"></i> Đăng nhập bằng Google+
                     </a>
                 </div>
                 <!-- /.social-auth-links -->

@@ -3,7 +3,7 @@
     <a href="index3.html" class="brand-link">
         <img src="{{ asset('template-admin') }}/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">Shop handmade</span>
     </a>
 
     <!-- Sidebar -->
@@ -11,7 +11,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('template-admin') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2"
+                <img src="{{ asset('template-client') }}/img/avatar1.png" class="img-circle elevation-2"
                     alt="User Image">
             </div>
             <div class="info">
@@ -68,14 +68,14 @@
                     </a>
                 </li>
 
-                {{-- <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('coupon.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Mã giảm giá
                         </p>
                     </a>
-                </li> --}}
+                </li>
                 {{-- @if (Auth::guard('quan_tri')->check())
                     <li class="nav-item">
                         <a href="{{ route('admin.logout') }}" class="nav-link">

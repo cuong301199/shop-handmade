@@ -24,9 +24,9 @@ class NguoiDungController extends Controller
 
     public function login()
     {
-        $danhmuc = DB::table('danh_muc')
+        $lsp = DB::table('loai_san_pham')
         ->get();
-        return view('client.login',\compact('danhmuc'));
+        return view('client.login',\compact('lsp'));
     }
 
     public function register(Request $request)
@@ -37,7 +37,7 @@ class NguoiDungController extends Controller
         $email = $request->email;
         $hoTen= $request->hoTen;
         $soDienThoai = $request->soDienThoai;
-
+        $id_lsp = $request->id_lsp;
 
         if($tenDangNhap=="" || $tenDangNhap == null ){
             Session::flash("error", "Tên đăng nhập không được để trống");
@@ -59,16 +59,16 @@ class NguoiDungController extends Controller
             Session::flash("error", "Tên đăng nhập đã có người sử dụng");
             return redirect()->back();
         }
-        // $checkEmail = DB::table('nguoi_dung')->where('email_nd',$email)->count();
-        // if($checkEmail > 0){
-        //     Session::flash("error", "Email đã có người sử dụng");
-        //     return redirect()->back();
-        // }
+        $checkEmail = DB::table('nguoi_dung')->where('email_nd',$email)->count();
+        if($checkEmail > 0){
+            Session::flash("error", "Email đã có người sử dụng");
+            return redirect()->back();
+        }
 
         if( $matKhau == $reMatKhau){
 
             $hashPassword = Hash::make($matKhau);
-            $insert = DB::table('nguoi_dung')->insert(
+            $insert = DB::table('nguoi_dung')->insertGetId(
                 [
                     'username'=>$tenDangNhap,
                     'password'=> $hashPassword,
@@ -76,6 +76,13 @@ class NguoiDungController extends Controller
                     'email_nd'=>$email,
                     'sdt_nd'=>$soDienThoai,
                     'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')->toDateString()
+
+                ]
+            );
+            $insert1 = DB::table('loaisanpham_yeuthich')->insert(
+                [
+                    'id_nd'=>$insert,
+                    'id_lsp'=>$id_lsp
                 ]
             );
 

@@ -72,13 +72,13 @@ class QuanTriController extends Controller
         return view('admin.thongke-nguoidung.index');
     }
     public function manage_chars_user_30day(){
-        $now =   $now = Carbon::now('Asia/Ho_Chi_Minh');
+          $now = Carbon::now('Asia/Ho_Chi_Minh');
         $sub30days =  Carbon::now('Asia/Ho_Chi_Minh')->subdays(30);
          $danhsach = DB::table('nguoi_dung')
         ->whereBetween('created_at',[$sub30days,$now])
         ->select('created_at',DB::raw('count(id) as nguoi_dung'))
         ->groupBy('created_at')
-       ->get();
+        ->get();
 
        foreach($danhsach as $key => $val){
         $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
@@ -93,20 +93,40 @@ class QuanTriController extends Controller
     public function filter_by_date_user(Request $request){
         $from_date = $request->from_date;
         $to_date = $request->to_date;
-        $danhsach = DB::table('nguoi_dung')
-        ->whereBetween('created_at',[$from_date, $to_date])
-        ->select('created_at',DB::raw('count(id) as nguoi_dung'))
-        ->groupBy('created_at')
-       ->get();
+        $orderBy = $request->orderBy;
+        if($orderBy == 'day'){
+            $danhsach = DB::table('nguoi_dung')
+            ->whereBetween('created_at',[$from_date, $to_date])
+            ->select('created_at',DB::raw('count(id) as nguoi_dung'))
+            ->groupBy('created_at')
+           ->get();
 
-       foreach($danhsach as $key => $val){
-        $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
-            $data[]=array(
-                'created_at'=>\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d'),
-                'nguoi_dung'=>$val->nguoi_dung
+           foreach($danhsach as $key => $val){
+            $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
+                $data[]=array(
+                    'created_at'=>\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d'),
+                    'nguoi_dung'=>$val->nguoi_dung
+                    );
+                }
+            return response()->json($data, 200);
+        }else{
+            $danhsach = DB::table('nguoi_dung')
+            ->whereBetween('created_at',[$from_date, $to_date])
+            ->orderBy('created_at','asc')
+            ->select('created_at',DB::raw('count(id) as nguoi_dung'))
+            ->groupBy(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"))
+            ->get();
+
+            foreach($danhsach as $key =>$val){
+                $date = \Carbon\Carbon::parse( $val->created_at)->format('m-Y');
+                $data[]=array(
+                    'created_at'=>$date,
+                    'nguoi_dung'=>$val->nguoi_dung
                 );
             }
-        return response()->json($data, 200);
+            return response()->json($data, 200);
+
+        }
     }
 
     public function filter_dashboard_user(Request $request){
@@ -130,7 +150,7 @@ class QuanTriController extends Controller
             ->whereBetween('created_at',[$dau_thangnay, $now])
             ->select('created_at',DB::raw('count(id) as nguoi_dung'))
             ->groupBy('created_at')
-           ->get();
+            ->get();
 
            foreach($danhsach as $key => $val){
             $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');

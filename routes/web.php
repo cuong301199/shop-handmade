@@ -22,6 +22,7 @@ use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\PhiVanChuyenController;
 use App\Http\Controllers\ThongTinLienHeController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ChatZaloController;
 
 use Carbon\Carbon;
 
@@ -43,6 +44,7 @@ Route::get('',[HomeController::class,'index'])->name('client.index');
 Route::prefix('/client')->group(function () {
     //tai them san pham
     Route::get('/load-more-product',[HomeController::class,'get_more_product'])->name('getMoreProduct.home');
+    Route::get('/load-more-product-like',[HomeController::class,'get_more_product_like'])->name('getMoreProductLike.home');
     //dang nhap facebook
     Route::get('/getInfor-facebook',[NguoiDungController::class,'getInfor'])->name('facebook.getInfor');
     Route::get('/check-infor-facebook',[NguoiDungController::class,'getInfor'])->name('facebook.checkInfor');
@@ -123,14 +125,22 @@ Route::prefix('/client')->group(function () {
 
     //trang ca nhan
     Route::get('/trang-ca-nhan/{id}',[CuaHangController::class,'index'])->name('cuahang.index');
+    Route::get('/folow',[CuaHangController::class,'folow'])->name('folow.create');
+    Route::get('/un-folow',[CuaHangController::class,'un_folow'])->name('folow.delete');
+
      //danh gia nguoi dung
-     Route::get('/load-moreo-rate',[CuaHangController::class,'load_rate'])->name('rate.load');
-     Route::get('/rate-user',[CuaHangController::class,'rate_user'])->name('rate.user');
+    Route::get('/load-moreo-rate',[CuaHangController::class,'load_rate'])->name('rate.load');
+    Route::get('/rate-user',[CuaHangController::class,'rate_user'])->name('rate.user');
 
     //chat
-    Route::get('/chat',[ChatController::class,'index'])->name('chat.index');
+    Route::get('/chat/{id}',[ChatController::class,'index'])->name('chat.index');
+    Route::get('/chat',[ChatController::class,'chat_home'])->name('chat.home');
+    Route::post('/send-message/{id_nguoinhan}',[ChatController::class,'send_message'])->name('chat.send');
+    Route::get('/load-message',[ChatController::class,'load_message'])->name('load.message');
 
-
+    //ton kho
+    Route::get('/inventory',[QuanLyCuaHangController::class,'inventory'])->name('inventory.manager');
+    Route::get('/update/qty/inventory',[QuanLyCuaHangController::class,'update_qty_inventory']);
     //chi tiet san pham
     Route::get('/chitietsanpham/{id}/',[ChiTietSanPhamController::class,'index'])->name('chitietsanpham.index');
 
@@ -146,7 +156,9 @@ Route::prefix('/client')->group(function () {
     //Quan ly don hang ------------------------------------------------------
     Route::get('quanly-donhang',[QuanLyCuaHangController::class, 'manage_oder'] )->name('manage_oder.index');
     Route::get('chitiet-donhang/{id}',[QuanLyCuaHangController::class, 'manage_oder_detail'] )->name('manage_oder.detail');
-    Route::get('accep-oder/{id}',[QuanLyCuaHangController::class, 'accepOder'] )->name('accepOder');
+    Route::get('/accep-oder',[QuanLyCuaHangController::class, 'accepOder'] )->name('accepOder');
+
+    Route::get('update/qty',[QuanLyCuaHangController::class,'update_qty'])->name('update.qty');
 
     //thong ke danh thu
 
@@ -165,6 +177,16 @@ Route::prefix('/client')->group(function () {
     Route::get('/load-more-comment',[ChiTietSanPhamController::class,'get_more_comment'])->name('getMoreComment.home');
     Route::get('/comment-product',[ChiTietSanPhamController::class,'comment_product'])->name('comment.product');
 
+    //zalo chat
+    Route::get('/zalo-chat-index',[ChatZaloController::class,'index'])->name('chatZalo.index');
+    Route::post('/zalo-chat-create',[ChatZaloController::class,'store'])->name('chatZalo.store');
+    Route::post('/zalo-chat-update',[ChatZaloController::class,'update'])->name('chatZalo.update');
+
+    //folow
+
+
+
+
 });
 Route::middleware(['checkNguoiDung'])->group(function () {
 
@@ -174,12 +196,12 @@ Route::middleware(['checkNguoiDung'])->group(function () {
     Route::get('/thanhtoan/{id}',[ThanhToanController::class,'thanhToan'])->name('thanhtoan.index');
     Route::post('/checkout/post/{id}',[ThanhToanController::class,'store'])->name('checkout.store');
 
-    // Route::post('/check-coupon',[ThanhToanController::class,'check_coupon'])->name('check.coupon');
-    // Route::get('/unset-coupon',[ThanhToanController::class,'unset_coupon'])->name('unset.coupon');
+    Route::get('/check-coupon',[ThanhToanController::class,'check_coupon'])->name('check.coupon');
+    Route::get('/unset-coupon',[ThanhToanController::class,'unset_coupon'])->name('unset.coupon');
     Route::get('/check-feeship',[ThanhToanController::class,'check_feeship'])->name('feeship.check');
 
     //report-san pham
-
+    // $id_user = Auth::guard('nguoi_dung')->user()->id;
 
 
 });
@@ -221,9 +243,10 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
         // mã giảm giá
 
-        // Route::get('/coupon', [MaGiamGiaController::class, 'index'])->name('coupon.index');
-        // Route::get('/coupon-add', [MaGiamGiaController::class, 'create'])->name('coupon.create');
-        // Route::post('/coupon-add-post', [MaGiamGiaController::class, 'store'])->name('coupon.store');
+        Route::get('/coupon', [MaGiamGiaController::class, 'index'])->name('coupon.index');
+        Route::get('/coupon-add', [MaGiamGiaController::class, 'create'])->name('coupon.create');
+        Route::get('/coupon-delete/{id}', [MaGiamGiaController::class, 'delete'])->name('coupon.delete');
+        Route::post('/coupon-add-post', [MaGiamGiaController::class, 'store'])->name('coupon.store');
 
         //thong ke nguoi dung
         Route::get('/thong-ke-nguoi-dung',[QuanTriController::class, 'manage_chars_user'] )->name('manage_chars_user.index');
@@ -240,7 +263,8 @@ Route::middleware(['checkQuanTri'])->group(function () {
 });
 
 
-
+Route::get('/2',[HomeController::class,'chat']);
+Route::post('/accep-file',[HomeController::class,'accepFile']);
 
 
 
@@ -256,6 +280,7 @@ Route::middleware(['checkQuanTri'])->group(function () {
 
 Route::get('/1', function () {
 
+
     // $comments = DB::table('danh_gia_nguoi_dung')
     // ->join('nguoi_dung','nguoi_dung.id','danh_gia_nguoi_dung.id_nm')
     // ->where('danh_gia_nguoi_dung.id_nb',2)
@@ -263,6 +288,73 @@ Route::get('/1', function () {
     // ->select('nguoi_dung.*','danh_gia_nguoi_dung.*')
     // ->take(2)
     // ->get();
-$comments = 'HN'.rand(0,999).'HM'.rand();
-    dd($comments);
+
+    // $a = 1;
+    // $b =2;
+    // $room = DB::table('tin_nhan')
+    // ->where(function ($query) use ($a, $b) {
+    //     $query->where('id_nguoigui', '=', $a)
+    //           ->orWhere('id_nguoigui', '=', $b);
+    // })->where(function ($query) use ($a, $b) {
+    //     $query->where('id_nguoinhan', '=', $a)
+    //           ->orWhere('id_nguoinhan', '=', $b);
+    // })->select('id', DB::raw('count(id) as total'))->get();
+
+
+
+
+
+
+    // $danhsach = DB::table('hoa_don')
+    // ->where('id_nb',$id_nb)
+    // ->whereBetween('created_at',[$sub30days,$now])
+    // ->select('created_at',
+    //     DB::raw('count(id) as don_hang'),
+    //     DB::raw('SUM(tong_sp) as tong_sp')
+    //     )
+    // ->groupBy('created_at')
+    // ->get();
+
+    // $danhsach = DB::table('hoa_don')
+    // // ->whereBetween('created_at',[$from_date, $to_date])
+    // ->orderBy('created_at','asc')
+    // ->select('created_at',DB::raw('count(id) as nguoi_dung'))
+    // ->groupBy(DB::raw("DATE_FORMAT(created_at,'%Y-%m')"))
+    // ->get();
+
+    // dd($danhsach);
+    // ->select(DB::raw('MONTH(created_at) as month'),
+    //          DB::raw('count(id) as total')
+    // )
+    // ->groupBy('month')
+    // ->get();
+
+    // echo "<pre>";
+    // print_r($chart);
+    // echo "</pre>";
+//   dd(Cart::content());
+
+        $danhsach = DB::table('hoa_don')
+        ->join('chi_tiet_hoa_don','chi_tiet_hoa_don.id_hd','hoa_don.id')
+        ->join('san_pham','san_pham.id','chi_tiet_hoa_don.id_sp')
+        ->where('san_pham.id_nb' ,1)
+        ->groupBy('hoa_don.id')
+        // ->select('hoa_don.*')
+        ->get();
+
+        // foreach($danhsach as $item =>$value){
+        //     $data = DB::table('chi_tiet_hoa_don')
+        //     ->join('hoa_don','hoa_don.id','chi_tiet_hoa_don.id_hd')
+        //     ->where('hoa_don.id',$value->id_hd)
+        //     ->get();
+        //     echo "<pre>";
+        //     print_r($data);
+        //     echo "</pre>";
+        // }
+
+            dd($danhsach);
+
 });
+
+
+

@@ -71,7 +71,11 @@
                     <tr>
                         <th style="width: ">#</th>
                         <th style="width:10%">Hình ảnh</th>
-                        <th style="width:40% ">Tên sản phẩm</th>
+
+                        <th style="width:30% ">Tên sản phẩm</th>
+                        @if ($khachhang->magiamgia!=null)
+                        <th style="width:15%">Tên mã giảm giá</th>
+                        @endif
                         <th style="width: ">Số lượng</th>
                         <th style="width: ">Đơn giá</th>
                         <th style="width:">Thành tiền</th>
@@ -83,7 +87,11 @@
                     <tr>
                         <td>{{ $stt++ }}</td>
                         <td> <img src="{{ asset($item->hinhanh_sp) }}" alt="" width = 60px heigth=60px></td>
+
                         <td>{{ $item->ten_sp }} </td>
+                        @if ($khachhang->magiamgia!=null)
+                        <td>{{ $item->magiamgia }}</td>
+                        @endif
                         <td>{{ $item->so_luong }}</td>
                         <td>{{  number_format($item->gia_sp) }} VND</td>
                         <td>{{  number_format($item->gia_sp*$item->so_luong )}} VND</td>
@@ -96,9 +104,29 @@
                     <td></td>
                     <td></td>
                     <td>
-                        <strong>Tổng tiền :{{ number_format( $khachhang->tong_tien - $khachhang->phivanchuyen_hd) }} VND</strong>
-                        <h6>Phí vận chuyển :{{ number_format( $khachhang->phivanchuyen_hd)}} VND</h6>
-                        <h6>Tổng đơn hàng : {{ number_format( $khachhang->tong_tien)}} VND</h6>
+                        <?php
+                            $coupon = DB::table('ma_giam_gia')->where('ma_mgg',$khachhang->magiamgia)->first();
+                        ?>
+                        @if ($khachhang->magiamgia==null)
+                           <h6>Tổng tiền :{{ number_format( $khachhang->tong_tien - $khachhang->phivanchuyen_hd) }} VND</h6>
+                            <h6>Phí vận chuyển :{{ number_format( $khachhang->phivanchuyen_hd)}} VND</h6>
+                           <strong>Tổng đơn hàng : {{ number_format( $khachhang->tong_tien)}} VND</strong>
+                        @else
+                            @if($coupon->dieukien_mgg==1)
+                                <h6>Tổng tiền :{{ number_format( $khachhang->tong_tien - $khachhang->phivanchuyen_hd +  $coupon->giatri_mgg) }} VND</h6>
+                                <h6>Phí vận chuyển :{{ number_format( $khachhang->phivanchuyen_hd)}} VND</h6>
+                                <h6>Giá trị mã giảm giá :{{ number_format( $coupon->giatri_mgg)}} VND</h6>
+                               <strong>Tổng đơn hàng : {{ number_format( $khachhang->tong_tien)}} VND</strong>
+                            @else
+                                <?php  ?>
+                                <h6>Tổng tiền :{{ number_format( $khachhang->tong_tien - $khachhang->phivanchuyen_hd +  $khachhang->sotiengiam) }} VND</h6>
+                                <h6>Phí vận chuyển :{{ number_format( $khachhang->phivanchuyen_hd)}} VND</h6>
+                                <h6>Giá trị mã giảm giá :{{ $coupon->giatri_mgg }}% </h6>
+                                <h6>Số tiền giảm :{{ number_format( $khachhang->sotiengiam)}} VND</h6>
+                                <strong>Tổng đơn hàng : {{ number_format( $khachhang->tong_tien)}} VND</strong>
+                            @endif
+                        @endif
+
                     </td>
 
                 </tr>

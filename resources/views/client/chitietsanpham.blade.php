@@ -56,6 +56,12 @@
         }
 
     </style>
+    {{-- //////////// --}}
+    @if ($id_oa != null)
+        <div class="zalo-chat-widget" data-oaid="{{ $id_oa->id_oa }}" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="300" data-height="300"></div>
+        <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+    @endif
+    {{-- //////// --}}
     <div class="page_title_area">
         <div class="container">
             <div class="row">
@@ -153,9 +159,11 @@
                                             class="trendify-btn black-bordered">Xem trang người bán</a>
                                     </div>
                                     <div>
-                                        <a style="margin-top:10px; margin-left:0px;width:220px;" href=""
+
+                                        <a style="margin-top:10px; margin-left:0px;width:220px;" href="{{ route('chat.index', ['id' => $danhsach->id_nb]) }}"
                                             class="trendify-btn black-bordered">Chat với người bán</a>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -209,7 +217,7 @@
             {{-- comment --}}
             <div class="row">
                 <div class="post_comments col-md-6">
-                    <h3 class="comment_title"><span>4 comments</span></h3>
+                    <h3 class="comment_title"><span>Đánh giá sản phẩm</span></h3>
                     <ul class="media-list">
 
                         @if (Auth::guard('nguoi_dung')->check())
@@ -228,8 +236,7 @@
                                 ->first();
                             ?>
                             @if ($danhsach1 != null)
-                                {{-- ///php/// --}}
-                                {{-- ////////comment-input//////// --}}
+
                                 <li class="media">
                                     <a class="pull-left" href="#">
                                         <img width="100px" height="90px" class="media-object "
@@ -241,9 +248,14 @@
                                         <input class="input-comment" type="text" placeholder="Viết bình luận của bạn">
                                         <button type="submit" class="btn btn-comment" id="btn-comment">Bình luận</button>
                                         <div class="success-comment"></div>
-                                    </div> <!-- end of media-body -->
-                                </li> <!-- end of media -->
-                                {{-- ////////comment-input//////// --}}
+                                    </div>
+                                </li>
+                            @else
+                            <div class="row">
+                                <div class="col-md-12 center-block text-center" >
+                                    <button  style="padding:7px 8px;border-radius:0px;color:#333; background-color:#bbb3b3;border:#fff;font-size:15px;width:100%" type="button" class="btn btn-success from-control">Hãy mua sản phẩm để đánh giá</button>
+                                </div>
+                            </div>
                             @endif
                         @endif
                         <div class="media-comment">
@@ -322,7 +334,7 @@
             </div>
         </div>
     </div>
-    <input type="text" class="id_sp" value="{{ $danhsach->id }}">
+    <input type="hidden" class="id_sp" value="{{ $danhsach->id }}">
     @push('Add-Cart')
         <script>
            $(document).ready(function () {
@@ -353,7 +365,7 @@
                     e.preventDefault();
                     var comment = $('.input-comment').val()
                     $('.media-comment').empty()
-                      $('.success-comment').removeAttr("style")
+                    $('.success-comment').removeAttr("style")
                    $.ajax({
                        type: "get",
                        url: "/client/comment-product/",

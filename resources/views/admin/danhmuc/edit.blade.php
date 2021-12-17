@@ -35,7 +35,7 @@ Sửa danh mục
                 <small id="helpId" class="text-muted">Hình ảnh danh mục là bắt buộc</small>
             </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Sửa</button>
         </form>
     </div>
 </div>

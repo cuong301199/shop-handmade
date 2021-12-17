@@ -249,9 +249,9 @@ body.home4 {
 .dropdown-menu.megamenu-content li a:hover {
     color: #9560F5;
 }
-.active a{
+/* .active a{
 	color: #9560F5 !important;
-}
+} */
 
 .sell {
     background-color: #FF4343;

@@ -65,7 +65,7 @@
                                         <div class="form-group">
                                             <label for="">Tên thành phố</label>
                                             <select name="thanhPho" id="" class="form-control thanhPho">
-                                                <option value="">Chọn thành phố</option>
+                                                <option value="80">Chọn thành phố</option>
                                                 @foreach ($tp as $item )
                                                     <option value="{{ $item->matp }}">{{ $item->name_tp }}</option>
                                                 @endforeach

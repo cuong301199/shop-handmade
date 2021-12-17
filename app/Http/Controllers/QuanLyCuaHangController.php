@@ -36,7 +36,7 @@ class QuanLyCuaHangController extends Controller
             if($orderBy == 'code'){
                 $oder = $oder1->where('ma_hd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
             }else{
-                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+                $oder = $oder1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
             }
         }
         return view('client.quanly-cuahang.donhang.index',compact('oder'));
@@ -70,16 +70,69 @@ class QuanLyCuaHangController extends Controller
         ->join('hoa_don','hoa_don.id','chi_tiet_hoa_don.id_hd')
         ->join('san_pham','san_pham.id','chi_tiet_hoa_don.id_sp')
         ->where('id_hd',$id)
+        ->select('san_pham.*','hoa_don.*','chi_tiet_hoa_don.*')
         ->get();
         return view('client.quanly-cuahang.donhang.chitiet-donhang',compact('danhsach','khachhang','ttvc'));
     }
 
-    public function accepOder(Request $request,$id){
-        $id_tt = $request->id_tt;
+    public function update_qty(Request $request){
         $id_sp = $request->id_sp;
+        $cthd_hd = $request->cthd_hd;
+        $qty = $request->qty;
+        $id_hd = $request->id_hd;
+
+
+        $cthd = DB::table('chi_tiet_hoa_don')
+        ->where('id',$cthd_hd)
+        ->first();
+
+        $hd = DB::table('hoa_don')
+        ->where('id',$id_hd)
+        ->first();
+
+
+        if($qty > $cthd->so_luong){
+            $qty_sp = $qty - $cthd->so_luong;
+            $gia = $qty_sp * $cthd->gia_sp;
+            $tong_gia = $hd->tong_tien + $gia;
+            $update1 = DB::table('hoa_don')->where('id',$id_hd)->update(
+                [
+                    'tong_tien'=>$tong_gia,
+                ]);
+
+        }else if($qty < $cthd->so_luong){
+            $qty_sp = $cthd->so_luong - $qty;
+            $gia = $qty_sp * $cthd->gia_sp;
+            $tong_gia = $hd->tong_tien - $gia;
+            $update1 = DB::table('hoa_don')->where('id',$id_hd)->update(
+                [
+                    'tong_tien'=>$tong_gia,
+                ]);
+        }
+
+        $update = DB::table('chi_tiet_hoa_don')->where('id', $cthd_hd)->update(
+            [
+                'so_luong'=>$qty,
+            ]
+        );
+
+    }
+
+    public function accepOder(Request $request){
+
+
+        $id_tt = $request->id_tt;
+        $order_product_id = $request->order_product_id;
         $soluong_sp = $request->soluong_sp;
+        $id_hd = $request->id_hd;
+
+        $update1 = DB::table('hoa_don')->where('id',$id_hd)->update(
+            [
+                'id_tt'=>$id_tt,
+            ]
+        );
         if($id_tt==3){
-            foreach($id_sp as $key => $product_id){
+            foreach($order_product_id as $key => $product_id){
                 $product = DB::table('san_pham')->where('id',$product_id)->first();
                 $product_quanty =$product->soluong_sp;
                 $product_sold = $product->soluong_daban;
@@ -93,25 +146,30 @@ class QuanLyCuaHangController extends Controller
                                 'soluong_daban'=>$sp_daban
                             ]
                         );
-
                     }
                 }
+            }
+        }else if($id_tt == 5 ){
+            foreach($order_product_id as $key => $product_id){
+                $product = DB::table('san_pham')->where('id',$product_id)->first();
+                $product_quanty =$product->soluong_sp;
+                $product_sold = $product->soluong_daban;
+                foreach($soluong_sp as $key2 => $quantity){
+                    if($key==$key2){
+                        $sp_conlai = $product_quanty + $quantity;
+                        $sp_daban = $product_sold - $quantity;
+                        $update = DB::table('san_pham')->where('id',$product_id)->update(
+                            [
+                                'soluong_sp'=> $sp_conlai,
+                                'soluong_daban'=>$sp_daban
+                            ]
+                        );
+                    }
+                }
+            }
+        }
 
-            }
-            if($update){
-                Session::flash("success-aceepOder-3","Cập nhập đơn hàng thành công");
-                return redirect()->back();
-            }
-        }
-        $update = DB::table('hoa_don')->where('id',$id)->update(
-            [
-                'id_tt'=>$id_tt,
-            ]
-        );
-        if($update){
-            Session::flash("success-aceepOder","Cập nhập đơn hàng thành công");
-            return redirect()->back();
-        }
+
 
 
     }
@@ -131,6 +189,7 @@ class QuanLyCuaHangController extends Controller
         ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*');
         $oder = $oder1->paginate(6)->appends(request()->query());
 
+
         if($key  && $orderBy  == 'null'){
             $oder = $oder1->where('ma_hd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
         }
@@ -138,7 +197,16 @@ class QuanLyCuaHangController extends Controller
             if($orderBy == 'code'){
                 $oder = $oder1->where('ma_hd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
             }else{
-                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+                $oder1 = DB::table('hoa_don')
+                ->join('nguoi_dung','nguoi_dung.id','hoa_don.id_nb')
+                ->join('thong_tin_van_chuyen','thong_tin_van_chuyen.id','hoa_don.id_ttvc')
+                ->join('trang_thai_don_hang','trang_thai_don_hang.id','hoa_don.id_tt')
+                ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','thong_tin_van_chuyen.id_tp')
+                ->join('tbl_quanhuyen','tbl_quanhuyen.maqh','thong_tin_van_chuyen.id_qh')
+                ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','thong_tin_van_chuyen.id_xp')
+                ->where('hoa_don.id_nm',$id)
+                ->select('trang_thai_don_hang.*','nguoi_dung.*','thong_tin_van_chuyen.*','tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','hoa_don.*');
+                $oder = $oder1->where('ten_nd','like','%'.$key.'%')->paginate(8)->appends(request()->query());
             }
         }
 
@@ -174,8 +242,14 @@ class QuanLyCuaHangController extends Controller
         return view('client.quanly-cuahang.donhangdadat.chitiet-donhang',compact('khachhang','ttvc','danhsach'));
     }
 
+
+
+
     public function manage_chars_oder(){
-        return view('client.quanly-cuahang.thongke-danhthu.index');
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+        $vlog = DB::table('bai_viet')->where('id_nd',$id_nd)->count();
+        $product = DB::table('san_pham')->where('id_nb',$id_nd)->count();
+        return view('client.quanly-cuahang.thongke-danhthu.index',compact('vlog','product'));
     }
 
     public function manage_chars_oder_30day(){
@@ -190,6 +264,7 @@ class QuanLyCuaHangController extends Controller
             // DB::raw('count(id) as don_hang'),
             // DB::raw('SUM(tong_sp) as tong_sp')
             )
+        ->orderBy('created_at','asc')
         ->groupBy('created_at')
         ->get();
 
@@ -211,26 +286,48 @@ class QuanLyCuaHangController extends Controller
         $from_date = $request->from_date;
         $to_date = $request->to_date;
 
-        $danhsach = DB::table('hoa_don')
-        ->where('id_nb',$id_nb)
-        ->whereBetween('created_at',[$from_date,$to_date])
-        ->select('created_at', DB::raw('SUM(tong_tien) as tong_tien'),
-            // DB::raw('count(id) as don_hang'),
-            // DB::raw('SUM(tong_sp) as tong_sp')
+        if( $request->orderBy == "day"){
+            $danhsach = DB::table('hoa_don')
+            ->where('id_nb',$id_nb)
+            ->whereBetween('created_at',[$from_date,$to_date])
+            ->orderBy('created_at','asc')
+            ->select('created_at', DB::raw('SUM(tong_tien) as tong_tien'),
+                // DB::raw('count(id) as don_hang'),
+                // DB::raw('SUM(tong_sp) as tong_sp')
+                )
+            ->groupBy('created_at')
+            ->get();
+                foreach($danhsach as $key => $val){
+                    $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
+                    $data[]=array(
+                        'created_at'=>$date,
+                        'tong_tien'=>$val->tong_tien,
+                        // 'don_hang'=>$val->don_hang,
+                        // 'tong_sp'=>$val->tong_sp
+                    );
+                }
+            // $danhsach = DB::table('san_pham')->get();
+            return response()->json($data, 200);
+        }else{
+            $danhsach = DB::table('hoa_don')
+            ->where('id_nb',$id_nb)
+            ->whereBetween('created_at',[$from_date,$to_date])
+            ->orderBy('created_at','asc')
+            ->select('created_at',
+                 DB::raw('SUM(tong_tien) as tong_tien'),
             )
-        ->groupBy('created_at')
-        ->get();
-            foreach($danhsach as $key => $val){
-                $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
-                $data[]=array(
-                    'created_at'=>$date,
-                    'tong_tien'=>$val->tong_tien,
-                    // 'don_hang'=>$val->don_hang,
-                    // 'tong_sp'=>$val->tong_sp
-                );
-            }
-        // $danhsach = DB::table('san_pham')->get();
-        return response()->json($data, 200);
+            ->groupBy( DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->get();
+                foreach($danhsach as $key => $val){
+                    $date = \Carbon\Carbon::parse( $val->created_at)->format('m-Y');
+                    $data[]=array(
+                        'created_at'=>$date,
+                        'tong_tien'=>$val->tong_tien,
+                    );
+                }
+            return response()->json($data, 200);
+        }
+
     }
 
     public function filter_dashboard(Request $request){
@@ -338,6 +435,7 @@ class QuanLyCuaHangController extends Controller
         $danhsach = DB::table('hoa_don')
         ->where('id_nb',$id_nb)
         ->whereBetween('created_at',[$sub30days,$now])
+        ->orderBy('created_at','asc')
         ->select('created_at',
             DB::raw('count(id) as don_hang'),
             DB::raw('SUM(tong_sp) as tong_sp')
@@ -361,17 +459,42 @@ class QuanLyCuaHangController extends Controller
         $from_date = $request->from_date;
         $to_date = $request->to_date;
 
-        $danhsach = DB::table('hoa_don')
-        ->where('id_nb',$id_nb)
-        ->whereBetween('created_at',[$from_date,$to_date])
-        ->select('created_at',
-            DB::raw('count(id) as don_hang'),
-            DB::raw('SUM(tong_sp) as tong_sp')
-            )
-        ->groupBy('created_at')
-        ->get();
+        if($request->orderBy == 'day'){
+            $danhsach = DB::table('hoa_don')
+            ->where('id_nb',$id_nb)
+            ->whereBetween('created_at',[$from_date,$to_date])
+            ->orderBy('created_at','asc')
+            ->select('created_at',
+                DB::raw('count(id) as don_hang'),
+                DB::raw('SUM(tong_sp) as tong_sp')
+                )
+            ->groupBy('created_at')
+            ->get();
+                foreach($danhsach as $key => $val){
+                    $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
+                    $data[]=array(
+                        'created_at'=>$date,
+                        // 'tong_tien'=>$val->tong_tien,
+                        'don_hang'=>$val->don_hang,
+                        'tong_sp'=>$val->tong_sp
+                    );
+                }
+            // $danhsach = DB::table('san_pham')->get();
+            return response()->json($data, 200);
+        }else{
+            $danhsach = DB::table('hoa_don')
+            ->where('id_nb',$id_nb)
+            ->whereBetween('created_at',[$from_date,$to_date])
+            ->orderBy('created_at','asc')
+            ->select('created_at',
+                DB::raw('count(id) as don_hang'),
+                DB::raw('SUM(tong_sp) as tong_sp')
+                )
+            ->groupBy( DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+            ->get();
+
             foreach($danhsach as $key => $val){
-                $date=\Carbon\Carbon::parse( $val->created_at)->format('Y-m-d');
+                $date=\Carbon\Carbon::parse( $val->created_at)->format('m-Y');
                 $data[]=array(
                     'created_at'=>$date,
                     // 'tong_tien'=>$val->tong_tien,
@@ -379,8 +502,9 @@ class QuanLyCuaHangController extends Controller
                     'tong_sp'=>$val->tong_sp
                 );
             }
-        // $danhsach = DB::table('san_pham')->get();
-        return response()->json($data, 200);
+
+            return response()->json($data, 200);
+        }
     }
 
     public function filter_dashboard_product(Request $request){
@@ -475,5 +599,20 @@ class QuanLyCuaHangController extends Controller
         }
     }
 
+    public function inventory(){
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+        $product1 = DB::table('san_pham')
+        ->where('id_nb',$id_nd);
+        $product = $product1->paginate(6)->appends(request()->query());
+        return view('client.quanly-cuahang.tonkho.index',compact('product'));
+    }
+    public function update_qty_inventory(Request $request){
+        $id_sp = $request->id_sp;
+        $qty = $request->qty;
+        $update = DB::table('san_pham')->where('id',$id_sp)->update(
+            [
+                'soluong_sp'=>$qty,
+            ]);
+    }
 
 }

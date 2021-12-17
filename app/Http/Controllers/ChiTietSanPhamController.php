@@ -24,12 +24,14 @@ class ChiTietSanPhamController extends Controller
             ->where('id_lsp',$danhsach->id_lsp)
             ->where('san_pham.id_nb','<>',$id_nd)
             ->where('san_pham.id','<>',$danhsach->id)
+            ->take(6)
             ->get();
 
             $sp_cungcuahang = DB::table('san_pham')
             ->where('id_nb',$danhsach->id_nb)
             ->where('san_pham.id_nb','<>',$id_nd)
             ->where('san_pham.id','<>',$danhsach->id)
+            ->take(6)
             ->get();
 
         }else{
@@ -44,14 +46,17 @@ class ChiTietSanPhamController extends Controller
             ->where('id_nb','<>',$danhsach->id_nb)
             ->where('id_lsp',$danhsach->id_lsp)
             ->where('san_pham.id','<>',$danhsach->id)
+            ->take(6)
             ->get();
 
             $sp_cungcuahang = DB::table('san_pham')
             ->where('id_nb',$danhsach->id_nb)
             ->where('san_pham.id','<>',$danhsach->id)
+            ->take(6)
             ->get();
         }
 
+        $id_oa = DB::table('zalo_chat')->where('id_nd',$danhsach->id_nb)->first();
 
         $noidung_bc = DB::table('noi_dung_bao_cao')->get();
 
@@ -60,7 +65,7 @@ class ChiTietSanPhamController extends Controller
         ->get();
 
 
-        return view('client.chitietsanpham', compact('danhsach','hinhanh','sp','sp_cungcuahang','noidung_bc'));
+        return view('client.chitietsanpham', compact('danhsach','hinhanh','sp','sp_cungcuahang','noidung_bc','id_oa'));
     }
 
 

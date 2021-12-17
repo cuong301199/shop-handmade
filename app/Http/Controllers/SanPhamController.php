@@ -34,7 +34,7 @@ class SanPhamController extends Controller
             if($orderBy == 'ten_lsp'){
                 $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
             }else{
-                $danhsach = $danhsach1->where('ten_lsp','like','%'.$key.'%')->paginate(8)->appends(request()->query());
+                $danhsach = $danhsach1->where('ten_dm','like','%'.$key.'%')->paginate(8)->appends(request()->query());
             }
         }
         return view('client.quanly-cuahang.sanpham.index', compact('danhsach'));
@@ -116,9 +116,9 @@ class SanPhamController extends Controller
                 Session::flash("error","Thiếu hình ảnh sản phẩm");
                 return redirect()->route('sanpham.create');
             }
-
-            Session::flash("success","Thêm thành công");
-            return redirect()->route('sanpham.index');
+            return redirect()->back();
+            // Session::flash("success","Thêm thành công");
+            // return redirect()->route('sanpham.index');
     }
 
 
@@ -154,17 +154,23 @@ class SanPhamController extends Controller
         ->get();
 
         $danhsach = DB::table('san_pham')
+        ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
+        ->join('tbl_quanhuyen','tbl_quanhuyen.maqh','san_pham.id_qh')
+        ->join('tbl_xaphuongthitran','tbl_xaphuongthitran.maxa','san_pham.id_xa')
         ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
         ->where('san_pham.id',$id)
-        ->select('loai_san_pham.*','danh_muc.*','san_pham.*')
+        ->select('tbl_tinhthanhpho.*','tbl_quanhuyen.*','tbl_xaphuongthitran.*','loai_san_pham.*','danh_muc.*','san_pham.*')
         ->first();
 
         $hinhanh = DB::table('hinh_anh')
         ->where('id_sp',$id)
         ->get();
 
-        return view('client.quanly-cuahang.sanpham.edit', compact('danhsach','danhsach_dm','danhsach_lsp','hinhanh'));
+        $tp = DB::table('tbl_tinhthanhpho')
+        ->get();
+
+        return view('client.quanly-cuahang.sanpham.edit', compact('danhsach','danhsach_dm','danhsach_lsp','hinhanh','tp'));
 
 
     }
@@ -238,13 +244,11 @@ class SanPhamController extends Controller
     public function getProductByCat(Request $request ,$id){
         if(Auth::guard('nguoi_dung')->check()){
             $id_nd = Auth::guard('nguoi_dung')->user()->id;
-            $tp = DB::table('san_pham')
+            $tp1 = DB::table('san_pham')
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
             ->join('loai_san_pham','loai_san_pham.id_dm','san_pham.id_lsp')
-            ->where('san_pham.id_nb','<>',$id_nd)
-            ->where('id_dm',$id)
-            ->groupBy('id_tp')->get();
-
+            ->where('san_pham.id_nb','<>',$id_nd);
+            // ->groupBy('id_tp');
 
             $danhsach = DB::table('san_pham')
             ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
@@ -253,14 +257,24 @@ class SanPhamController extends Controller
             ->where('loai_san_pham.id_dm',$id)
             ->where('san_pham.id_nb','<>',$id_nd)
             ->select('tbl_tinhthanhpho.*','san_pham.*');
+
+            if($request->productType != null){
+            $productType = $request->productType;
+            $danhsach2 = $danhsach->where('id_lsp', $productType)->paginate(16)->appends(request()->query());
+            $tp = $tp1->where('id_lsp', $productType)
+            ->select('id_tp','name_tp',DB::raw('count(san_pham.id) as total'))
+            ->groupBy('id_tp')->get();
+            }else{
+            $tp = $tp1->where('loai_san_pham.id_dm',$id)
+             ->select('id_tp','name_tp',DB::raw('count(san_pham.id) as total'))
+             ->groupBy('id_tp')->get();
+
             $danhsach2 = $danhsach->paginate(16)->appends(request()->query());
+            }
         }else{
-            $tp = DB::table('san_pham')
+            $tp1 = DB::table('san_pham')
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-            ->join('loai_san_pham','loai_san_pham.id_dm','san_pham.id_lsp')
-            ->where('id_dm',$id)
-            ->groupBy('id_tp')->get();
-
+            ->join('loai_san_pham','loai_san_pham.id_dm','san_pham.id_lsp');
 
             $danhsach = DB::table('san_pham')
             ->join('loai_san_pham','loai_san_pham.id','san_pham.id_lsp')
@@ -268,8 +282,24 @@ class SanPhamController extends Controller
             ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
             ->where('loai_san_pham.id_dm',$id)
             ->select('tbl_tinhthanhpho.*','san_pham.*');
+
+            if($request->productType != null){
+            $productType = $request->productType;
+            $danhsach2 = $danhsach->where('id_lsp', $productType)->paginate(16)->appends(request()->query());
+            $tp = $tp1->where('id_lsp', $productType)
+            ->select('id_tp','name_tp',DB::raw('count(san_pham.id) as total'))
+            ->groupBy('id_tp')->get();
+            }else{
+            $tp = $tp1->where('loai_san_pham.id_dm',$id)
+            ->select('id_tp','name_tp',DB::raw('count(san_pham.id) as total'))
+            ->groupBy('id_tp')->get();
+
+
             $danhsach2 = $danhsach->paginate(16)->appends(request()->query());
+            }
         }
+
+
 
         $lsp = DB::table('loai_san_pham')
         ->join('danh_muc','danh_muc.id','loai_san_pham.id_dm')
@@ -284,16 +314,13 @@ class SanPhamController extends Controller
 
 
         }
-        if($request->productType != null){
-            $productType = $request->productType ;
-            $danhsach2 = $danhsach->where('id_lsp', $productType)->paginate(16)->appends(request()->query());
-            $tp = DB::table('san_pham')
-            ->join('tbl_tinhthanhpho','tbl_tinhthanhpho.matp','san_pham.id_tp')
-            ->where('id_lsp', $productType )
-            // ->where('san_pham.id_nb','<>',$id_nd)
-            ->groupBy('id_tp')->get();
-
-        }
+        // if($request->productType != null){
+        //     $productType = $request->productType;
+        //     $danhsach2 = $danhsach->where('id_lsp', $productType)->paginate(16)->appends(request()->query());
+        //     $tp2 = $tp1->where('id_lsp', $productType)
+        //     ->select('id_tp','name_tp',DB::raw('count(san_pham.id) as total'))
+        //     ->groupBy('id_tp')->get();
+        // }
         if($request->price != null){
             $price = $request->price;
             if($price==1){
@@ -334,7 +361,7 @@ class SanPhamController extends Controller
         ->where('id_nb',$id_nd)
         ->where('id_trangthai',3)
         ->select('loai_san_pham.*','trang_thai_san_pham.*','san_pham.*')
-        -paginate(6);
+        ->paginate(6);
         return view('client.quanly-cuahang.sanpham.product-report',\compact('danhsach'));
     }
 

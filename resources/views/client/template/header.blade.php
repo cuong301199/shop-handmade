@@ -13,9 +13,12 @@
       font-size: 5px;
       margin-right: 4px;
   }
+  .search form input[type="text"]{
+      font-style: normal;
+  }
+
 </style>
 
-{{-- <?php Carbon::setLocale('vi');?> --}}
 <div class="header">
     <div class="header-top">
         <div class="container">
@@ -29,13 +32,13 @@
                         <ul>
                             @if (Auth::guard('nguoi_dung')->check())
                                 <li><a class="header-navbar" href="{{ route('client.index') }}"><i class="fa fa-home"></i>Trang chủ</a></li>
-                                <li><a class="header-navbar" href="{{ route('nguoidung.login') }}"><i class="fa fa-comments"></i>Chat</a></li>
+                                <li><a class="header-navbar" href="{{ route('chat.home') }}"><i class="fa fa-comments"></i>Chat</a></li>
                                 <li><a class="header-navbar" >Xin chào {{ Auth::guard('nguoi_dung')->user()->ten_nd }}</a></li>
                                 {{-- <span style="font-size: 20px"><i class="far fa-user-circle"></i></span> --}}
 
                             @else
                                 <li><a class="header-navbar" href="{{ route('client.index') }}"><i class="fa fa-home"></i>Trang chủ</a></li>
-                                <li><a class="header-navbar" href="{{ route('nguoidung.login') }}"><i class="fa fa-comments"></i>Chat</a></li>
+                                <li><a class="header-navbar" href="{{ route('chat.home') }}"><i class="fa fa-comments"></i>Chat</a></li>
                                 <li><a class="header-navbar" href="{{ route('nguoidung.login') }}">Đăng nhập</a></li>
                                 <li><a class="header-navbar" href="{{ route('nguoidung.login') }}">Đăng ký</a></li>
                             @endif
@@ -67,12 +70,13 @@
                     </form>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-6 text-center">
-                    <img src="{{asset('template-client')}}/img/logo.png" alt="Trendify logo" />
+                    {{-- <img src="{{asset('template-client')}}/img/logo.png" alt="Trendify logo" /> --}}
+                    <img width="150px"src="{{asset('template-client')}}/img/1.png" alt="Trendify logo" />
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-6 cart-icon">
                     <div class="cart">
                         <a href="#">
-                            <img alt="cart" src="{{ asset('template-client') }}/img/cart.png">
+                            <img style="padding:0px" alt="cart" src="{{asset('template-client') }}/img/cart.png">
                             @if(Cart::content()!= null)
                             <span id="show-total">{{Cart::count() }}</span>
                             @else
@@ -82,7 +86,7 @@
 
                         <div class="cart-list hidden-xs">
                             <div class="change-item-cart">
-                                @if (Cart::content()!=null)
+                                @if (Cart::count() > 0)
                                     <h5 class="title">Số lượng sản
                                         phẩm<span>({{Cart::count() }} sản phẩm)</span></h5>
                                     @foreach (Cart::content() as $item)
@@ -109,16 +113,16 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                     <div class="order-total">
+                                    <div class="order-total">
                                         <h5 class="title">Tổng tiền <span
                                                 class="amount">{{  Cart::subtotal() }}</span>
                                         </h5>
                                     </div>
+                                    <a href="{{ route('cart.list') }}" class="trendify-btn black-bordered">Xem giỏ hàng</a>
+                                @else
+                                    <a href="" class="trendify-btn black-bordered">Vui long thêm sản phẩm vào giỏ hàng</a>
                                 @endif
-
-
                             </div>
-                            <a href="{{ route('cart.list') }}" class="trendify-btn black-bordered">Xem giỏ hàng</a>
 
                         </div>
                     </div>

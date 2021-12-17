@@ -20,10 +20,10 @@ Thêm danh mục
         @csrf
         <div class="form-group">
             <label for="">Tên danh mục</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="tenDanhMuc" placeholder="Ten danh muc">
+            <input type="text" class="form-control" id="exampleInputEmail1" name="tenDanhMuc" placeholder="Tên danh mục">
             <br>
             <label for="">Mô tả</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" name="moTa" placeholder="Ten danh muc">
+            <input type="text" class="form-control" id="exampleInputEmail1" name="moTa" placeholder="Mô tả danh mục">
         </div>
         <div class="form-group">
             <label for=""></label>
@@ -31,7 +31,7 @@ Thêm danh mục
                 placeholder="Hình ảnh" aria-describedby="helpId"><br>
             <small id="helpId" class="text-muted">Hình ảnh danh mục là bắt buộc</small>
         </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Thêm</button>
     </form>
    </div>
     </div>

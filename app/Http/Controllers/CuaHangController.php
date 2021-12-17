@@ -47,7 +47,12 @@ class CuaHangController extends Controller
             $id_cat= $request->id_cat;
             $sanpham = $sanpham->where('id_dm',$id_cat);
         }
-        return view('client.cuahang.index' ,compact('thongtin','sanpham','post','danhmuc','infor'));
+        $id_oa = DB::table('zalo_chat')->where('id_nd',$thongtin->id)->first();
+
+        $rate = DB::table('danh_gia_nguoi_dung')
+        ->join('nguoi_dung','nguoi_dung.id','danh_gia_nguoi_dung.id_nm')
+        ->where('id_nb',$id)->paginate(1);
+        return view('client.cuahang.index' ,compact('thongtin','sanpham','post','danhmuc','infor','id_oa','rate'));
     }
 
     public function load_rate(Request $request){
@@ -61,7 +66,7 @@ class CuaHangController extends Controller
             ->where('danh_gia_nguoi_dung.id','<',$data)
             ->orderBy('danh_gia_nguoi_dung.id','desc')
             ->select('nguoi_dung.*','danh_gia_nguoi_dung.*')
-            ->take(1)
+            ->take(4)
             ->get();
         }else{
             $comments = DB::table('danh_gia_nguoi_dung')
@@ -69,27 +74,37 @@ class CuaHangController extends Controller
             ->where('danh_gia_nguoi_dung.id_nb',$id_nb)
             ->orderBy('danh_gia_nguoi_dung.id','desc')
             ->select('nguoi_dung.*','danh_gia_nguoi_dung.*')
-            ->take(1)
+            ->take(4)
             ->get();
         }
 
         $output = '';
         foreach($comments as $key => $comment){
             $last_id = $comment->id;
-            $output.='<li class="media">
-            <a class="pull-left" href="#">
-                <img width="100px" height="90px" class="media-object"
-                    src="'. asset($comment->anhdaidien_nd).'" alt="" />
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading"><a href="#">'.$comment->ten_nd.'</a> <span>'.\Carbon\Carbon::parse($comment->created_at)->subHours(7)->diffForHumans().'</span></h4>
-                <p>'.$comment->noidung_dg.'</p>
-            </div>
-        </li>';
+            $output.='<div class="row">
+            <div class="post_comments col-md-12">
+            <ul class="media-list">
+                <li class="media" style="margin-top: 10px">
+                    <a class="pull-left" href="#">
+                        <img width="100px" height="90px" class="media-object"
+                            src="'. asset($comment->anhdaidien_nd).' " alt="" />
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading"><a href="#">'. $comment->ten_nd .'</a><span>'. \Carbon\Carbon::parse($comment->created_at)->subHours(7)->diffForHumans() .'</span></h4>
+                        <p>'.$comment->noidung_dg .'</p>
+                    </div>
+                </li> <!-- end of media -->
+                <div class="media-comment">
+                </div>
+            </ul>
+        </div>
+        </div>';
         }
         $output .= '
+        <div class="row">
         <div class="col-md-12 center-block text-center" >
-            <button id="load-more-button" data-id ="'.$last_id.'" style="color:#333; background-color:#9b9999;border:#fff;font-size:12px;" type="button" class="btn btn-success from-control">Xem thêm</button>
+            <button id="load-more-button" data-id ="'.$last_id.'" style="color:#333; background-color:#9b9999;border:#fff;font-size:12px;width:100%" type="button" class="btn btn-success from-control">Xem thêm</button>
+        </div>
         </div>';
 
         echo $output;
@@ -109,6 +124,48 @@ class CuaHangController extends Controller
                 'created_at'=> Carbon::now('Asia/Ho_Chi_Minh')
             ]
         );
+    }
+
+    public function folow(Request $request){
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+        $id_nb = $request->id_nb;
+
+        $id_td = DB::table('theo_doi')->where('id_nd',$id_nb)->first();
+
+        $insert= DB::table('chi_tiet_theo_doi')->insert(
+            [
+                'id_nd'=>$id_nd,
+                'id_td'=>$id_td->id,
+            ]
+        );
+        $output = "";
+        $output.='
+        <a class="folow un-folow " style="padding:0px 5px;" href=""><i class="fa fa-eye"></i>Hủy theo dõi</a>
+        ';
+
+        // if($insert){
+        //     $output.='
+        //     <a class="folow folower" href=""><i class="fa fa-eye"></i>Đã theo dõi</a>
+        //     ';
+        // }
+        return $output;
+    }
+
+
+    public function un_folow(Request $request){
+        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+        $id_nb = $request->id_nb;
+        $id_td = DB::table('theo_doi')->where('id_nd',$id_nb)->first();
+        $delete = DB::table('Chi_tiet_theo_doi')->where('id_nd',$id_nd)->where('id_td',$id_td->id)->delete();
+
+        $output="";
+
+        if($delete){
+            $output.='
+                <a class="folow folower" href=""><i class="fa fa-eye"></i>Theo dõi</a>
+            ';
+        }
+        return $output;
     }
     // public function index(){
     //     return view('admin.cuahang.index');

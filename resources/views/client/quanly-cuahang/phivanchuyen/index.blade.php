@@ -1,11 +1,11 @@
 @extends('client.quanly-cuahang.template.master')
 
 @section('title')
-    Sản phẩm
+    Phí vận chuyển
 @endsection
 {{-- {{ dd($danhsach) }} --}}
 @section('title-page')
-    Sản phẩm
+    Phí vận chuyển
 @endsection
 @section('content')
 
@@ -23,7 +23,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                          <h3 class="card-title">Bordered Table</h3>
+                          <h3 class="card-title">Phí vận chuyển</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

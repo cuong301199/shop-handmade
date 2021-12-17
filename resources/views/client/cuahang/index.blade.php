@@ -168,11 +168,25 @@
             padding: 10px;
             border-color: #efebebf0;
         }
+        .folow{
+            margin-left:3px;
+        }
+        .box{
+            border: 2px solid;
+            padding: 6px 20px 40px 20px ;
+            border-color: #efebebf0;
+            width:700px;
+            margin: 0 auto;
+        }
 
     </style>
 
     {{-- <div class="benner">
 </div> --}}
+@if ($id_oa != null)
+<div class="zalo-chat-widget" data-oaid="{{ $id_oa->id_oa }}" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="300" data-height="300"></div>
+<script src="https://sp.zalo.me/plugins/sdk.js"></script>
+@endif
     <div class="page_title_area" style="margin-bottom: 0px">
         <div class="container">
             <div class="row infor">
@@ -181,29 +195,70 @@
                         <img src="{{ asset('hinh-anh-san-pham') }}/1.jpg" class="img-circle" alt="Hot girl" width="90"
                             height="90">
                     </div>
-                    <div class="col-md-9 box-folow ">
+                    <div class="col-md-9 box-folow">
                         <div class="name">{{ $thongtin->ten_nd }}</div>
-                        <a class="folow" href=""><i class="fa fa-comments"></i>Chat ngay</a>
-                        <a class="folow" href=""><i class="fa fa-eye"></i>Theo dõi</a>
-                    </div>
+                        {{-- <a class="folow " href=""><i class="fa fa-comments"></i>Chat ngay</a>
+                        <a class="folow folower" href=""><i class="fa fa-eye"></i>Theo dõi</a> --}}
+                        <?php
+                            if(Auth::guard('nguoi_dung')->check()){
+                                $id_nd = Auth::guard('nguoi_dung')->user()->id;
+                                $folow = DB::table('chi_tiet_theo_doi')
+                                ->join('theo_doi','theo_doi.id','chi_tiet_theo_doi.id_td')
+                                ->where('theo_doi.id_nd',$thongtin->id)
+                                ->where('chi_tiet_theo_doi.id_nd',$id_nd)
+                                ->select(DB::raw('count(chi_tiet_theo_doi.id) as total'))
+                                ->first();
+                            }
+                            $qty_rate = DB::table('danh_gia_nguoi_dung')
+                            ->where('id_nb',$thongtin->id)
+                            ->select(DB::raw('count(id) as total'))
+                            ->first();
 
+                            $qty_product = DB::table('san_pham')
+                            ->where('id_nb',$thongtin->id)
+                            ->select(DB::raw('count(id) as total'))
+                            ->first();
+
+                            $qty_folow = DB::table('chi_tiet_theo_doi')
+                                ->join('theo_doi','theo_doi.id','chi_tiet_theo_doi.id_td')
+                                ->where('theo_doi.id_nd',$thongtin->id)
+                                ->select(DB::raw('count(theo_doi.id) as total'))
+                                ->first();
+                        ?>
+{{-- {{ dd( $qty_folow) }} --}}
+                        <div class="right" style="display: flex">
+                            <div class="chat">
+                                <a class="folow" href=""><i class="fa fa-comments"></i>Chat ngay</a>
+                            </div>
+                            @if (Auth::guard('nguoi_dung')->check() && $folow->total ==0)
+                                <div class="folow">
+                                    <a class="folow folower" href=""><i class="fa fa-eye"></i>Theo dõi</a>
+                                </div>
+                            @elseif(Auth::guard('nguoi_dung')->check() && $folow->total != 0)
+                                <div class="folow">
+                                    <a class="folow un-folow" style="padding:0px 5px;" href=""><i class="fa fa-eye"></i>Hủy theo dõi</a>
+                                </div>
+                            @endif
+
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm-8">
                     <div class="col-md-4">
                         <div>
                             <label for="">Đánh giá :</label>
-                            <span>Chưa có đánh giá</span>
+                            <span>{{ $qty_rate->total }} đánh giá</span>
                         </div>
                         <div>
                             <label for="">Sản phẩm :</label>
-                            <span>Chưa có đánh giá</span>
+                            <span>{{ $qty_product->total }} sản phẩm</span>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div>
                             <label for="">Phản hồi :</label>
-                            <span>Chưa xác định</span>
+                            <span>100%</span>
                         </div>
                         <div>
                             <label for="">Thời gian phản hồi :</label>
@@ -214,11 +269,11 @@
                     <div class="col-md-4">
                         <div>
                             <label for="">Ngày tham gia:</label>
-                            <span>Chưa có đánh giá</span>
+                            <span>{{ \Carbon\Carbon::parse($thongtin->created_at)->subHours(7)->diffForHumans() }}</span>
                         </div>
                         <div>
                             <label for="">Người theo dõi :</label>
-                            <span>Chưa có đánh giá</span>
+                            <span>{{   $qty_folow->total }} người theo dõi</span>
                         </div>
                     </div>
 
@@ -245,7 +300,7 @@
                         <div class="view-navigation">
                             {{-- <div class="info-text">
                             <p>Showing 1-8 from 124 products</p>
-                        </div> --}}
+                            </div> --}}
                             <div class="right-content">
                                 <div class="grid-list">
                                     <ul>
@@ -285,7 +340,6 @@
                     {{-- {{ dd($sanpham) }} --}}
                     <div class="row">
                         @foreach ($sanpham as $item)
-
                             <div class="col-md-2 col-sm-6">
                                 <div class="product-single fadeInUp wow" data-wow-delay="0.5s">
                                     <div class="product-img">
@@ -302,9 +356,13 @@
                                                 class="fa fa-clock"></i>{{ \Carbon\Carbon::parse($item->created_at)->subHours(7)->diffForHumans() }}
                                         </p>
                                         <p><i class="fa fa-map-marker-alt"></i>{{  Str::limit($item->name_tp,15) }}</p>
-                                        <a id="{{ $item->id }}" class="addcart"
-                                            href="{{ route('Add.cart', ['id' => $item->id]) }}"><i
-                                                class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                                        @if ($item->soluong_sp > 0)
+                                            <a id="{{ $item->id }}" class="addcart"
+                                                href="{{ route('Add.cart', ['id' => $item->id]) }}"><i
+                                                    class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                                        @else
+                                            <a id="out-of" style="color:#939098;cursor:pointer;"><i class="fa fa-cart-plus"></i>Thêm vào giỏ hàng</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -347,81 +405,125 @@
                     <div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <div class="blog_content">
-                                <div class="col-md-8">
-                                    <article class="single_blog_post">
-                                        <a href="#">
-                                            <h3 class="post_title">Bản đồ</h3>
-                                        </a>
-                                        <br>
-                                        {!! $infor->bando_ttlh !!}
-                                    </article>
-                                </div>
-                                <div class="col-md-4">
-                                    <article class="single_blog_post">
-                                        <a href="#">
-                                            <h3 class="post_title">Thông tin liên hệ</h3>
-                                        </a>
-                                        <br>
-                                        <i class="fa fa-phone" style="margin:5px;"></i><label>Số điện thoại</label>:
-                                        <span>{{ $infor->sdt_nd }}</span><br>
-                                        <i class="fa fa-envelope-square" style="margin:5px;"></i><label>Email</label> :
-                                        <span>{{ $infor->email_nd }}</span><br>
-                                        <i class="fa fa-map-marker-alt" style="margin:5px;"></i><label>Địa chỉ</label> :
-                                        <span>{{ $infor->diachi_ttlh }}</span><br>
-                                    </article>
-                                </div>
+                                @if ($infor != null)
+                                    <div class="col-md-8">
+                                        <article class="single_blog_post">
+                                            <a href="#">
+                                                <h3 class="post_title">Bản đồ</h3>
+                                            </a>
+                                            <br>
+                                            {!! $infor->bando_ttlh !!}
+                                        </article>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <article class="single_blog_post">
+                                            <a href="#">
+                                                <h3 class="post_title">Thông tin liên hệ</h3>
+                                            </a>
+                                            <br>
+                                            <i class="fa fa-phone" style="margin:5px;"></i><label>Số điện thoại</label>:
+                                            <span>{{ $infor->sdt_nd }}</span><br>
+                                            <i class="fa fa-envelope-square" style="margin:5px;"></i><label>Email</label> :
+                                            <span>{{ $infor->email_nd }}</span><br>
+                                            <i class="fa fa-map-marker-alt" style="margin:5px;"></i><label>Địa chỉ</label> :
+                                            <span>{{ $infor->diachi_ttlh }}</span><br>
+                                        </article>
+                                    </div>
+                                @endif
                             </div> <!-- end of col-md-9 -->
                         </div> <!-- end of row-->
                     </div>
                 </div>
 
                 <div id="women" class="tab-pane">
-                    <div class="row">
-                        <div class="col-md-2"></div>
-                        <div class="post_comments col-md-8">
-                            <ul class="media-list">
-                                @if (Auth::guard('nguoi_dung')->check())
-                                    {{-- ///php/// --}}
-                                    <?php
-                                    $id_nd = Auth::guard('nguoi_dung')->user()->id;
-                                    $user = DB::table('nguoi_dung')
-                                        ->where('id', $id_nd)
-                                        ->first();
-                                        $danhsach1 = DB::table('hoa_don')
-                                        ->where('hoa_don.id_nm', $id_nd)
-                                        ->where('hoa_don.id_nb',$thongtin->id)
-                                        ->select(DB::raw('count(*) as total'))
-                                        ->groupBy('id_nm')
-                                        ->first();
-                                    ?>
-                                    @if ($danhsach1 != null)
+                    <div class="box ">
+                        <div class="row" style="margin-bottom: 7px">
+                            <div class="post_comments col-md-12">
+                                <ul class="media-list">
+                                    @if (Auth::guard('nguoi_dung')->check())
                                         {{-- ///php/// --}}
-                                        {{-- ////////comment-input//////// --}}
-                                        <li class="media">
-                                            <a class="pull-left" href="#">
-                                                <img width="100px" height="90px" class="media-object "
-                                                    src="{{ asset($user->anhdaidien_nd) }}" alt="" />
-                                                {{-- {{ asset('template-client') }}/img/blog/comment1.png --}}
-                                            </a>
-                                            <div class="media-body" style="padding-top: 0px">
-                                                <h4 class="media-heading"><a href="#">{{ $user->ten_nd }}</a></h4>
-                                                <input class="input-comment" type="text" placeholder="Viết đánh giá của bạn">
-                                                <button type="submit" class="btn btn-comment" id="btn-comment">Đánh giá</button>
-                                                <div class="success-comment"></div>
-                                            </div> <!-- end of media-body -->
-                                        </li> <!-- end of media -->
-                                        {{-- ////////comment-input//////// --}}
+                                        <?php
+                                        $id_nd = Auth::guard('nguoi_dung')->user()->id;
+                                        $user = DB::table('nguoi_dung')
+                                            ->where('id', $id_nd)
+                                            ->first();
+                                            $danhsach1 = DB::table('hoa_don')
+                                            ->where('hoa_don.id_nm', $id_nd)
+                                            ->where('hoa_don.id_nb',$thongtin->id)
+                                            ->select(DB::raw('count(*) as total'))
+                                            ->groupBy('id_nm')
+                                            ->first();
+                                            $count_rate= DB::table('danh_gia_nguoi_dung')
+                                            ->where('id_nm',$id_nd)
+                                            ->where('id_nb',$thongtin->id)
+                                            ->select(DB::raw('count(id) as total'))
+                                            ->first();
+
+
+                                        ?>
+    {{-- {{ dd(  $count_rate) }} --}}
+                                        @if ($danhsach1 != null && $count_rate->total > 0)
+                                            <div class="row">
+                                                <div class="col-md-12 center-block text-center" >
+                                                    <button  style="padding:14px 12px;border-radius:0px;color:#333; background-color:#faf5f5;border:#fff;font-size:15px;width:100%" type="button" class="btn btn-success from-control">Bạn đã thực hiện đánh giá người dùng này </button>
+                                                </div>
+                                            </div>
+                                        @elseif($danhsach1 != null && $count_rate->total == 0)
+                                            <li class="media" style="margin-top: 10px;">
+                                                <a class="pull-left" href="#">
+                                                    <img width="90px" height="100px" class="media-object "
+                                                        src="{{ asset($user->anhdaidien_nd) }}" alt="" />
+                                                    {{-- {{ asset('template-client') }}/img/blog/comment1.png --}}
+                                                </a>
+                                                <div class="media-body" style="padding-top: 0px">
+                                                    <h4 class="media-heading"><a href="#">{{ $user->ten_nd }}</a></h4>
+                                                    <input class="input-comment" type="text" placeholder="Viết đánh giá của bạn">
+                                                    <button type="submit" class="btn btn-comment" id="btn-comment">Đánh giá</button>
+                                                    <div class="success-comment"></div>
+                                                </div>
+                                            </li>
+                                        @elseif($danhsach1 == null)
+                                        <div class="row">
+                                            <div class="col-md-12 center-block text-center" >
+                                                <button  style="padding:14px 12px;border-radius:0px;color:#333; background-color:#faf5f5;border:#fff;font-size:15px;width:100%" type="button" class="btn btn-success from-control">Do bạn chưa mua sản phẩm của người dùng này nên chưa thể đánh giá </button>
+                                            </div>
+                                        </div>
+                                        @endif
+                                    @else
+                                    <div class="row">
+                                        <div class="col-md-12 center-block text-center" >
+                                            <button  style="padding:14px 12px;border-radius:0px;color:#333; background-color:#faf5f5;border:#fff;font-size:15px;width:100%" type="button" class="btn btn-success from-control">Bạn cần đăng nhập và mua sản phẩm để đánh giá người dùng</button>
+                                        </div>
+                                    </div>
                                     @endif
-                                @endif
-                                <div class="media-comment">
-                                </div>
-                            </ul>
+
+                                    <div class="media-comment">
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="col-md-2"></div>
+
+                        <div class="load_cmt">
+                            {{-- <div class="post_comments col-md-12">
+                                <ul class="media-list">
+                                    <li class="media" style="margin-top: 10px">
+                                        <a class="pull-left" href="#">
+                                            <img width="100px" height="90px" class="media-object"
+                                                src="{{ asset($comment->anhdaidien_nd) }} " alt="" />
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading"><a href="#">{{ $comment->ten_nd }}</a><span>{{ \Carbon\Carbon::parse($comment->created_at)->subHours(7)->diffForHumans() }}</span></h4>
+                                            <p>{{ $comment->noidung_dg }}</p>
+                                        </div>
+                                    </li> <!-- end of media -->
+                                    <div class="media-comment">
+                                    </div>
+                                </ul>
+                            </div> --}}
+                        </div>
+
                     </div>
                 </div>
-
-                <!-- / men -->
             </div>
         </div>
         <!-- Latest items -->
@@ -525,6 +627,12 @@
                     // $('#form-oder').submit();
                 });
             });
+            $(document).on('click','#out-of', function () {
+                $.alert({
+                    title: 'Thông báo!',
+                    content: 'Sản phẩm đã hết, nên bạn không thể thêm vào giỏ hàng!',
+                });
+            });
         </script>
     @endpush
     @push('Add-Cart')
@@ -543,7 +651,8 @@
                         },
                         success: function(data) {
                             $('#load-more-button').remove();
-                            $('.media-comment').append(data);
+                            // $('.media-comment').append(data);
+                            $('.load_cmt').append(data)
                         }
                     });
                 }
@@ -557,8 +666,8 @@
                 $('.btn-comment').click(function (e) {
                     e.preventDefault();
                     var comment = $('.input-comment').val()
-                    $('.media-comment').empty()
-                      $('.success-comment').removeAttr("style")
+                    // $('.media-comment').empty()
+                    //   $('.success-comment').removeAttr("style")
                    $.ajax({
                        type: "get",
                        url: "/client/rate-user/",
@@ -569,13 +678,50 @@
                         },
                        dataType: "dataType",
                        success: function (data) {
-                        //
+                            swal({
+                                title: "Thông báo",
+                                text: "Cập nhật trạng thái đơn hàng  thành công",
+                                icon: "success",
+                                button: "Đóng",
+                                });
+                                // location.reload();
+                                setInterval('location.reload()', 2000);
                        }
                    });
-                   load_more_comment();
-                   $('.success-comment').html('<span style="color:#45e312;">Đánh giá thành công</span>')
-                    $('.input-comment').val('')
-                    $('.success-comment').fadeOut(5000)
+                //    load_more_comment();
+                //    $('.success-comment').html('<span style="color:#45e312;">Đánh giá thành công</span>')
+                //     $('.input-comment').val('')
+                //     $('.success-comment').fadeOut(5000)
+                });
+
+                $('.folower').click(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: "get",
+                        url: "/client/folow",
+                        data: {
+                            id_nb:id_nb
+                        },
+
+                        success: function (data) {
+                            $('div.folow').html(data);
+                        }
+                    });
+                });
+                $('.un-folow').click(function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: "get",
+                        url: "/client/un-folow",
+                        data: {
+                            id_nb:id_nb
+                        },
+
+                        success: function (data) {
+                            $('div.folow').html(data);
+                        }
+                    });
                 });
 
            });

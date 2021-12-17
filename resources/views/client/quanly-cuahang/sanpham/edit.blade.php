@@ -23,7 +23,7 @@
     </style>
 
     <body>
-        {{-- {{ dd($danhsach_sp) }} --}}
+        {{-- {{ dd($danhsach) }} --}}
         <main class="container">
             <header class="row text-center"></header>
             <section class="row">
@@ -48,7 +48,7 @@
                                         <div class="input-group form-group">
                                             <span class="input-group-text">Giá sản phẩm</span>
                                             <input class="form-control" type="number" value="{{ $danhsach->gia_sp }}"
-                                                name="giaSanPham" placeholder="Giá sản phẩm" aria-label="Recipient's ">
+                                                name="giaSanPham" placeholder="Giá sản phẩm">
                                             <span class="input-group-text">VND</span>
                                         </div>
                                         <div class="form-group">
@@ -60,11 +60,33 @@
                                                 @endforeach
                                             </select>
                                         </div>
+
                                         <div class="form-group">
                                             <label for="">Loại sản phẩm</label>
                                             <select class="form-control loaiSanPham" name="loaiSanPham" id="">
                                                 <option class="itemLSP" value="{{ $danhsach->id_lsp }}">
                                                     {{ $danhsach->ten_lsp }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Tên thành phố</label>
+                                            <select name="thanhPho" id="" class="form-control thanhPho">
+                                                <option value="80">Chọn thành phố</option>
+                                                @foreach ($tp as $item )
+                                                    <option value="{{ $item->matp }}" @if ($danhsach->id_tp == $item->matp) selected @endif>{{ $item->name_tp }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Tên quận huyện</label>
+                                            <select name="quanHuyen" id="" class="form-control quanHuyen">
+                                                <option value="" >Chọn quận huyện</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Tên xã phường</label>
+                                            <select name="xaPhuong" id="" class="form-control xaPhuong">
+                                                <option value="" >Chọn xã phường</option>
                                             </select>
                                         </div>
                                         <?php $danhsach_tt = DB::table('trang_thai_san_pham')->where('id','<',3)->get() ?>
@@ -78,6 +100,7 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group form-img">
                                             <img class="img" src="{{ asset($danhsach->hinhanh_sp) }}"
@@ -202,6 +225,45 @@
                 //     });
                 // })
             });
+            const BASE_URL = window.location.origin //lấy base url
+                $('select.thanhPho').change(function(e) {
+                    e.preventDefault();
+                    var getIDCity = $(this).children("option:selected").val();
+                    console.log(getIDCity);
+                    $('.itemProvince').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL+ "/client/get-province/" + getIDCity,
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.quanHuyen').append('<option value="' + response[i].maqh +
+                                    '" class="itemProvince" >' + response[i].name_qh + '</option>');
+                            }
+                        }
+                    });
+                });
+                $('select.quanHuyen').change(function(e) {
+                    e.preventDefault();
+                    var getIDProvince = $(this).children("option:selected").val();
+                    // console.log(getIDCity);
+                    // console.log('124')
+                    $('.itemWards').remove();
+                    $.ajax({
+                        type: "get",
+                        url: BASE_URL+"/client/get-wards/" + getIDProvince,
+                        dataType: "json",
+                        success: function(response) {
+                            for (let i = 0; i < response.length; i++) {
+                                $('.xaPhuong').append('<option value="' + response[i].maxa +
+                                    '"class="itemWards" >' + response[i].name_xa + '</option>');
+
+                            }
+
+                        }
+                    });
+                });
+
         </script>
     @endpush
 @endsection
