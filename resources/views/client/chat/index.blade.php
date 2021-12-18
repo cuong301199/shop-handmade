@@ -76,6 +76,7 @@ input[type="file"] {
         @endif
     </div>
         <input type="hidden" name="" id="id_nguoinhan" value="{{ $nguoinhan->id }}">
+        <input type="hidden" name="" id="id_nguoigui" value="{{ $id_nd }}">
     <div class="message-input" style="" >
         <div class="wrap">
 
@@ -96,17 +97,22 @@ input[type="file"] {
                     <div class="col-md-1">
                         <button class="submit" style="padding: 6px;height:40px"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                     </div>
+
                 </div>
             </form>
         </div>
     </div>
+
 </div>
+
 @push('chat')
     <script>
         $(document).ready(function () {
+
             var id_nguoinhan = $('#id_nguoinhan').val();
+            var id_nguoigui = $('#id_nguoigui').val();
             load_message()
-            $('.messages').scrollTop(1000)
+
             function load_message() {
                     $.ajax({
                         type: "get",
@@ -116,9 +122,11 @@ input[type="file"] {
                         },
                         success: function(data) {
                            $('ul.messages_ul').html(data)
+                           $('.messages').scrollTop(1000)
                         }
                     });
             }
+
             $('.submit').click(function (e) {
                 e.preventDefault();
                 var id_nguoinhan = $('#id_nguoinhan').val();
@@ -141,6 +149,9 @@ input[type="file"] {
                             }
                     });
             });
+
+
+
             $('.file-image').change(function (e) {
                 e.preventDefault();
                 var id_nguoinhan = $('#id_nguoinhan').val();
@@ -166,7 +177,59 @@ input[type="file"] {
                     });
             });
 
-        });
+            var pusher = new Pusher('7a9dede1a4324a782371', {
+            cluster: 'ap1',
+            encrypted: true
+            });
+            var channel = pusher.subscribe('channel-demo-real-time');
+            //Bind một function addMesagePusher với sự kiện DemoPusherEvent
+            channel.bind('App\\Events\\MessageSent', addMessageDemo);
+
+
+
+            function addMessageDemo(data) {
+                if(parseInt(data.id_from) != parseInt(id_nguoigui) ){
+                    if(parseInt(id_nguoinhan) == parseInt(data.id_to)){
+                        if(parseInt(data.type) == 1){
+                            $('ul.messages_ul').append('<li class="replies">'+
+                                     '<img style="padding:0px" src="{{asset('template-client')}}/img/avatar1.png" alt="" />'+
+                                    '<p style="font-size: 13px" class="text-right">'+data.message+''+
+                                        '<br>'+
+                                        '<label class="text-left" for="" style="color:#ccc8c8;font-size:9px">'+data.created_at+'</label>'+
+                                        '</p>'+
+                                '</li>');
+                            $('.messages').scrollTop(1000)
+                        }else{
+                            $('ul.messages_ul').append('<li class="replies">'+
+                                '<img style="font-size:13px;padding:0px" src="{{asset('template-client')}}/img/avatar1.png" alt="" />'+
+                                '<img class="hinhAnh"  style="padding:0px;width:150px;border-radius:0%"src="{{ asset('+data.message+') }}" alt="">'+
+                                '</li>');
+                            $('.messages').scrollTop(1000)
+                        }
+
+                    }else{
+                        if(parseInt(data.type) == 1){
+                            $('ul.messages_ul').append('<li class="sent">'+
+                                     '<img style="padding:0px" src="{{asset('template-client')}}/img/avatar1.png" alt="" />'+
+                                    '<p style="font-size: 13px" class="text-right">'+data.message+''+
+                                        '<br>'+
+                                        '<label  class="text-left" for="" style="color:#ccc8c8;font-size:9px">'+data.created_at+'</label>'+
+                                        '</p>'+
+                                '</li>');
+                            $('.messages').scrollTop(1000)
+                        }else{
+                            $('ul.messages_ul').append('<li class="sent">'+
+                                '<img style="font-size:13px;padding:0px" src="{{asset('template-client')}}/img/avatar1.png" alt="" />'+
+                                '<img class="hinhAnh"  style="padding:0px;width:150px;border-radius:0%"src="{{ asset('+data.message+') }}" alt="">'+
+                                '</li>');
+                            $('.messages').scrollTop(1000)
+                        }
+                    }
+                }
+            }
+        }
+
+        );
 
     </script>
 @endpush

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Carbon\Carbon;
+use App\Events\MessageSent;
 class ChatController extends Controller
 {
     public function index($id){
@@ -27,60 +28,81 @@ class ChatController extends Controller
     public function send_message(Request $request ,$id_nguoinhan){
         $id_nguoigui = Auth::guard('nguoi_dung')->user()->id;
         $message = $request->message;
+        $created_at =Carbon::now('Asia/Ho_Chi_Minh');
 
         $tinnhan = DB::table('tin_nhan')
         ->where(function ($query) use ($id_nguoigui, $id_nguoinhan) {
-            $query->where('id_nguoigui', '=', $id_nguoinhan)
+            $query->where('id_nguoigui', '=', $id_nguoigui)
                 ->orWhere('id_nguoigui', '=', $id_nguoinhan);
         })->where(function ($query) use ($id_nguoigui, $id_nguoinhan) {
             $query->where('id_nguoinhan', '=', $id_nguoigui)
                 ->orWhere('id_nguoinhan', '=', $id_nguoinhan);
         })->select('id', DB::raw('count(id) as total'))->get();
 
-        if($request->hasFile('file')){
-            $hinhAnh = $request->file('file');
-            $tenFile = $hinhAnh->getClientOriginalName();
-            $hinhAnh->move(public_path('hinh-anh-tin-nhan/'),$tenFile);
-            foreach($tinnhan as $value => $item){
-                if($item->total > 0 ){
-                    $insert3 = DB::table('tin_nhan')->insert(
-                        [
-                            'id_nguoigui'=> $id_nguoigui,
-                            'id_nguoinhan'=>$id_nguoinhan,
-                            'noidung_tn'=>'hinh-anh-tin-nhan/'.$hinhAnh->getClientOriginalName(),
-                            'created_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
-                            'kieu_tn'=>2,
-                        ]
-                    );
-                }else{
-                    $insert = DB::table('phong_chat')->insertGetId([
-                        'ten_phong'=>"phong",
-                    ]);
-                    $insert1 = DB::table('nguoidung_phongchat')->insert(
-                        [
-                            'id_phongchat'=>$insert,
-                            'id_nd'=>$id_nguoigui,
-                        ]
-                    );
-                    $insert2 = DB::table('nguoidung_phongchat')->insert(
-                        [
-                            'id_phongchat'=>$insert,
-                            'id_nd'=>$id_nguoinhan,
-                        ]
-                    );
-                    $insert3 = DB::table('tin_nhan')->insert(
-                        [
-                            'id_nguoigui'=> $id_nguoigui,
-                            'id_nguoinhan'=>$id_nguoinhan,
-                            'noidung_tn'=>'hinh-anh-tin-nhan/'.$hinhAnh->getClientOriginalName(),
-                            'created_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
-                            'kieu_tn'=>2,
-                        ]
-                    );
-                }
-            }
 
-        }else{
+
+        if($request->hasFile('file')){
+            // $hinhAnh = $request->file('file');
+            // $tenFile = $hinhAnh->getClientOriginalName();
+            // $hinhAnh->move(public_path('hinh-anh-tin-nhan/'),$tenFile);
+            // $message = $hinhAnh->getClientOriginalName();
+                ///////////////////////////////////
+                $file = request('file');
+                $path = $file->hashName('profiles');
+
+                $disk = Storage::disk('public');
+
+                $disk->put(
+                    $path, $this->formatImage($file)
+                );
+
+                $photo = request()->user()->photos()->create([
+                    'photo_url' => $disk->url($path),
+                ]);
+                //////////////////////////////////
+
+            // foreach($tinnhan as $value => $item){
+            //     if($item->total > 0 ){
+
+            //         $insert3 = DB::table('tin_nhan')->insert(
+            //             [
+            //                 'id_nguoigui'=> $id_nguoigui,
+            //                 'id_nguoinhan'=>$id_nguoinhan,
+            //                 'noidung_tn'=>'hinh-anh-tin-nhan/'.$hinhAnh->getClientOriginalName(),
+            //                 'created_at'=>  $created_at,
+            //                 'kieu_tn'=>2,
+            //             ]
+            //         );
+            //     }else{
+            //         $insert = DB::table('phong_chat')->insertGetId([
+            //             'ten_phong'=>"phong",
+            //         ]);
+            //         $insert1 = DB::table('nguoidung_phongchat')->insert(
+            //             [
+            //                 'id_phongchat'=>$insert,
+            //                 'id_nd'=>$id_nguoigui,
+            //             ]
+            //         );
+            //         $insert2 = DB::table('nguoidung_phongchat')->insert(
+            //             [
+            //                 'id_phongchat'=>$insert,
+            //                 'id_nd'=>$id_nguoinhan,
+            //             ]
+            //         );
+            //         $insert3 = DB::table('tin_nhan')->insert(
+            //             [
+            //                 'id_nguoigui'=> $id_nguoigui,
+            //                 'id_nguoinhan'=>$id_nguoinhan,
+            //                 'noidung_tn'=>'hinh-anh-tin-nhan/'.$hinhAnh->getClientOriginalName(),
+            //                 'created_at'=>$created_at,
+            //                 'kieu_tn'=>2,
+            //             ]
+            //         );
+            //     }
+            // }
+            $type = 2;
+        }
+        else{
             foreach($tinnhan as $value => $item){
                 if($item->total > 0 ){
                     $insert3 = DB::table('tin_nhan')->insert(
@@ -88,7 +110,7 @@ class ChatController extends Controller
                             'id_nguoigui'=> $id_nguoigui,
                             'id_nguoinhan'=>$id_nguoinhan,
                             'noidung_tn'=>$message,
-                            'created_at'=>Carbon::now('Asia/Ho_Chi_Minh'),
+                            'created_at'=>  $created_at,
                             'kieu_tn'=>1,
                         ]
                     );
@@ -114,12 +136,14 @@ class ChatController extends Controller
                             'id_nguoinhan'=>$id_nguoinhan,
                             'noidung_tn'=>$message,
                             'kieu_tn'=>1,
-                            'created_at'=>Carbon::now('Asia/Ho_Chi_Minh')
+                            'created_at'=>  $created_at,
                         ]
                     );
                 }
             }
+            $type = 1;
         }
+        broadcast(new MessageSent( $message, $id_nguoigui,$id_nguoinhan, $created_at->format('d-m-Y'),$type));
     }
 
 

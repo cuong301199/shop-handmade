@@ -23,7 +23,7 @@ use App\Http\Controllers\PhiVanChuyenController;
 use App\Http\Controllers\ThongTinLienHeController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ChatZaloController;
-
+use App\Http\Controllers\FrontEndController;
 use Carbon\Carbon;
 
 
@@ -268,7 +268,9 @@ Route::post('/accep-file',[HomeController::class,'accepFile']);
 
 
 
-
+Route::get('/send',[FrontEndController::class,'send']);
+Route::get('/revice',[FrontEndController::class,'revice']);
+Route::post('/send-message',[FrontEndController::class,'send_message'])->name('send.message');
 
 // Route::get('/thu1/{2}',[LoaiSanPhamController::class , 'edit']);
 // Route::get('/1/{id}', function(){
@@ -334,13 +336,13 @@ Route::get('/1', function () {
     // echo "</pre>";
 //   dd(Cart::content());
 
-        $danhsach = DB::table('hoa_don')
-        ->join('chi_tiet_hoa_don','chi_tiet_hoa_don.id_hd','hoa_don.id')
-        ->join('san_pham','san_pham.id','chi_tiet_hoa_don.id_sp')
-        ->where('san_pham.id_nb' ,1)
-        ->groupBy('hoa_don.id')
-        // ->select('hoa_don.*')
-        ->get();
+        // $danhsach = DB::table('hoa_don')
+        // ->join('chi_tiet_hoa_don','chi_tiet_hoa_don.id_hd','hoa_don.id')
+        // ->join('san_pham','san_pham.id','chi_tiet_hoa_don.id_sp')
+        // ->where('san_pham.id_nb' ,1)
+        // ->groupBy('hoa_don.id')
+        // // ->select('hoa_don.*')
+        // ->get();
 
         // foreach($danhsach as $item =>$value){
         //     $data = DB::table('chi_tiet_hoa_don')
@@ -351,8 +353,16 @@ Route::get('/1', function () {
         //     print_r($data);
         //     echo "</pre>";
         // }
+        $tinnhan = DB::table('tin_nhan')
+        ->where(function ($query) {
+            $query->where('id_nguoigui', '=', 1)
+                ->orWhere('id_nguoigui', '=', 8);
+        })->where(function ($query) {
+            $query->where('id_nguoinhan', '=', 1)
+                ->orWhere('id_nguoinhan', '=', 8);
+        })->select( DB::raw('count(id) as total'))->get();
 
-            dd($danhsach);
+            dd($tinnhan);
 
 });
 
